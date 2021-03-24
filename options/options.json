@@ -1,0 +1,94 @@
+{
+	"token": "",
+	"bot": "784349110517760031",
+	"guild": "768734582648209409",
+	"user": {
+		"mitch": "399186129288560651"
+	},
+	"emote": {
+		"weird": {
+			"string": "<:WeirdStuff:785230226732613654>",
+			"id": "785230226732613654"
+		},
+		"tony": {
+			"string": "<:tonyW:794911355634712606>",
+			"id": "794911355634712606"
+		},
+		"donowall": {
+			"string": "<:DonoWall:773295613558128671>",
+			"id": "773295613558128671"
+		},
+		"pogo": {
+			"string": "<:PogO:788598265951551548>",
+			"id": "788598265951551548"
+		},
+		"ok": {
+			"string": "<:pepok:806462439851163648>",
+			"id": "806462439851163648"
+		}
+	},
+	"role": {
+		"weebleader": "797782876661088256",
+		"weeb": "787807791192080394",
+		"wizard": "788077328948789298",
+		"mod": "773110638000078888",
+		"mute": "815660103650115604"
+	},
+	"message": {
+		"roles": "805683087601303574",
+		"pins": "819798292723662898"
+	},
+	"channel": {
+		"roles": "798816193405648936",
+		"shitposting": "800179535801876501",
+		"dnd": "786338883699998730"
+	},
+	"api": {
+		"translate": {
+			"url": "",
+			"auth": ""
+		},
+		"time": {
+			"url": "https://timezone.abstractapi.com/v1/current_time?api_key=",
+			"auth": ""
+		}
+	},
+	"voteReactions": [
+		"1️⃣",
+		"2️⃣",
+		"3️⃣",
+		"4️⃣",
+		"5️⃣",
+		"6️⃣",
+		"7️⃣",
+		"8️⃣",
+		"9️⃣",
+		"🔟"
+	],
+	"weebPhrases": [
+		"ayaya",
+		"onii-chan",
+		"oniichan",
+		"onii chan",
+		"daijobu",
+		"nani",
+		"omaewashinderu",
+		"omae-wa-shinderu",
+		"omae wa shinderu",
+		"yare-yare",
+		"yare yare",
+		"yareyare",
+		"yare",
+		"tsundere",
+		"baka",
+		"senpai",
+		"kawaii",
+		"manga",
+		"yandere",
+		"chibi",
+		"onee-san",
+		"onee san",
+		"oneesan",
+		"doujinshi"
+	]
+}

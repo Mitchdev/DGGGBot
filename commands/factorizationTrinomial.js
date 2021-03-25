@@ -1,4 +1,3 @@
-  
 exports.name = ['trinomial']
 exports.permission = 'none'
 exports.handler = function(message) {
@@ -86,12 +85,36 @@ exports.handler = function(message) {
         }
 	}
 
+    function FixCoeff(x)
+    {
+        if(x===1)
+    {
+        return ""
+    }
+    else
+    {
+       return x.toString()
+    }
+    }
+
+    function FixMinus(x)
+    {
+        if(x<0)
+        {
+            return `+ ${Maths.abs(x).toString}`
+        }
+        else
+        {
+            return `- ${Maths.abs(x).toString}`
+        }
+    }
+
     /*Generates the factorisation question as string using generated values for a,b,c
 	 * Returns the factorisation question in the form ax^2 + bx + c
 	 */
 	function QToString() 
 	{
-	return (a.toString()+"x^2 + " +b.toString() +"x + "+ c.toString());
+	return (FixCoeff(a)+"x^2 + " +FixCoeff(b) +"x + "+ FixCoeff(c));
     }
     
     /*Generates the factorisation answer as string using generated values for a,b,c dependent on the difficulty
@@ -102,24 +125,26 @@ exports.handler = function(message) {
 	ans = "Default Trinomial Answer";
 	if(diff == "easy") 
 	{
-		ans =("(x - "+r1.toString()+")( x - "+r2.toString()+")");
+
+		ans =("(x "+FixMinus(r1)+")( x "+FixMinus(r2)+")");
 	}
 	else 
 	{
 		if(diff == "medium") 
 		{
-			ans =("(x - "+r1.toString()+")(x - "+r2.toString()+")");
+			ans =("(x "+FixMinus(r1)+")(x "+FixMinus(r2)+")");
 		}
 		else
 		{
 			if(diff == "hard") 
 			{
-				ans =("("+ r12.toString() + "x - "+r11.toString()+")("+ r22.toString() +"x - "+r21.toString()+")");
+                
+				ans =("("+ FixCoeff(r12) + "x "+FixMinus(r11)+")("+ FixCoeff(r22) +"x "+FixMinus(r21)+")");
 			}
 		}
 	}
 	return ans;	
 	}
 
-    message.channel.send(`Question: ${QToString()}\nAnswer: ${AnsToString(diff)}`)
+    message.channel.send(`Question: ${QToString()}\nAnswer: || ${AnsToString(diff)} ||`)
 }

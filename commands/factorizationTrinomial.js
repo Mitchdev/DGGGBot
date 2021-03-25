@@ -1,16 +1,16 @@
 exports.name = ['trinomial']
 exports.permission = 'none'
 exports.handler = function(message) {
-	let a,b,c,r11,r12,r21,r22; 
-	let r1,r2;
-	var diff = message.content.replace('!trinomial ', '');
-	if (diff == 'easy' || diff == 'medium' || diff == 'hard') {
+    let a,b,c,r11,r12,r21,r22; 
+    let r1,r2;
+    var diff = message.content.replace('!trinomial ', '');
+	if (diff === 'easy' || diff === 'medium' || diff === 'hard') {
 		setDifficulty(diff)
-	} else {
-		return;
-	}
-
-	/*
+    } else {
+    	return;
+    }
+    
+    /*
 	 * Method to set the difficulty of the Factorization Trinomial(ax^2 +bx+c) object.
 	 * Setting the different difficulties does the following:  
 	 * </p>easy-sets the roots to be integers between in the range  [-10,10], and the a coefficient to 1<p>
@@ -18,7 +18,7 @@ exports.handler = function(message) {
 	 * </p>hard-sets the roots to be rational numbers between in the range  [-15,15]<p>
 	 * @param difficulty the difficulty of which the problem is set to, which can be easy, medium or hard 
 	 */
-	function setDifficulty(difficulty) {
+    function setDifficulty(difficulty) {
 		if(difficulty == 'easy') {
 			r11 = Math.ceil(Math.random()*20) -10;
 			r12 = 1;
@@ -70,22 +70,61 @@ exports.handler = function(message) {
 		}
 	}
 
-	function FixCoeff(x) {
-		return x == 1 ? '' : x.toString();
-	}
+    function FixCoeff(x) {
+        resultCof = "";
+        if(Math.abs(x)===1)
+        {
+            
+            if(x<0)
+            {
+                resultCof = "-";
+            }
+        }
+        else{
+            resultCof = x.toString();
+        }
+        return resultCof;
+    }
 
-	function FixMinus(x) {
-		return x < 0 ? `+ ${Math.abs(x).toString()}` : `- ${Math.abs(x).toString()}`;
-	}
+    function FixMinus(x) {
+    	return x < 0 ? `+ ${Math.abs(x).toString()}` : `- ${Math.abs(x).toString()}`;
+    }
 
-	/*Generates the factorisation question as string using generated values for a,b,c
+    function FixCoeffMinus(x)
+    {
+        resultCof = "+ ";
+        if(Math.abs(x)===1)
+        {     
+            if(x<0)
+            {
+                resultCof = "- ";
+            }
+        }   
+        else{
+
+            if(x<0)
+            {
+
+             resultCof = `+ ${Math.abs(x).toString()}`;
+
+            }
+            else
+            {
+
+             resultCof = `- ${Math.abs(x).toString()}`;
+
+            }
+        }
+        return resultCof
+    }
+    /*Generates the factorisation question as string using generated values for a,b,c
 	 * Returns the factorisation question in the form ax^2 + bx + c
 	 */
 	function QToString() {
-		return `${FixCoeff(a)}x^2 + ${FixCoeff(b)}x + ${FixCoeff(c)}`;
-	}
-	
-	/*Generates the factorisation answer as string using generated values for a,b,c dependent on the difficulty
+		return `${FixCoeff(a)}x^2 ${FixCoeffMinus(b)}x ${FixCoeffMinus(c)}`;
+    }
+    
+    /*Generates the factorisation answer as string using generated values for a,b,c dependent on the difficulty
 	 *@return Returns the factorisation answer in the form (mx-r1)(nx-r2) dependent on the difficulty
 	 */
 	function AnsToString(diff)  {
@@ -100,5 +139,5 @@ exports.handler = function(message) {
 		return ans;	
 	}
 
-	message.channel.send(`Question: ${QToString()}\nAnswer: ||${AnsToString(diff)}||`);
+    message.channel.send(`Question: ${QToString()}\nAnswer: ||${AnsToString(diff)}||`);
 }

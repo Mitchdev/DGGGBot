@@ -5,8 +5,10 @@ exports.handler = function(message) {
     let a,b,c,r11,r12,r21,r22; 
     let r1,r2;
     var diff = message.content.replace('!trinomial ', '');
-	if (diff != '') {
+	if (diff === 'easy' || diff === 'medium' || diff === 'hard') {
 		setDifficulty(diff)
+    } else {
+    	return;
     }
     
     /*
@@ -119,7 +121,5 @@ exports.handler = function(message) {
 	return ans;	
 	}
 
-    message.channel.send(`Question: ${QToString()} \n Answer: ${AnsToString(diff)} `)
-
-
+    message.channel.send(`Question: ${QToString()}\nAnswer: ${AnsToString(diff)}`)
 }

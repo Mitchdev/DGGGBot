@@ -89,7 +89,7 @@ exports.handler = function(message) {
 		if(Math.abs(x) == 1) {
 			if(x < 0) resultCof = '- ';
 		} else{
-			resultCof = `${x < 0 ? '+' : '-'} ${Math.abs(x).toString()}`;
+			resultCof = `${x > 0 ? '+ ' : '- '} ${Math.abs(x).toString()}`;
 		}
 		return resultCof
 	}

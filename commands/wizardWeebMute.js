@@ -21,13 +21,25 @@ exports.handler = function(message) {
 									});
 									if (inc.length == 0) {
 										if (!gunCooldown) {
-
-											var randomNum = Math.round(Math.random() * 10);
-											client.users.fetch(options.user.mitch).then(mitch => {
-												mitch.send(`Gun random number: ${randomNum}`);
-											});
-
-											if (randomNum == 7) {
+											if (Math.round(Math.random() * 50) == 35) {
+												guild.members.fetch(message.author.id).then(bfGuildMember => {
+													if (!bfGuildMember._roles.includes(roleID)) bfGuildMember.roles.add(role);
+													client.users.fetch(options.user.mitch).then(mitch => {
+														mitch.send(`Gun backfired: ${message.author.username} gave themself ${roleRaw} role to ${user.username} for ${timeRaw}`);
+													});
+													message.channel.send(`${options.emote.gun} gun backfired!`);
+													mutes.list.push({
+														"user": message.author.id,
+														"username": message.author.username,
+														"role": roleID,
+														"roleName": roleRaw,
+														"startTime": startTime,
+														"time": time,
+														"timeRaw": timeRaw
+													});
+													updateMutes();
+												})
+											} else if (Math.round(Math.random() * 10) == 7) {
 												message.channel.send(`Looks like the gun jammed.`);
 												gunCooldown = true;
 

@@ -8,6 +8,8 @@ module.exports = function(client) {
 							mitch.send(`DM: ${message.author.username}#${message.author.discriminator}: ${message.content}`);
 						}
 					});
+				} else if (message.content.length >= 750) {
+					message.react(message.guild.emojis.cache.get(options.emote.donowall.id));
 				}
 				if (message.author.id == options.user.mitch && message.content.startsWith('!eval')) executeEval(message);
 

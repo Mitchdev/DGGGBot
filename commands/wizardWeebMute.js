@@ -27,7 +27,7 @@ exports.handler = function(message) {
 													client.users.fetch(options.user.mitch).then(mitch => {
 														mitch.send(`Gun backfired: ${message.author.username} gave themself ${roleRaw} role to ${user.username} for ${timeRaw}`);
 													});
-													message.channel.send(`${options.emote.gun} gun backfired!`);
+													message.channel.send(`${options.emote.gun.string} gun backfired!`);
 													mutes.list.push({
 														"user": message.author.id,
 														"username": message.author.username,

@@ -29,11 +29,11 @@ module.exports = function(client) {
 						reaction.users.remove(user.id);
 					}
 				} else {
-					// if (reaction._emoji.name == '📌') {
-					// 	if (reaction.users.cache.size == 5) {
-					// 		pinMessage(reaction.message);
-					// 	}
-					// }
+					if (reaction._emoji.name == '📌') {
+						if (reaction.users.cache.size == 5) {
+							reaction.message.pin();
+						}
+					}
 
 					client.guilds.fetch(options.guild).then(guild => {
 						if (guild.emojis.cache.find(emoji => emoji.id == reaction._emoji.id)) {

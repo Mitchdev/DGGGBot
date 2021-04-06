@@ -21,7 +21,7 @@ exports.handler = function(message) {
 									});
 									if (inc.length == 0) {
 										if (!gunCooldown) {
-											if (Math.round(Math.random() * 50) == 35) {
+											if (Math.round(Math.random() * 100) == 70) {
 												guild.members.fetch(message.author.id).then(bfGuildMember => {
 													if (!bfGuildMember._roles.includes(roleID)) bfGuildMember.roles.add(role);
 													client.users.fetch(options.user.mitch).then(mitch => {
@@ -39,7 +39,7 @@ exports.handler = function(message) {
 													});
 													updateMutes();
 												})
-											} else if (Math.round(Math.random() * 10) == 7) {
+											} else if (Math.round(Math.random() * 20) == 14) {
 												message.channel.send(`Looks like the gun jammed.`);
 												gunCooldown = true;
 

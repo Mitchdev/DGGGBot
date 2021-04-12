@@ -24,9 +24,10 @@ module.exports = function(client) {
 									if (guild.emojis.cache.find(emoji => emoji.id == e[1])) {
 										if (emotesUse.emotes[e[1]]) {
 											emotesUse.emotes[e[1]].uses++;
+											emotesUse.emotes[e[1]].newUses++;
 											updateEmoteUse();
 										} else {
-											emotesUse.emotes[e[1]] = {"id": e[1], "uses": 1}
+											emotesUse.emotes[e[1]] = {"id": e[1], "uses": 1, "newUses": 1}
 											updateEmoteUse();
 										}
 										addedIDs[e[1]].count++;
@@ -36,9 +37,10 @@ module.exports = function(client) {
 								if (guild.emojis.cache.find(emoji => emoji.id == e[1])) {
 									if (emotesUse.emotes[e[1]]) {
 										emotesUse.emotes[e[1]].uses++;
+										emotesUse.emotes[e[1]].newUses++;
 										updateEmoteUse();
 									} else {
-										emotesUse.emotes[e[1]] = {"id": e[1], "uses": 1}
+										emotesUse.emotes[e[1]] = {"id": e[1], "uses": 1, "newUses": 1}
 										updateEmoteUse();
 									}
 									addedIDs[e[1]] = {"count": 1}

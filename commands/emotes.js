@@ -6,7 +6,7 @@ exports.handler = function(message) {
 		guild.emojis.cache.each(emoji => {
 			if (!emoji.animated) {
 				if (emotesUse.emotes[emoji.id]) {
-					e.push({"name": emoji.name, "id": emoji.id, "count": emotesUse.emotes[emoji.id].uses});
+					e.push({"name": emoji.name, "id": emoji.id, "count": message.content.toLowerCase().replace('!emotes', '').includes('total') ? emotesUse.emotes[emoji.id].uses : emotesUse.emotes[emoji.id].newUses});
 				} else {
 					e.push({"name": emoji.name, "id": emoji.id, "count": 0});
 				}
@@ -27,15 +27,25 @@ exports.handler = function(message) {
 			}
 		}
 
-		console.log(combined)
+		for (var i = 0; i < combined.length; i++) {
+			if (combined[i].length > 10) {
+				combined[i] = [{"emotes": combined[i].length, "count": combined[i][0].count}];
+			}
+		}
 
-		var difference = (new Date().getTime() - new Date(emotesUse.started).getTime()) / 1000;
-		if (message.content.toLowerCase().replace('!emotes', '') == ' all') {
-			message.channel.send('Emote usage since '+secondsToDhms(parseInt(difference))+'ago ('+new Date(emotesUse.started).toUTCString()+')\n'+combined.map(l => {
+		//console.log(combined);
+
+		var difference = (new Date().getTime() - new Date(message.content.toLowerCase().replace('!emotes', '').includes('total') ? emotesUse.started : emotesUse.newStarted).getTime()) / 1000;
+		if (message.content.toLowerCase().replace('!emotes', '').includes('all')) {
+			message.channel.send('Emote usage since '+secondsToDhms(parseInt(difference))+'ago ('+new Date(message.content.toLowerCase().replace('!emotes', '').includes('total') ? emotesUse.started : emotesUse.newStarted).toUTCString()+')\n'+combined.map(l => {
 				if (l) {
-					return l[0].count + ' - ' + l.map(em => {
-						return '<:' + em.name + ':' + em.id + '>';
-					}).join('')
+					if (l[0].emotes) {
+						return l[0].count + ' - ' + l[0].emotes + ' emotes';
+					} else {
+						return l[0].count + ' - ' + l.map(em => {
+							return '<:' + em.name + ':' + em.id + '>';
+						}).join('')
+					}
 				} else {
 					return;
 				}
@@ -43,19 +53,27 @@ exports.handler = function(message) {
 		} else {
 			var top5 = [combined[0], combined[1], combined[2], combined[3], combined[4]];
 			var bottom5 = [combined[combined.length-1], combined[combined.length-2], combined[combined.length-3], combined[combined.length-4], combined[combined.length-5]];
-			message.channel.send('Emote usage since '+secondsToDhms(parseInt(difference))+'ago ('+new Date(emotesUse.started).toUTCString()+')\n**Most used**\n'+top5.map(l => {
+			message.channel.send('Emote usage since '+secondsToDhms(parseInt(difference))+'ago ('+new Date(message.content.toLowerCase().replace('!emotes', '').includes('total') ? emotesUse.started : emotesUse.newStarted).toUTCString()+')\n**Most used**\n'+top5.map(l => {
 				if (l) {
-					return l[0].count + ' - ' + l.map(em => {
-						return '<:' + em.name + ':' + em.id + '>';
-					}).join('')
+					if (l[0].emotes) {
+						return l[0].count + ' - ' + l[0].emotes + ' emotes';
+					} else {
+						return l[0].count + ' - ' + l.map(em => {
+							return '<:' + em.name + ':' + em.id + '>';
+						}).join('')
+					}
 				} else {
 					return;
 				}
 			}).join('\n') + '\n\n**Least used**\n' + bottom5.map(l => {
 				if (l) {
-					return l[0].count + ' - ' + l.map(em => {
-						return '<:' + em.name + ':' + em.id + '>';
-					}).join('')
+					if (l[0].emotes) {
+						return l[0].count + ' - ' + l[0].emotes + ' emotes';
+					} else {
+						return l[0].count + ' - ' + l.map(em => {
+							return '<:' + em.name + ':' + em.id + '>';
+						}).join('')
+					}
 				} else {
 					return;
 				}

@@ -39,9 +39,10 @@ module.exports = function(client) {
 						if (guild.emojis.cache.find(emoji => emoji.id == reaction._emoji.id)) {
 							if (emotesUse.emotes[reaction._emoji.id]) {
 								emotesUse.emotes[reaction._emoji.id].uses++;
+								emotesUse.emotes[reaction._emoji.id].newUses++;
 								updateEmoteUse();
 							} else {
-								emotesUse.emotes[reaction._emoji.id] = {"id": reaction._emoji.id, "uses": 1}
+								emotesUse.emotes[reaction._emoji.id] = {"id": reaction._emoji.id, "uses": 1, "newUses": 1}
 								updateEmoteUse();
 							}
 						}

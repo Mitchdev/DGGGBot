@@ -2,9 +2,16 @@ exports.name = ['emotes']
 exports.permission = 'none'
 exports.handler = function(message) {
 	client.guilds.fetch(options.guild).then(guild => {
+		
 		var e = [];
+		var combined = [];
+		var total = 0;
+		var size = 0;
+
 		guild.emojis.cache.each(emoji => {
 			if (!emoji.animated) {
+				total += parseInt(`<:${emoji.name}:${emoji.id}>`.length);
+				size++;
 				if (emotesUse.emotes[emoji.id]) {
 					e.push({"name": emoji.name, "id": emoji.id, "count": message.content.toLowerCase().replace('!emotes', '').includes('total') ? emotesUse.emotes[emoji.id].uses : emotesUse.emotes[emoji.id].newUses});
 				} else {
@@ -12,9 +19,9 @@ exports.handler = function(message) {
 				}
 			}
 		});
+
 		e.sort((a, b) => a.count-b.count);
 
-		var combined = [];
 		for (var i = 0; i < e.length; i++) {
 			if (i == 0) {
 				combined.unshift([e[i]]);
@@ -28,12 +35,10 @@ exports.handler = function(message) {
 		}
 
 		for (var i = 0; i < combined.length; i++) {
-			if (combined[i].length > 10) {
+			if (combined[i].length > Math.round(1950/(total/size))) {
 				combined[i] = [{"emotes": combined[i].length, "count": combined[i][0].count}];
 			}
 		}
-
-		//console.log(combined);
 
 		var difference = (new Date().getTime() - new Date(message.content.toLowerCase().replace('!emotes', '').includes('total') ? emotesUse.started : emotesUse.newStarted).getTime()) / 1000;
 		if (message.content.toLowerCase().replace('!emotes', '').includes('all')) {

@@ -54,6 +54,10 @@
 		"time": {
 			"url": "https://timezone.abstractapi.com/v1/current_time?api_key=",
 			"auth": ""
+		},
+		"currency": {
+			"url": "https://currencyapi.net/api/v1/rates?key=",
+			"auth": ""
 		}
 	},
 	"voteReactions": [

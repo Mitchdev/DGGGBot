@@ -91,6 +91,7 @@ exports.handler = function(message) {
 					} else {
 						guild.roles.fetch(roleID).then(role => {
 							if (!member._roles.includes(roleID)) {
+								let startTime = new Date();
 								member.roles.add(role);
 								message.channel.send(`${message.author.username} wasn't trained in gun safety and killed himself ${options.emote.sadge.string} (2m)`);
 								mutes.list.push({

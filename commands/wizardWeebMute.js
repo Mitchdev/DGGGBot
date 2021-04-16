@@ -90,18 +90,20 @@ exports.handler = function(message) {
 						}
 					} else {
 						guild.roles.fetch(roleID).then(role => {
-							if (!member._roles.includes(roleID)) member.roles.add(role);
-							message.channel.send(`${message.author.username} wasn't trained in gun safety and killed himself ${options.emote.sadge.string}`);
-							mutes.list.push({
-								"user": message.author.id,
-								"username": message.author.username,
-								"role": roleID,
-								"roleName": roleRaw,
-								"startTime": startTime,
-								"time": 300,
-								"timeRaw": "5m"
-							});
-							updateMutes();
+							if (!member._roles.includes(roleID)) {
+								member.roles.add(role);
+								message.channel.send(`${message.author.username} wasn't trained in gun safety and killed himself ${options.emote.sadge.string} (2m)`);
+								mutes.list.push({
+									"user": message.author.id,
+									"username": message.author.username,
+									"role": roleID,
+									"roleName": roleRaw,
+									"startTime": startTime,
+									"time": 120,
+									"timeRaw": "2m"
+								});
+								updateMutes();
+							}
 						}).catch(console.error);
 					}
 				});

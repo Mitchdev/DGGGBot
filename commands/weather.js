@@ -18,9 +18,9 @@ exports.handler = function(message) {
 					var sunset = data.sys.sunset - data.dt;
 					if (sunrise <= 5 && sunrise >= -5) sunText = `\n☀️ Sun is rising now`;
 					else if (sunset <= 5 && sunset >= -5) sunText = `\n☀️ Sun is setting now`;
-					else if (sunrise >= 0) sunText = `\n☀️ Sun is rising in ${secondsToHMS(sunrise)}`;
-					else if (sunset >= 0) sunText = `\n☀️ Sun is setting in ${secondsToHMS(sunset)}`;
-					else sunText = `\n☀️ Sunset ${secondsToHMS(Math.abs(sunset))} ago`;
+					else if (sunrise >= 0) sunText = `\n☀️ Sun is rising in ${secondsToDhms(sunrise)}`;
+					else if (sunset >= 0) sunText = `\n☀️ Sun is setting in ${secondsToDhms(sunset)}`;
+					else sunText = `\n☀️ Sunset ${secondsToDhms(Math.abs(sunset))} ago`;
 
 					if (data.rain) rainText = `\n🌧️ ${data.rain["1h"]}mm of rain in the last hour`;
 					if (data.snow) snowText = `\n🌨️ ${data.snow["1h"]}mm of snow in the last hour`;
@@ -49,17 +49,6 @@ exports.handler = function(message) {
 				} else if (data.cod == 404) message.channel.send(`Could not find ${location}`);
 			}
 		});
-	}
-
-	function secondsToHMS(seconds) {
-		seconds = Number(seconds);
-		var h = Math.floor(seconds % (3600*24) / 3600);
-		var m = Math.floor(seconds % 3600 / 60);
-		var s = Math.floor(seconds % 60);
-		var hDisplay = h > 0 ? h + "h " : "";
-		var mDisplay = m > 0 ? m + "m " : "";
-		var sDisplay = s > 0 ? s + "s" : "";
-		return hDisplay + mDisplay + sDisplay;
 	}
 
 	function getCardinalDirection(deg) {

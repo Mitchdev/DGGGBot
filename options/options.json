@@ -60,6 +60,10 @@
 			"url": "https://timezone.abstractapi.com/v1/current_time?api_key=",
 			"auth": ""
 		},
+		"weather": {
+			"url": "https://api.openweathermap.org/data/2.5/weather?units=metric&q=",
+			"auth": ""
+		},
 		"currency": {
 			"url": "https://currencyapi.net/api/v1/rates?key=",
 			"auth": ""

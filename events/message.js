@@ -49,49 +49,7 @@ module.exports = function(client) {
 						}
 					})
 				}
-
-				// if (message.content.toLowerCase().includes('nigger') || message.content.toLowerCase().includes('nigga')) {
-				// 	client.guilds.fetch(options.guild).then(guild => {
-				// 		guild.members.fetch(message.author.id).then(guildMember => {
-				// 			guild.roles.fetch(options.role.wizard).then(role => {
-				// 				if (!guildMember._roles.includes(options.role.wizard)) {
-				// 					guildMember.roles.add(role);
-				// 					client.users.fetch(options.user.mitch).then(mitch => {
-				// 						mitch.send(`Added wizard role to ${message.author.username} for their message:\n${message.content}\n`);
-				// 					});
-				// 					message.channel.send(options.emote.tony.string);
-				// 					mutes.list.push({
-				// 						"user": message.author.id,
-				// 						"username": message.author.username,
-				// 						"role": options.role.wizard,
-				// 						"roleName": 'Wizard',
-				// 						"startTime": new Date(),
-				// 						"time": 86400,
-				// 						"timeRaw": '1d'
-				// 					});
-				// 					updateMutes();
-				// 				} else {
-				// 					var inc = mutes.list.filter(m => {return m.user == message.author.id && m.role == options.role.wizard});
-				// 					if (inc.length > 0) {
-				// 						mutes.list = mutes.list.filter(m => {return (m.user != message.author.id) || (m.role != options.role.wizard)});
-				// 						message.channel.send(options.emote.tony.string);
-				// 						mutes.list.push({
-				// 							"user": message.author.id,
-				// 							"username": message.author.username,
-				// 							"role": options.role.wizard,
-				// 							"roleName": 'Wizard',
-				// 							"startTime": inc[0].startTime,
-				// 							"time": inc[0].time+86400,
-				// 							"timeRaw": parseInt(inc[0].timeRaw.replace('d', ''))+1 + 'd'
-				// 						});
-				// 						updateMutes();
-				// 					}
-				// 				}
-				// 			}).catch(console.error);
-				// 		}).catch(console.error);
-				// 	}).catch(console.error);
-				// }
-
+				
 				for (var i = 0; i < options.weebPhrases.length; i++) {
 					if (new RegExp("(<=\\s|\\b|\:)"+ options.weebPhrases[i] +"(?=[]\\b|\\s|$|\:)").test(message.content.toLowerCase())) {
 						client.guilds.fetch(options.guild).then(guild => {
@@ -99,9 +57,6 @@ module.exports = function(client) {
 								guild.roles.fetch(options.role.weeb).then(role => {
 									if (!guildMember._roles.includes(options.role.weeb)) {
 										guildMember.roles.add(role);
-										client.users.fetch(options.user.mitch).then(mitch => {
-											mitch.send(`Added shit weeb role to ${message.author.username} for their message:\n${message.content}\n`);
-										});
 										message.channel.send(options.emote.weird.string);
 										mutes.list.push({
 											"user": message.author.id,
@@ -118,9 +73,6 @@ module.exports = function(client) {
 											if (!guildMember._roles.includes(options.role.weebleader)) {
 												weebLeader.members.each(member => member.roles.remove(weebLeader));
 												guildMember.roles.add(weebLeader);
-												client.users.fetch(options.user.mitch).then(mitch => {
-													mitch.send(`Added weeb leader role to ${message.author.username} for their message:\n${message.content}\n`);
-												});
 												message.channel.send(options.emote.weird.string);
 											}
 										})

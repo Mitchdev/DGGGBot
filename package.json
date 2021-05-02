@@ -1,0 +1,30 @@
+{
+  "name": "DGGGBot",
+  "version": "1.0.0",
+  "description": "Discord Bot for the dgg gaming community",
+  "main": "bot.js",
+  "scripts": {
+    "test": "node bot.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mitchdev/DGGGBot.git"
+  },
+  "author": "Mitchdev",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Mitchdev/DGGGBot/issues"
+  },
+  "homepage": "https://github.com/Mitchdev/DGGGBot#readme",
+  "devDependencies": {
+    "eslint": "^7.25.0",
+    "eslint-config-google": "^0.14.0"
+  },
+  "dependencies": {
+    "discord.js": "^12.5.3",
+    "fs": "0.0.1-security",
+    "path": "^0.12.7",
+    "request": "^2.88.2",
+    "require-reload": "^0.2.2"
+  }
+}

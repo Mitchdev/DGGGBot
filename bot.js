@@ -6,7 +6,7 @@ var config = require('./options/options.json');
 var commands = [];
 
 client.on('ready', () => {
-	config["disabled"] = false;
+	config['disabled'] = false;
 
     require('./globals')({client: client, config: config, commands: commands});
     require('./init')(commands);

@@ -8,7 +8,11 @@ exports.handler = function(message) {
 				var time = JSON.parse(res);
 				var hours = (new Date(time.datetime).getHours() < 10) ? '0' + new Date(time.datetime).getHours() : new Date(time.datetime).getHours();
 				var minutes = (new Date(time.datetime).getMinutes() < 10) ? '0' + new Date(time.datetime).getMinutes() : new Date(time.datetime).getMinutes();
-				message.channel.send(`**${location}${time.timezone_name ? ` | ${time.timezone_name}` : ''}${time.timezone_location ? ` | ${time.timezone_location}`:''}${time.timezone_abbreviation ? ` | (${time.timezone_abbreviation})` : ''}${time.gmt_offset ? ` | (GMT${time.gmt_offset >= 0 ? `+${time.gmt_offset}`: time.gmt_offset})` : ''}**\n${hours}:${minutes}`);
+				if (isNaN(hours) || isNaN(minutes)) {
+					message.channel.send(`Could not find ${location}`);
+				} else {
+					message.channel.send(`**${location}${time.timezone_name ? ` | ${time.timezone_name}` : ''}${time.timezone_location ? ` | ${time.timezone_location}`:''}${time.timezone_abbreviation ? ` | (${time.timezone_abbreviation})` : ''}${time.gmt_offset ? ` | (GMT${time.gmt_offset >= 0 ? `+${time.gmt_offset}`: time.gmt_offset})` : ''}**\n${hours}:${minutes}`);
+				}
 			}
 		});
 	}

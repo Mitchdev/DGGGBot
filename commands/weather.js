@@ -20,7 +20,7 @@ exports.handler = function(message) {
 					else if (sunset <= 5 && sunset >= -5) sunText = `\n☀️ Sun is setting now`;
 					else if (sunrise >= 0) sunText = `\n☀️ Sun is rising in ${secondsToDhms(sunrise)}`;
 					else if (sunset >= 0) sunText = `\n☀️ Sun is setting in ${secondsToDhms(sunset)}`;
-					else sunText = `\n☀️ Sunset ${secondsToDhms(Math.abs(sunset))} ago`;
+					else sunText = `\n☀️ Sunset ${secondsToDhms(Math.abs(sunset))}ago`;
 
 					if (data.rain) rainText = `\n🌧️ ${data.rain["1h"]}mm of rain in the last hour`;
 					if (data.snow) snowText = `\n🌨️ ${data.snow["1h"]}mm of snow in the last hour`;

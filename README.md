@@ -16,6 +16,7 @@ ___
 
 | Command    | Arguments                                               | Description                                         | Example               |
 |------------|---------------------------------------------------------|-----------------------------------------------------|-----------------------|
+| !commands  |                                                         | Links to this readme                                | !commands             |
 | !info      |                                                         | Shows uptime & ping                                 | !info                 |
 | !list      |                                                         | Shows list of temporarily roled users               | !list                 |
 | !shame     |                                                         | Shows list of indefinitely roled users              | !shame                |

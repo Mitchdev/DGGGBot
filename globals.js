@@ -1,5 +1,6 @@
 module.exports = function(conf) {
 	fs = require('fs');
+	os = require('os');
 	request = require('request');
 	dpath = require('path');
 	reload = require('require-reload')(require);

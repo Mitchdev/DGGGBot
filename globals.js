@@ -7,6 +7,7 @@ module.exports = function(conf) {
 
 	currentVoteID = null;
 	voteValidReactions = [];
+	inviteList = [];
 	gunCooldown = false;
 	timedout = false;
 

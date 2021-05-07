@@ -24,6 +24,12 @@ client.on('ready', () => {
 	});
 
 	client.guilds.fetch(options.guild).then(guild => {
+		guild.fetchInvites().then(invites => {
+			invites.each(invite => {
+				inviteList.push(invite);
+			});
+		});
+
 		setInterval(function() {
 			for (var i = 0; i < mutes.list.length; i++) {
 				checkRemoveTag(guild, mutes.list[i]);

@@ -1,5 +1,15 @@
 exports.name = ['trinomial']
 exports.permission = 'none'
+exports.slash = {
+    name: 'trinomial',
+    description: 'Gives a factorisation trinomial question and answer',
+    options: [{
+        name: 'difficulty',
+        type: 'STRING',
+        description: 'easy/medium/hard',
+        required: true
+    }]
+}
 exports.handler = function(message) {
 	let a,b,c,r11,r12,r21,r22; 
 	let r1,r2;
@@ -116,5 +126,10 @@ exports.handler = function(message) {
 		return ans;	
 	}
 
-	message.channel.send(`Question: ${QToString()}\nAnswer: ||${AnsToString(diff)}||`);
+    var content = `Question: ${QToString()}\nAnswer: ||${AnsToString(diff)}||`;
+    if (message.interaction) {
+        message.interaction.editReply(content);
+    } else {
+        message.channel.send(content);
+    }
 }

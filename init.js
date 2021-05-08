@@ -2,15 +2,20 @@ module.exports = function(commands) {
     loadCommands = function(client) {
         commands = [];
         try {
-            var dir = dpath.resolve(__dirname, './commands') + '/';
-            fs.readdirSync(dir).forEach(function (file) {
-                if (file.indexOf(".js") > -1) {
-                    var command = reload(dir + file);
-                    commands.push(command);
-                }
+            client.guilds.fetch(options.guild).then(guild => {
+                var dir = dpath.resolve(__dirname, './commands') + '/';
+                fs.readdirSync(dir).forEach(function (file) {
+                    if (file.indexOf(".js") > -1) {
+                        var command = reload(dir + file);
+                        commands.push(command);
+                        if (command.slash) {
+                            guild.commands.create(command.slash);
+                        }
+                    }
+                });
+                reloadGlobals(client);
+                console.log("[INIT] " + commands.length + " Commands loaded...");
             });
-            reloadGlobals(client);
-            console.log("[INIT] " + commands.length + " Commands loaded...");
         } catch (e) {
             console.error('Unable to load command: ', e.stack);
         }

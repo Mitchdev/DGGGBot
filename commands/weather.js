@@ -1,5 +1,15 @@
 exports.name = ['weather']
 exports.permission = 'none'
+exports.slash = {
+    name: 'weather',
+    description: 'Gets weather from a location',
+    options: [{
+        name: 'location',
+        type: 'STRING',
+        description: 'Location to get weather from',
+        required: true
+    }]
+}
 exports.handler = function(message) {
 	var location = message.content.replace('!weather ', '');
 	if (location != '') {
@@ -45,7 +55,12 @@ exports.handler = function(message) {
 						if (data.main.pressure) tempText += `\n**Pressure** ${data.main.pressure}hPa`;
 					}
 
-					message.channel.send(`${data.name}, ${data.sys.country} Has ${data.weather[0].description}\n${tempText}\n${sunText}${rainText}${snowText}${cloudText}${windText}`);
+                    var content = `${data.name}, ${data.sys.country} Has ${data.weather[0].description}\n${tempText}\n${sunText}${rainText}${snowText}${cloudText}${windText}`;
+                    if (message.interaction) {
+                        message.interaction.editReply(content);
+                    } else {
+                        message.channel.send(content);
+                    }
 				} else if (data.cod == 404) message.channel.send(`Could not find ${location}`);
 			}
 		});

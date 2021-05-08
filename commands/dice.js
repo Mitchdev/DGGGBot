@@ -1,6 +1,4 @@
 exports.name = ['r', 'roll']
-exports.hasRegex = true;
-exports.regex = /(\d+)(d)(\d+)/g;
 exports.permission = 'none'
 exports.handler = function(message) {
 	var diceMatch = /!(?:r )?(?:roll )?(\d+)(d)(\d+)/g.exec(message.content.toLowerCase());

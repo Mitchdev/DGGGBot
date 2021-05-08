@@ -3,33 +3,34 @@ A Discord bot for the dgg gaming discord community.
 
 ## Command References
 
-| Reference  | Meaning                                         |
-|------------|-------------------------------------------------|
-| {}         | Required                                        |
-| ()         | Optional                                        |
-| `argument` | literal (exactly what it shows)                 |
-| duration   | number followed by `d`,`h`,`m` or `s` (eg. 10m) |
+| Reference   | Meaning                                         |
+|-------------|-------------------------------------------------|
+| {}          | Required                                        |
+| ()          | Optional                                        |
+| `argument`  | literal (exactly what it shows)                 |
+| **command** | slash command available                         |
+| duration    | number followed by `d`,`h`,`m` or `s` (eg. 10m) |
 
 ___
 
 ## User Commands
 
-| Command    | Arguments                                               | Description                                         | Example               |
-|------------|---------------------------------------------------------|-----------------------------------------------------|-----------------------|
-| !commands  |                                                         | Links to this readme                                | !commands             |
-| !info      |                                                         | Shows uptime & ping                                 | !info                 |
-| !list      |                                                         | Shows list of temporarily roled users               | !list                 |
-| !shame     |                                                         | Shows list of indefinitely roled users              | !shame                |
-| !timeleft  | (@user)                                                 | Gets timeleft of a temporary role                   | !timeleft @Mitch      |
-| !emotes    | (`total`) (`all`)                                       | Shows emote usage                                   | !emotes total         |
-| !raw       | {message}                                               | Shows raw input of message (what bot sees)          | !raw @Mitch nice bot  |
-| !currency  | {ammount} {source currency} {target currency}           | Converts currency                                   | !currency 150 nzd usd |
-| !define    | {phrase}                                                | Gets definition of a phrase via urban dictionary    | !define New Zealand   |
-| !translate | {phrase}                                                | Translate a phrase into english                     | !translate Hej        |
-| !time      | {location}                                              | Gets the local time of a location                   | !time New Zealand     |
-| !weather   | {location}                                              | Gets weather from a location                        | !weather New Zealand  |
-| !roll !r   | {number}`d`{number} (`+`number) (`-`number) (`d`number) | Rolls a dice with optional modifiers                | !roll 1d6+2           |
-| !trinomial | {`easy`/`medium`/`hard`}                                | Gives a factorisation trinomial question and answer | !trinomial medium     |
+| Command        | Arguments                                               | Description                                         | Example               |
+|----------------|---------------------------------------------------------|-----------------------------------------------------|-----------------------|
+| **!commands**  |                                                         | Links to this readme                                | !commands             |
+| **!info**      |                                                         | Shows uptime & ping                                 | !info                 |
+| **!list**      |                                                         | Shows list of temporarily roled users               | !list                 |
+| **!shame**     |                                                         | Shows list of indefinitely roled users              | !shame                |
+| !timeleft      | (@user)                                                 | Gets timeleft of a temporary role                   | !timeleft @Mitch      |
+| !emotes        | (`total`) (`all`)                                       | Shows emote usage                                   | !emotes total         |
+| **!raw**       | {message}                                               | Shows raw input of message (what bot sees)          | !raw @Mitch nice bot  |
+| **!currency**  | {ammount} {source currency} {target currency}           | Converts currency                                   | !currency 150 nzd usd |
+| **!define**    | {phrase}                                                | Gets definition of a phrase via urban dictionary    | !define New Zealand   |
+| **!translate** | {phrase}                                                | Translate a phrase into english                     | !translate Hej        |
+| **!time**      | {location}                                              | Gets the local time of a location                   | !time New Zealand     |
+| **!weather**   | {location}                                              | Gets weather from a location                        | !weather New Zealand  |
+| !roll !r       | {number}`d`{number} (`+`number) (`-`number) (`d`number) | Rolls a dice with optional modifiers                | !roll 1d6+2           |
+| **!trinomial** | {`easy`/`medium`/`hard`}                                | Gives a factorisation trinomial question and answer | !trinomial medium     |
 
 ___
 

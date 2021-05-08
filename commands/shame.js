@@ -1,5 +1,9 @@
 exports.name = ['shame']
 exports.permission = 'none'
+exports.slash = {
+    name: 'shame',
+    description: 'Shows list of indefinitely roled users'
+}
 exports.handler = function(message) {
 	client.guilds.fetch(options.guild).then(guild => {
 		guild.roles.fetch(options.role.wizard).then(wizardRole => {
@@ -29,8 +33,12 @@ exports.handler = function(message) {
 							weebUsers.splice(weebUsers.indexOf(biggestWeebUsers[i]), 1);
 						}
 					}
-					message.channel.send((biggestWeebUsers.length > 0 ? '**Biggest Weeb' + (biggestWeebUsers.length > 1 ? 's' : '') + '**\n'+biggestWeebUsers.map(m=>{return m}).join(', ') + (weebUsers.length > 0 ? '\n' : '') : '') + (weebUsers.length > 0 ? '**Weeb' + (weebUsers.length > 1 ? 's' : '') + '**\n'+weebUsers.map(m=>{return m}).join(', ') + (wizardUsers.length > 0 ? '\n' : '') : '') + (wizardUsers.length > 0 ? '**Grand Wizard' + (wizardUsers.length > 1 ? 's' : '') + '**\n'+wizardUsers.map(m=>{return m}).join(', ') : ''));
-
+                    var content = (biggestWeebUsers.length > 0 ? '**Biggest Weeb' + (biggestWeebUsers.length > 1 ? 's' : '') + '**\n'+biggestWeebUsers.map(m=>{return m}).join(', ') + (weebUsers.length > 0 ? '\n' : '') : '') + (weebUsers.length > 0 ? '**Weeb' + (weebUsers.length > 1 ? 's' : '') + '**\n'+weebUsers.map(m=>{return m}).join(', ') + (wizardUsers.length > 0 ? '\n' : '') : '') + (wizardUsers.length > 0 ? '**Grand Wizard' + (wizardUsers.length > 1 ? 's' : '') + '**\n'+wizardUsers.map(m=>{return m}).join(', ') : '');
+                    if (message.interaction) {
+                        message.interaction.editReply(content);
+                    } else {
+                        message.channel.send(content);
+                    }
 				});
 			});
 		});

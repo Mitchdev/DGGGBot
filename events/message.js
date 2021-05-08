@@ -92,9 +92,6 @@ module.exports = function(client) {
 						for (i = 0; i < cmd.name.length; i++) {
 							if (!found) {
 								found = (possibleCommand == cmd.name[i]);
-								if (cmd.hasRegex && !found) {
-									found = cmd.regex.exec(possibleCommand);
-								}
 							}
 						}
 						return found;

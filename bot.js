@@ -1,6 +1,6 @@
-const Discord = require('discord.js');
+const { Client, Intents } = require('discord.js');
 const fs = require('fs');
-const client = new Discord.Client({'messageCacheMaxSize': 1000, 'fetchAllMembers': true});
+const client = new Client({'messageCacheMaxSize': 1000, 'fetchAllMembers': true, 'intents': [Intents.ALL]});
 
 var config = require('./options/options.json');
 var commands = [];
@@ -15,13 +15,7 @@ client.on('ready', () => {
     loadEvents(client);
     loadFunctions(client);
 
-	console.log('Online!');
-	
 	client.channels.resolve(options.channel.roles).messages.fetch(options.message.roles);
-
-	client.users.fetch(options.user.mitch).then(mitch => {
-		mitch.send(`Bot restarted!`);
-	});
 
 	client.guilds.fetch(options.guild).then(guild => {
 		guild.fetchInvites().then(invites => {
@@ -36,6 +30,9 @@ client.on('ready', () => {
 			}
 		}, 5000);
 	}).catch(console.error);
+
+	console.log('Online!');
+	client.users.fetch(options.user.mitch).then(mitch => {mitch.send(`Bot restarted!`)});
 });
 
 client.login(config.token);

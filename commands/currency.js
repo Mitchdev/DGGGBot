@@ -1,5 +1,25 @@
 exports.name = ['currency']
 exports.permission = 'none'
+exports.slash = {
+    name: 'currency',
+    description: 'Converts ammount from one currency to another',
+    options: [{
+        name: 'ammount',
+        type: 'STRING',
+        description: 'Ammount in source currency',
+        required: true
+    }, {
+        name: 'source',
+        type: 'STRING',
+        description: 'Source currency',
+        required: true
+    }, {
+        name: 'target',
+        type: 'STRING',
+        description: 'Target currency',
+        required: true
+    }]
+}
 exports.handler = function(message) {
 	var args = /(\d+)\s(\w\w\w)\s(\w\w\w)/g.exec(message.content.toUpperCase());
 	if (args) {
@@ -10,7 +30,12 @@ exports.handler = function(message) {
 					var USD = parseFloat(args[1]) / rates[args[2]];
 					var REQ = USD * rates[args[3]];
 
-					message.channel.send(`${Math.round(parseFloat(args[1]) * 100) / 100} ${args[2]} = ${Math.round(parseFloat(REQ) * 100) / 100} ${args[3]}`);
+                    var content = `${Math.round(parseFloat(args[1]) * 100) / 100} ${args[2]} = ${Math.round(parseFloat(REQ) * 100) / 100} ${args[3]}`;
+                    if (message.interaction) {
+                        message.interaction.editReply(content);
+                    } else {
+                        message.channel.send(content);
+                    }
 				}
 			}
 		});

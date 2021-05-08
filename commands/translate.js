@@ -1,8 +1,23 @@
 exports.name = ['translate']
 exports.permission = 'none'
+exports.slash = {
+    name: 'translate',
+    description: 'Translate a phrase into english',
+    options: [{
+        name: 'phrase',
+        type: 'STRING',
+        description: 'Phrase to be translated',
+        required: true
+    }]
+}
 exports.handler = function(message) {
 	if (message.content.toLowerCase().replace('!translate ', '') === 'andlin') {
-		message.channel.send(`**Svensk** - Language detection score: 777,777,777,777,777\n${message.content.replace('!translate ', '')}\n**English**\n🥺 0mar 😂 please mute me <:rustgarage:800754270550360104>`)
+        var content = `**Svensk** - Language detection score: 777,777,777,777,777\n${message.content.replace('!translate ', '')}\n**English**\n🥺 0mar 😂 please mute me <:rustgarage:800754270550360104>`;
+        if (message.interaction) {
+            message.interaction.editReply(content);
+        } else {
+            message.channel.send(content);
+        }
 	} else {
 		request({
 			method: 'POST',
@@ -23,7 +38,12 @@ exports.handler = function(message) {
 									if (fromLang) {
 										getLang(res[0].translations[0].to, true, function(toLang) {
 										 	if (toLang) {
-												message.channel.send(`**${fromLang}** - Language detection score: ${res[0].detectedLanguage.score}\n${message.content.replace('!translate ', '')}\n**${toLang}**\n${escapeHtml(res[0].translations[0].text, true)}`, {split: true});
+                                                var content = `**${fromLang}** - Language detection score: ${res[0].detectedLanguage.score}\n${message.content.replace('!translate ', '')}\n**${toLang}**\n${escapeHtml(res[0].translations[0].text, true)}`;
+                                                if (message.interaction) {
+                                                    message.interaction.editReply(content, {split: true});
+                                                } else {
+                                                    message.channel.send(content, {split: true});
+                                                }
 										 	} else {
 										 		client.users.fetch(options.user.mitch).then(mitch => {
 													mitch.send(`Language missing: ${res[0].translations[0].to}`);

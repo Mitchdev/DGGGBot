@@ -2,7 +2,7 @@ module.exports = function(client) {
 	reloadRolesMessage = function(message) {
 		var generalRoles = roles.list.filter(role => role.type == 'General');
 		var gamingRoles = roles.list.filter(role => role.type == 'Gaming');
-		var dndChannel = message.guild.channels.cache.find(c => c.id === options.channel.dnd);
+		var dndChannel = client.channels.cache.find(c => c.id === options.channel.dnd);
 		message.channel.messages.fetch(options.message.roles).then(msg => {
 			msg.edit("**Instructions**\n"+
 					 "React to this message to get a role and access to the channels.\n"+

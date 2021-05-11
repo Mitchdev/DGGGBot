@@ -33,7 +33,10 @@ exports.handler = function(message) {
 							weebUsers.splice(weebUsers.indexOf(biggestWeebUsers[i]), 1);
 						}
 					}
+                    
                     var content = (biggestWeebUsers.length > 0 ? '**Biggest Weeb' + (biggestWeebUsers.length > 1 ? 's' : '') + '**\n'+biggestWeebUsers.map(m=>{return m}).join(', ') + (weebUsers.length > 0 ? '\n' : '') : '') + (weebUsers.length > 0 ? '**Weeb' + (weebUsers.length > 1 ? 's' : '') + '**\n'+weebUsers.map(m=>{return m}).join(', ') + (wizardUsers.length > 0 ? '\n' : '') : '') + (wizardUsers.length > 0 ? '**Grand Wizard' + (wizardUsers.length > 1 ? 's' : '') + '**\n'+wizardUsers.map(m=>{return m}).join(', ') : '');
+                    if (content === ``) content = `Nobody is a weeb/wizard`
+                    
                     if (message.interaction) {
                         message.interaction.editReply(content);
                     } else {

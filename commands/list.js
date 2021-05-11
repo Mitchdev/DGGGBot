@@ -11,11 +11,12 @@ exports.handler = function(message) {
 		return (parseInt(b.time) - parseInt(differenceB))-(parseInt(a.time) - parseInt(differenceA));
 	});
 
-    var content = `${sorted.map(m => {
+    var content = (sorted.length > 0) ? `${sorted.map(m => {
 		var difference = (new Date().getTime() - new Date(m.startTime).getTime()) / 1000;
 		var time = (parseInt(m.time) - parseInt(difference) <= 0) ? 0 : parseInt(m.time) - parseInt(difference);
 		return `${m.username} is a ${m.roleName} until ${secondsToDhms(time)}`;
-	}).join('\n')}`;
+	}).join('\n')}` : `Nobody is a mute/weeb/wizard`;
+
     if (message.interaction) {
         message.interaction.editReply(content);
     } else {

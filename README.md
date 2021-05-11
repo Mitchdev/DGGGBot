@@ -36,16 +36,16 @@ ___
 
 ## Mod Commands
 
-| Command  | Arguments                                                                    | Description                                  | Example                                     |
-|----------|------------------------------------------------------------------------------|----------------------------------------------|---------------------------------------------|
-| !disable |                                                                              | Disables the bot if it's acting up           | !disable                                    |
-| !enable  |                                                                              | Enables the bot if disabled                  | !enable                                     |
-| !mute    | {@user} {duration}                                                           | Gives mentions user mute role for duration   | !mute @Andlin 1h                            |
-| !weeb    | {@user} {duration}                                                           | Gives mentions user weeb role for duration   | !weeb @Nezz 7d                              |
-| !wizard  | {@user} {duration}                                                           | Gives mentions user wizard role for duration | !wizard @Samekonge 10s                      |
-| !unmute  | {user id}                                                                    | Umutes a user from user id                   | !unmute 399186129288560651                  |
-| !vote    | {question`?`} {answer} `or` {answer} ... `or` (answer)                       | Starts a 30s vote                            | !vote Pineapple on pizza? Yes or No         |
-| ~~!pin~~ | ~~{message id}~~                                                             | ~~Pins message to pin channel~~              |~~!pin 816082245391089664~~                  |
-| !add     | {`gaming`/`general`} {name} {role id/@role} {:emoji:} (position in category) | Adds a role to the roles channel             | !add gaming AmongUs 773111468836519936 🔪 1 |
-| !remove  | {name}                                                                       | Removes a role from the roles channel        | !remove AmongUs                             |
-| !reload  |                                                                              | Reloads roles channel if bugged              | !reload                                     |
+| Command     | Arguments                                                                    | Description                                  | Example                                     |
+|-------------|------------------------------------------------------------------------------|----------------------------------------------|---------------------------------------------|
+| !disable    |                                                                              | Disables the bot if it's acting up           | !disable                                    |
+| !enable     |                                                                              | Enables the bot if disabled                  | !enable                                     |
+| !mute       | {@user} {duration}                                                           | Gives mentions user mute role for duration   | !mute @Andlin 1h                            |
+| !weeb       | {@user} {duration}                                                           | Gives mentions user weeb role for duration   | !weeb @Nezz 7d                              |
+| !wizard     | {@user} {duration}                                                           | Gives mentions user wizard role for duration | !wizard @Samekonge 10s                      |
+| !unmute     | {user id}                                                                    | Umutes a user from user id                   | !unmute 399186129288560651                  |
+| !vote       | {question`?`} {answer} `or` {answer} ... `or` (answer)                       | Starts a 30s vote                            | !vote Pineapple on pizza? Yes or No         |
+| ~~!pin~~    | ~~{message id}~~                                                             | ~~Pins message to pin channel~~              |~~!pin 816082245391089664~~                  |
+| !add        | {`gaming`/`general`} {name} {role id/@role} {:emoji:} (position in category) | Adds a role to the roles channel             | !add gaming AmongUs 773111468836519936 🔪 1 |
+| !remove     | {name}                                                                       | Removes a role from the roles channel        | !remove AmongUs                             |
+| **!reload** |                                                                              | Reloads roles channel if bugged              | !reload                                     |

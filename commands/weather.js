@@ -75,7 +75,7 @@ exports.handler = function(message) {
                                         else if (alertEnd > 5) alertTime = `started ${secondsToDhms(Math.abs(alertStart))}ago and ends in ${secondsToDhms(alertEnd)}`
                                         else alertTime = `ended ${secondsToDhms(Math.abs(alertEnd))}ago and lasted ${secondsToDhms(alertDuration)}`
 
-                                        return `**⚠️ ${capitalize(alert.event)} alert!** ${alertTime}\n${alert.description}`;
+                                        return `**⚠️ ${capitalize(alert.event)}** ${alertTime}\n${alert.description}`;
                                     }).join('\n')}\n\n`;
                                 }
                             }

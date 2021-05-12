@@ -39,7 +39,7 @@ exports.handler = function(message) {
 									if (fromLang) {
 										getLang(res[0].translations[0].to, true, function(toLang) {
 										 	if (toLang) {
-                                                var content = `**${fromLang}** - Language detection score: ${res[0].detectedLanguage.score}\n${message.content.replace('!translate ', '')}\n**${toLang}**\n${escapeHtml(res[0].translations[0].text, true)}`;
+                                                var content = `**${fromLang}** - Language confidence: ${parseFloat(res[0].detectedLanguage.score)*100}%\n${message.content.replace('!translate ', '')}\n**${toLang}**\n${escapeHtml(res[0].translations[0].text, true)}`;
                                                 if (message.interaction) {
                                                     message.interaction.editReply(content, {split: true});
                                                 } else {

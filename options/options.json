@@ -18,6 +18,10 @@
 			"string": "<:DonoWall:773295613558128671>",
 			"id": "773295613558128671"
 		},
+		"pause": {
+			"string": "<:PauseChamp:813350214927777832>",
+			"id": "813350214927777832"
+		},
 		"pogo": {
 			"string": "<:PogO:788598265951551548>",
 			"id": "788598265951551548"
@@ -60,8 +64,11 @@
 			"url": "https://timezone.abstractapi.com/v1/current_time?api_key=",
 			"auth": ""
 		},
+        "coordinates": {
+            "url": "https://geocode.xyz/"
+        },
 		"weather": {
-			"url": "https://api.openweathermap.org/data/2.5/weather?units=metric&q=",
+            "url": "https://api.openweathermap.org/data/2.5/onecall?units=metric&exclude=minutely&appid=",
 			"auth": ""
 		},
 		"currency": {

@@ -13,57 +13,102 @@ exports.slash = {
 exports.handler = function(message) {
 	var location = message.content.replace('!weather ', '');
 	if (location != '') {
-		request(options.api.weather.url + location + '&appid=' + options.api.weather.auth, function(err,req,res) {
-			if (!err) {
-				var data = JSON.parse(res);
-				if (data.cod == 200) {
-					var sunText = "";
-					var snowText = "";
-					var rainText = "";
-					var cloudText = "";
-					var windText = "";
-					var tempText = "";
+        request(options.api.coordinates.url + location + `?json=1`, (coordinatesErr, coordinatesReq, coordinatesRes) => {
+            if (!coordinatesErr) {
+                var coordinatesData = JSON.parse(coordinatesRes);
+                if (!coordinatesData.error) {
+                    request(options.api.weather.url + options.api.weather.auth + `&lat=${coordinatesData.latt}&lon=${coordinatesData.longt}`, (err, req, res) => {
+                        if (!err) {
+                            var data = JSON.parse(res);
+                            var sunText = "";
+                            var moonText = "";
+                            var rainText = "";
+                            var snowText = "";
+                            var windText = "";
+                            var alertsText = "";
 
-					var sunrise = data.sys.sunrise - data.dt;
-					var sunset = data.sys.sunset - data.dt;
-					if (sunrise <= 5 && sunrise >= -5) sunText = `\n☀️ Sun is rising now`;
-					else if (sunset <= 5 && sunset >= -5) sunText = `\n☀️ Sun is setting now`;
-					else if (sunrise >= 0) sunText = `\n☀️ Sun is rising in ${secondsToDhms(sunrise)}`;
-					else if (sunset >= 0) sunText = `\n☀️ Sun is setting in ${secondsToDhms(sunset)}`;
-					else sunText = `\n☀️ Sunset ${secondsToDhms(Math.abs(sunset))}ago`;
+                            var sunrise = data.daily[0].sunrise - data.current.dt;
+                            var sunset = data.daily[0].sunset - data.current.dt;
+                            if (sunrise <= 5 && sunrise >= -5) sunText = `\n☀️ Sun is rising now`;
+                            else if (sunset <= 5 && sunset >= -5) sunText = `\n☀️ Sun is setting now`;
+                            else if (sunrise >= 0) sunText = `\n☀️ Sun is rising in ${secondsToDhms(sunrise)}`;
+                            else if (sunset >= 0) sunText = `\n☀️ Sun is setting in ${secondsToDhms(sunset)}`;
+                            else sunText = `\n☀️ Sunset ${secondsToDhms(Math.abs(sunset))}ago`;
 
-					if (data.rain) rainText = `\n🌧️ ${data.rain["1h"]}mm of rain in the last hour`;
-					if (data.snow) snowText = `\n🌨️ ${data.snow["1h"]}mm of snow in the last hour`;
-					if (data.clouds) cloudText = `\n☁️ ${data.clouds.all}% Cloud cover`;
+                            if (data.daily[0].moon_phase > 0 && data.daily[0].moon_phase < 0.25) moonText = `\n🌒 Waxing crescent moon`;
+                            if (data.daily[0].moon_phase > 0.25 && data.daily[0].moon_phase < 0.5) moonText = `\n🌔 Waxing gibous moon`;
+                            if (data.daily[0].moon_phase > 0.5 && data.daily[0].moon_phase < 0.75) moonText = `\n🌖 Waning gibous moon`;
+                            if (data.daily[0].moon_phase > 0.75 && data.daily[0].moon_phase < 1) moonText = `\n🌘 Waning crescent moon`;
+                            if (data.daily[0].moon_phase == 0 || data.daily[0].moon_phase == 1) moonText = `\n🌑 New moon`;
+                            if (data.daily[0].moon_phase == 0.25) moonText = `\n🌓 First quarter moon`;
+                            if (data.daily[0].moon_phase == 0.5) moonText = `\n🌕 Full moon`;
+                            if (data.daily[0].moon_phase == 0.75) moonText = `\n🌗 Last quarter moon`;
 
-					if (data.wind) {
-						windText = `\n💨 ${(data.wind.speed*3.6).toFixed(2)}km/h ${getCardinalDirection(data.wind.deg)}`;
-						if (data.wind.gust) windText += ` with ${(data.wind.gust*3.6).toFixed(2)}km/h gusts`;
-					}
+                            var moonrise = data.daily[0].moonrise - data.current.dt;
+                            var moonset = data.daily[0].moonset - data.current.dt;
+                            if (moonrise <= 5 && moonrise >= -5) moonText += ` is rising now`;
+                            else if (moonset <= 5 && moonset >= -5) moonText += ` is setting now`;
+                            else if (moonrise >= 0) moonText += ` is rising in ${secondsToDhms(moonrise)}`;
+                            else if (moonset >= 0) moonText += ` is setting in ${secondsToDhms(moonset)}`;
+                            else moonText += `set ${secondsToDhms(Math.abs(moonset))}ago`;
 
-					if (data.main) {
-						tempText = `\n**Currently** ${data.main.temp}°C`;
-						if (data.main.feels_like) tempText += `\n**Feels like** ${data.main.feels_like}°C`;
-						if (data.main.temp_max) tempText += `\n**High** ${data.main.temp_max}°C`;
-						if (data.main.temp_min) tempText += `\n**Low** ${data.main.temp_min}°C`;
-						if (data.main.humidity) {
-							//Ts = (b(ln(RH/100) + aT/(b+T))) / (a - (ln(RH/100) + aT/(b+T)))
-							var Ts = (243.12*(Math.log(data.main.humidity/100) + 17.62*data.main.temp/(243.12+data.main.temp))) / (17.62 - (Math.log(data.main.humidity/100) + 17.62*data.main.temp/(243.12+data.main.temp)));
-							tempText += `\n**Dew point** ${Ts.toFixed(2)}°C`;
-							tempText += `\n**Humidity** ${data.main.humidity}%`;
-						}
-						if (data.main.pressure) tempText += `\n**Pressure** ${data.main.pressure}hPa`;
-					}
+                            if (data.hourly[0].rain) rainText = `\n🌧️ ${data.hourly[0].rain["1h"]}mm of rain`;
+                			if (data.hourly[0].snow) snowText = `\n🌨️ ${data.hourly[0].snow["1h"]}mm of snow`;
 
-                    var content = `${data.name}, ${data.sys.country} Has ${data.weather[0].description}\n${tempText}\n${sunText}${rainText}${snowText}${cloudText}${windText}`;
+                            windText = `\n💨 ${(data.hourly[0].wind_speed*3.6).toFixed(2)}km/h ${getCardinalDirection(data.hourly[0].wind_deg)}`;
+                            if (data.hourly[0].wind_gust) windText += ` with ${(data.hourly[0].wind_gust*3.6).toFixed(2)}km/h gusts`;
+
+                            if (data.alerts) {
+                                if (data.alerts.length > 0) {
+                                    alertsText = `${data.alerts.map(alert => {
+                                        var alertTime = "";
+                                        var alertStart = alert.start - data.current.dt;
+                                        var alertEnd = alert.end - data.current.dt;
+                                        var alertDuration = alert.end - alert.start;
+
+                                        if (alertStart > 5) alertTime = `starts in ${secondsToDhms(alertStart)}and lasts for ${secondsToDhms(alertDuration)}`
+                                        else if (alertEnd > 5) alertTime = `started ${secondsToDhms(Math.abs(alertStart))}ago and ends in ${secondsToDhms(alertEnd)}`
+                                        else alertTime = `ended ${secondsToDhms(Math.abs(alertEnd))}ago and lasted ${secondsToDhms(alertDuration)}`
+
+                                        return `**⚠️ ${capitalize(alert.event)} alert!** ${alertTime}\n${alert.description}`;
+                                    }).join('\n')}\n\n`;
+                                }
+                            }
+
+                            var content =   `${coordinatesData.standard.city}, ${coordinatesData.standard.countryname} has ${data.hourly[0].weather[0].description} (Location confidence: ${parseFloat(coordinatesData.standard.confidence)*100}%)\n\n`+
+                                            `${alertsText}`+
+                                            `**---- This Hour ----**\n`+
+                                            `**Currently** ${data.hourly[0].temp}°C\n`+
+                                            `**Feels like** ${data.hourly[0].feels_like}°C\n`+
+                                            `**Rain probability** ${data.hourly[0].pop*100}%\n`+
+                                            `${rainText}${snowText}`+
+                                            `\n☁️ ${data.hourly[0].clouds}% cloud cover`+
+                                            `${windText}${sunText}${moonText}\n\n`+
+                                            `**High** ${data.daily[0].temp.max}°C\n`+
+                                            `**Low** ${data.daily[0].temp.min}°C\n`+
+                                            `**Dew point** ${data.hourly[0].dew_point}°C\n`+
+                                            `**Humidity** ${data.hourly[0].humidity}%\n`+
+                                            `**Pressure** ${data.hourly[0].pressure}hPa\n`+
+                                            `**UV** ${data.hourly[0].uvi}\n`+
+                                            `**Visibility** ${data.hourly[0].visibility/1000}km\n`;
+
+                            if (message.interaction) {
+                                message.interaction.editReply(content);
+                            } else {
+                                message.channel.send(content);
+                            }
+
+                        }
+                    });
+                } else {
                     if (message.interaction) {
-                        message.interaction.editReply(content);
+                        message.interaction.editReply(`Could not find ${location}`);
                     } else {
-                        message.channel.send(content);
+                        message.channel.send(`Could not find ${location}`);
                     }
-				} else if (data.cod == 404) message.channel.send(`Could not find ${location}`);
-			}
-		});
+                }
+            }
+        });
 	}
 
 	function getCardinalDirection(deg) {

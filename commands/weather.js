@@ -13,10 +13,15 @@ exports.slash = {
 exports.handler = function(message) {
 	var location = message.content.replace('!weather ', '');
 	if (location != '') {
-        request(options.api.coordinates.url + location + `?json=1`, (coordinatesErr, coordinatesReq, coordinatesRes) => {
+        request({
+			method: 'POST',
+			url: options.api.coordinates.url,
+			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            body: `scantext=${location}&json=1`
+        }, (coordinatesErr, coordinatesReq, coordinatesRes) => {
             if (!coordinatesErr) {
                 var coordinatesData = JSON.parse(coordinatesRes);
-                if (!coordinatesData.error) {
+                if (coordinatesData.matches) {
                     request(options.api.weather.url + options.api.weather.auth + `&lat=${coordinatesData.latt}&lon=${coordinatesData.longt}`, (err, req, res) => {
                         if (!err) {
                             var data = JSON.parse(res);
@@ -75,7 +80,7 @@ exports.handler = function(message) {
                                 }
                             }
 
-                            var content =   `${coordinatesData.standard.city}, ${coordinatesData.standard.countryname} has ${data.hourly[0].weather[0].description} (Location confidence: ${parseFloat(coordinatesData.standard.confidence)*100}%)\n\n`+
+                            var content =   `${coordinatesData.match[0].location.replace(',', ', ')} has ${data.hourly[0].weather[0].description} (Location confidence: ${parseFloat(coordinatesData.match[0].confidence)*100}%)\n\n`+
                                             `${alertsText}`+
                                             `**---- This Hour ----**\n`+
                                             `**Currently** ${data.hourly[0].temp}°C\n`+

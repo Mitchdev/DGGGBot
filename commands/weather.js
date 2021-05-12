@@ -17,12 +17,12 @@ exports.handler = function(message) {
 			method: 'POST',
 			url: options.api.coordinates.url,
 			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-            body: `scantext=${location}&json=1`
+            body: `scantext=${location}&json=1&moreinfo=1&nostrict=1`
         }, (coordinatesErr, coordinatesReq, coordinatesRes) => {
             if (!coordinatesErr) {
                 var coordinatesData = JSON.parse(coordinatesRes);
                 if (coordinatesData.matches) {
-                    request(options.api.weather.url + options.api.weather.auth + `&lat=${coordinatesData.latt}&lon=${coordinatesData.longt}`, (err, req, res) => {
+                    request(options.api.weather.url + options.api.weather.auth + `&lat=${coordinatesData.match[0].latt}&lon=${coordinatesData.match[0].longt}`, (err, req, res) => {
                         if (!err) {
                             var data = JSON.parse(res);
                             var sunText = "";
@@ -80,7 +80,9 @@ exports.handler = function(message) {
                                 }
                             }
 
-                            var content =   `${coordinatesData.match[0].location.replace(',', ', ')} has ${data.hourly[0].weather[0].description} (Location confidence: ${parseFloat(coordinatesData.match[0].confidence)*100}%)\n\n`+
+                            var matchedLocation = coordinatesData.match[0].location.split(',');
+
+                            var content =   `${capitalize(matchedLocation[0].toLowerCase())}, ${matchedLocation[1]} has ${data.hourly[0].weather[0].description} (Location confidence: ${parseFloat(coordinatesData.match[0].confidence)*100}%)\n\n`+
                                             `${alertsText}`+
                                             `**---- This Hour ----**\n`+
                                             `**Currently** ${data.hourly[0].temp}°C\n`+

@@ -24,11 +24,7 @@ client.on('ready', () => {
 			});
 		});
 
-        for (var i = 0; i < feeds.list.length; i++) {
-            feedTimers[feeds.list[i].channel] = setTimeout(function() {
-                reloadFeed(feeds.list[i].channel)
-            }, feeds.list[i].interval * 1000);
-        }
+        for (var i = 0; i < feeds.list.length; i++) feedTimer(i);
         
 		setInterval(function() {
 			for (var i = 0; i < mutes.list.length; i++) {

@@ -3,7 +3,7 @@ module.exports = function(client) {
         var feedIndex = feeds.list.findIndex(feed => feed.channel == channel);
         if (feedIndex >= 0) {
             if (feeds.list[feedIndex].subs.length > 0) {
-                request(`https://www.reddit.com/r/${feeds.list[feedIndex].subs[Math.floor(Math.random() * feeds.list[feedIndex].subs.length)]}/hot.json`, (err, req, res) => {
+                request(`https://www.reddit.com/r/${feeds.list[feedIndex].subs[Math.floor(Math.random() * feeds.list[feedIndex].subs.length)]}/hot.json?count=100&limit=100`, (err, req, res) => {
                     if (!err) {
                         var data = JSON.parse(res);
                         var filtered = data.data.children.filter(item => {

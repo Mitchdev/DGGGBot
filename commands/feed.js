@@ -50,9 +50,7 @@ exports.handler = function(message) {
                             message.channel.send(`Updated interval from ${feeds.list[feedIndex].interval} seconds to ${args[2]} seconds.`);
                             feeds.list[feedIndex].interval = parseInt(args[2]);
                             clearInterval(feedTimers[feeds.list[feedIndex].channel]);
-                            feedTimers[feeds.list[feedIndex].channel] = setInterval(function() {
-                                reloadFeed(feeds.list[feedIndex].channel);
-                            }, feeds.list[feedIndex].interval * 1000);
+                            feedTimer(feedIndex);
                             updateFeed();
                         } else {
                             message.channel.send(`Interval has to be more than 10 seconds.`);

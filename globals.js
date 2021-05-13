@@ -10,6 +10,7 @@ module.exports = function(conf) {
 	inviteList = [];
 	gunCooldown = false;
 	timedout = false;
+    feedTimers = {};
 
 	client = conf.client;
 	options = conf.config;
@@ -17,6 +18,7 @@ module.exports = function(conf) {
 
 	roles = JSON.parse(fs.readFileSync('./options/roles.json'));
 	pins = JSON.parse(fs.readFileSync('./options/pins.json'));
+	feeds = JSON.parse(fs.readFileSync('./options/feeds.json'));
 	mutes = JSON.parse(fs.readFileSync('./options/mutes.json'));
 	emotesUse = JSON.parse(fs.readFileSync('./options/emotes.json'));
 	languageCodes = JSON.parse(fs.readFileSync('./options/lang.json'));

@@ -55,7 +55,7 @@ exports.handler = function(message) {
                             else if (moonset <= 5 && moonset >= -5) moonText += ` is setting now`;
                             else if (moonrise >= 0) moonText += ` is rising in ${secondsToDhms(moonrise)}`;
                             else if (moonset >= 0) moonText += ` is setting in ${secondsToDhms(moonset)}`;
-                            else moonText += `set ${secondsToDhms(Math.abs(moonset))}ago`;
+                            else moonText += ` set ${secondsToDhms(Math.abs(moonset))}ago`;
 
                             if (data.hourly[0].rain) rainText = `\n🌧️ ${data.hourly[0].rain["1h"]}mm of rain`;
                 			if (data.hourly[0].snow) snowText = `\n🌨️ ${data.hourly[0].snow["1h"]}mm of snow`;

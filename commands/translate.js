@@ -19,7 +19,6 @@ exports.handler = function(message) {
             message.channel.send(content);
         }
 	} else {
-        if (!message.interaction) message.react(message.guild.emojis.cache.get(options.emote.pause.id));
 		request({
 			method: 'POST',
 			url: options.api.translate.url,

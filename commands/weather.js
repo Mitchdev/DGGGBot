@@ -6,7 +6,7 @@ exports.slash = {
     options: [{
         name: 'units',
         type: 'STRING',
-        description: 'Unit of measurment (imperial/metric)',
+        description: 'Unit of measurment (metric/imperial/standard)',
         required: false
     }, {
         name: 'location',
@@ -17,7 +17,7 @@ exports.slash = {
 }
 exports.handler = function(message) {
     if (message.content.split(' ').length > 1) {
-        var units = (message.content.toLowerCase().split(' ')[1] === 'imperial') ? 'imperial' : 'metric'
+        var units = (message.content.toLowerCase().split(' ')[1] === 'imperial') ? 'imperial' : (message.content.toLowerCase().split(' ')[1] === 'standard') ? 'standard' :'metric'
         var location = message.content.replace('!weather ', '').replace(units, '');
         if (location != '') {
             request({
@@ -43,7 +43,7 @@ exports.handler = function(message) {
                             });
                         }
                     } else {
-                        request(options.api.weather.url + options.api.weather.auth + `&lat=${coordinatesRes.lat}&lon=${coordinatesRes.lon}&units=${units}`, (err, req, res) => {
+                        request(options.api.weather.url + options.api.weather.auth + `&lat=${coordinatesRes.lat}&lon=${coordinatesRes.lon}${(units === 'standard') ? '' : `&units=${units}`}`, (err, req, res) => {
                             if (!err) {
                                 var data = JSON.parse(res);
                                 var sunText = "";
@@ -81,8 +81,8 @@ exports.handler = function(message) {
                                 if (data.hourly[0].rain) rainText = `\n🌧️ ${data.hourly[0].rain["1h"]}mm of rain`;
                                 if (data.hourly[0].snow) snowText = `\n🌨️ ${data.hourly[0].snow["1h"]}mm of snow`;
         
-                                windText = `\n💨 ${(units === 'imperial') ? data.hourly[0].wind_speed+'mi/h' : (data.hourly[0].wind_speed*3.6).toFixed(2)+'km/h'} ${getCardinalDirection(data.hourly[0].wind_deg)}`;
-                                if (data.hourly[0].wind_gust) windText += ` and ${(units === 'imperial') ? data.hourly[0].wind_gust+'mi/h' : (data.hourly[0].wind_gust*3.6).toFixed(2)+'km/h'} gusts`;
+                                windText = `\n💨 ${(units === 'imperial') ? data.hourly[0].wind_speed+'mi/h' : (units === 'standard') ? data.hourly[0].wind_speed+'m/s' : (data.hourly[0].wind_speed*3.6).toFixed(2)+'km/h'} ${(units === 'standard') ? data.hourly[0].wind_deg+'°' : getCardinalDirection(data.hourly[0].wind_deg)}`;
+                                if (data.hourly[0].wind_gust) windText += ` and ${(units === 'imperial') ? data.hourly[0].wind_gust+'mi/h' : (units === 'standard') ? data.hourly[0].wind_speed+'m/s' : (data.hourly[0].wind_gust*3.6).toFixed(2)+'km/h'} gusts`;
         
                                 if (data.alerts) {
                                     if (data.alerts.length > 0) {
@@ -104,19 +104,19 @@ exports.handler = function(message) {
                                 var content =   `${coordinatesRes.manicipality}, ${coordinatesRes.countryCode} has ${data.hourly[0].weather[0].description} (Location confidence: ${coordinatesRes.score}%)\n\n`+
                                                 `${alertsText}`+
                                                 `**---- This Hour ----**\n`+
-                                                `**Currently** ${data.hourly[0].temp}${units === 'imperial' ? '°F' : '°C'}\n`+
-                                                `**Feels like** ${data.hourly[0].feels_like}${units === 'imperial' ? '°F' : '°C'}\n`+
+                                                `**Currently** ${data.hourly[0].temp}${units === 'imperial' ? '°F' : (units === 'standard') ? 'K' : '°C'}\n`+
+                                                `**Feels like** ${data.hourly[0].feels_like}${units === 'imperial' ? '°F' : (units === 'standard') ? 'K' : '°C'}\n`+
                                                 `**Rain probability** ${data.hourly[0].pop*100}%\n`+
                                                 `${rainText}${snowText}`+
                                                 `\n☁️ ${data.hourly[0].clouds}% cloud cover`+
                                                 `${windText}${sunText}${moonText}\n\n`+
-                                                `**High** ${data.daily[0].temp.max}${units === 'imperial' ? '°F' : '°C'}\n`+
-                                                `**Low** ${data.daily[0].temp.min}${units === 'imperial' ? '°F' : '°C'}\n`+
-                                                `**Dew point** ${data.hourly[0].dew_point}${units === 'imperial' ? '°F' : '°C'}\n`+
+                                                `**High** ${data.daily[0].temp.max}${units === 'imperial' ? '°F' : (units === 'standard') ? 'K' : '°C'}\n`+
+                                                `**Low** ${data.daily[0].temp.min}${units === 'imperial' ? '°F' : (units === 'standard') ? 'K' : '°C'}\n`+
+                                                `**Dew point** ${data.hourly[0].dew_point}${units === 'imperial' ? '°F' : (units === 'standard') ? 'K' : '°C'}\n`+
                                                 `**Humidity** ${data.hourly[0].humidity}%\n`+
                                                 `**Pressure** ${data.hourly[0].pressure}hPa\n`+
                                                 `**UV** ${data.hourly[0].uvi}\n`+
-                                                `**Visibility** ${units === 'imperial' ? (data.hourly[0].visibility/1609).toFixed(2)+'mi' : (data.hourly[0].visibility/1000).toFixed(2)+'km'}\n`;
+                                                `**Visibility** ${units === 'imperial' ? (data.hourly[0].visibility/1609).toFixed(2)+'mi' : (units === 'standard') ? data.hourly[0].visibility+'m' : (data.hourly[0].visibility/1000).toFixed(2)+'km'}\n`;
         
                                 if (message.interaction) {
                                     message.interaction.editReply(content);

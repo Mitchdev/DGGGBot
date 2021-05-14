@@ -29,7 +29,10 @@ exports.handler = function(message) {
 				if (res) {
 					if (res.Message) {
 						client.users.fetch(options.user.mitch).then(mitch => {
-							mitch.send(`Translator: ${res.Message}\nSent: \`\`\`{"source": "auto", "target": "en", "text": ${escapeHtml(message.content.replace('!translate ', ''), false)}}\`\`\``);
+							mitch.send(`**Translator:** ${res.Message}\n**Sent:** \`\`\`{"source": "auto", "target": "en", "text": ${escapeHtml(message.content.replace('!translate ', ''), false)}}\`\`\``);
+						});
+						client.users.fetch(options.user.andlin).then(andlin => {
+							andlin.send(`**Translator:** ${res.Message}\n**Sent:** \`\`\`{"source": "auto", "target": "en", "text": ${escapeHtml(message.content.replace('!translate ', ''), false)}}\`\`\``);
 						});
 					} else if (res.length > 0) {
 						if (res[0].translations) {

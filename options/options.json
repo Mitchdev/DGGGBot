@@ -3,7 +3,8 @@
 	"bot": "784349110517760031",
 	"guild": "768734582648209409",
 	"user": {
-		"mitch": "399186129288560651"
+		"mitch": "399186129288560651",
+        "andlin": "98469747905011712"
 	},
 	"emote": {
 		"weird": {
@@ -65,7 +66,8 @@
 			"auth": ""
 		},
         "coordinates": {
-            "url": "https://geocode.xyz/"
+            "url": "",
+			"auth": ""
         },
 		"weather": {
             "url": "https://api.openweathermap.org/data/2.5/onecall?units=metric&exclude=minutely&appid=",

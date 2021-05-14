@@ -1,9 +1,9 @@
 exports.name = ['list']
 exports.permission = 'none'
-exports.slash = {
+exports.slash = [{
     name: 'list',
     description: 'Shows list of temporarily roled users'
-}
+}]
 exports.handler = function(message) {
 	var sorted = mutes.list.sort((a, b) => {
 		var differenceA = (new Date().getTime() - new Date(a.startTime).getTime()) / 1000;

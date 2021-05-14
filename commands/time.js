@@ -1,6 +1,6 @@
 exports.name = ['time']
 exports.permission = 'none'
-exports.slash = {
+exports.slash = [{
     name: 'time',
     description: 'Gets the local time of a location',
     options: [{
@@ -9,7 +9,7 @@ exports.slash = {
         description: 'Location to get time from',
         required: true
     }]
-}
+}]
 exports.handler = function(message) {
 	var location = message.content.replace('!time ', '');
 	if (location != '') {

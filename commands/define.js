@@ -1,6 +1,6 @@
 exports.name = ['define']
 exports.permission = 'none'
-exports.slash = {
+exports.slash = [{
     name: 'define',
     description: 'Gets definition of a phrase via urban dictionary',
     options: [{
@@ -9,7 +9,7 @@ exports.slash = {
         description: 'Phrase to be defined',
         required: true
     }]
-}
+}]
 exports.handler = function(message) {
 	if (!timedout) {
 		var prase = message.content.toLowerCase().replace('!define ', '');

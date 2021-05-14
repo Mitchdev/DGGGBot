@@ -1,20 +1,15 @@
 exports.name = ['weather']
 exports.permission = 'none'
-exports.slash = {
+exports.slash = [{
     name: 'weather',
     description: 'Gets weather from a location',
     options: [{
-        name: 'units',
-        type: 'STRING',
-        description: 'Unit of measurment (metric/imperial/standard)',
-        required: false
-    }, {
         name: 'location',
         type: 'STRING',
         description: 'Location to get weather from',
         required: true
     }]
-}
+}]
 exports.handler = function(message) {
     if (message.content.split(' ').length > 1) {
         var units = (message.content.toLowerCase().split(' ')[1] === 'imperial') ? 'imperial' : (message.content.toLowerCase().split(' ')[1] === 'standard') ? 'standard' :'metric'

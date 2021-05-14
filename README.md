@@ -1,4 +1,5 @@
 # DGG Gaming Bot
+
 A Discord bot for the dgg gaming discord community.
 
 ## Command References
@@ -28,7 +29,7 @@ ___
 | **!define**    | {phrase}                                                | Gets definition of a phrase via urban dictionary    | !define New Zealand   |
 | **!translate** | {phrase}                                                | Translate a phrase into english                     | !translate Hej        |
 | **!time**      | {location}                                              | Gets the local time of a location                   | !time New Zealand     |
-| **!weather**   | {location}                                              | Gets weather from a location                        | !weather New Zealand  |
+| **!weather**   | (unit) {location}                                       | Gets weather from a location                        | !weather New Zealand  |
 | !roll !r       | {number}`d`{number} (`+`number) (`-`number) (`d`number) | Rolls a dice with optional modifiers                | !roll 1d6+2           |
 | **!trinomial** | {`easy`/`medium`/`hard`}                                | Gives a factorisation trinomial question and answer | !trinomial medium     |
 
@@ -49,7 +50,10 @@ ___
 | !add           | {`gaming`/`general`} {name} {role id/@role} {:emoji:} (position in category) | Adds a role to the roles channel             | !add gaming AmongUs 773111468836519936 🔪 1 |
 | !remove        | {name}                                                                       | Removes a role from the roles channel        | !remove AmongUs                             |
 | **!reload**    |                                                                              | Reloads roles channel if bugged              | !reload                                     |
+| **!feeds**     |                                                                              | Lists all the feeds                          | !feeds                                      |
 | !feed list     |                                                                              | Lists all the subs in the feed               | !feed list                                  |
+| !feed create   |                                                                              | Creates a new feed in current channel        | !feed create                                |
+| !feed delete   |                                                                              | Deletes feed in current channel              | !feed delete                                |
 | !feed sub      | {subreddit name}                                                             | Adds subreddit to feed                       | !feed sub memes                             |
 | !feed unsub    | {subreddit name}                                                             | Removes subreddit from feed                  | !feed unsub memes                           |
 | !feed interval | (interval in seconds)                                                        | Shows current interval or updates interval   | !feed interval 900                          |

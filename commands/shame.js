@@ -1,9 +1,9 @@
 exports.name = ['shame']
 exports.permission = 'none'
-exports.slash = {
+exports.slash = [{
     name: 'shame',
     description: 'Shows list of indefinitely roled users'
-}
+}]
 exports.handler = function(message) {
 	client.guilds.fetch(options.guild).then(guild => {
 		guild.roles.fetch(options.role.wizard).then(wizardRole => {

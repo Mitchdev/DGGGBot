@@ -1,6 +1,6 @@
 exports.name = ['translate']
 exports.permission = 'none'
-exports.slash = {
+exports.slash = [{
     name: 'translate',
     description: 'Translate a phrase into english',
     options: [{
@@ -9,7 +9,7 @@ exports.slash = {
         description: 'Phrase to be translated',
         required: true
     }]
-}
+}]
 exports.handler = function(message) {
 	if (message.content.toLowerCase().replace('!translate ', '') === 'andlin') {
         var content = `**Svensk** - Language detection score: 777,777,777,777,777\n${message.content.replace('!translate ', '')}\n**English**\n🥺 0mar 😂 please mute me <:rustgarage:800754270550360104>`;

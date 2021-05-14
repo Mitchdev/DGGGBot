@@ -9,15 +9,18 @@ module.exports = function(commands) {
                         var command = reload(dir + file);
                         commands.push(command);
                         if (command.slash) {
-                            guild.commands.create(command.slash).then(cmd => {
-                                if (command.permission === 'mod') {
-                                    cmd.setPermissions([{
-                                        id: '773110638000078888',
-                                        type: 'ROLE',
-                                        permission: true
-                                    }]);
-                                }
-                            });
+                            var isMod = command.permission;
+                            for (var i = 0; i < command.slash.length; i++) {
+                                guild.commands.create(command.slash[i]).then(cmd => {
+                                    if (isMod === 'mod') {
+                                        cmd.setPermissions([{
+                                            id: '773110638000078888',
+                                            type: 'ROLE',
+                                            permission: true
+                                        }]);
+                                    }
+                                }).catch(console.error);
+                            }
                         }
                     }
                 });

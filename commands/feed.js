@@ -2,9 +2,9 @@ exports.name = ['feed']
 exports.permission = 'mod'
 exports.handler = function(message) {
     var feedIndex = feeds.list.findIndex(feed => feed.channel == message.channel.id);
-    if (feedIndex >= 0) {
-        var args = message.content.toLowerCase().split(' ');
-        if (args.length > 1) {
+    var args = message.content.toLowerCase().split(' ');
+    if (args.length > 1) {
+        if (feedIndex >= 0) {
             if (args[1] == "list" || args[1] == "subs") {
                 message.channel.send(`**Subs in the feed**\n${feeds.list[feedIndex].subs.join('\n')}`);
             } else if (args[1] == "sub") {
@@ -61,6 +61,17 @@ exports.handler = function(message) {
                 } else {
                     message.channel.send(`The current feed interval is ${feeds.list[feedIndex].interval} seconds.`);
                 }
+            } else if (args[1] == "delete") {
+                clearInterval(feedTimers[feeds.list[feedIndex].channel]);
+                feeds.list.splice(feedIndex, 1);
+                updateFeed();
+                message.channel.send(`Deleted feed for this channel`);
+            }
+        } else {
+            if (args[1] == "create") {
+                feeds.list.push({"interval": 3600, "channel": message.channel.id.toString(), "subs": [], "posted": []});
+                message.channel.send(`Created a new feed for this channel`);
+                updateFeed();
             }
         }
     }

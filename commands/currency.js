@@ -1,6 +1,6 @@
 exports.name = ['currency']
 exports.permission = 'none'
-exports.slash = {
+exports.slash = [{
     name: 'currency',
     description: 'Converts ammount from one currency to another',
     options: [{
@@ -19,7 +19,7 @@ exports.slash = {
         description: 'Target currency',
         required: true
     }]
-}
+}]
 exports.handler = function(message) {
 	var args = /([+-]?[0-9]*[.]?[0-9]+)\s(\w\w\w)\s(\w\w\w)/g.exec(message.content.toUpperCase());
 	if (args) {

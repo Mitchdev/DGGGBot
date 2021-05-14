@@ -1,6 +1,6 @@
 exports.name = ['trinomial']
 exports.permission = 'none'
-exports.slash = {
+exports.slash = [{
     name: 'trinomial',
     description: 'Gives a factorisation trinomial question and answer',
     options: [{
@@ -9,7 +9,7 @@ exports.slash = {
         description: 'easy/medium/hard',
         required: true
     }]
-}
+}]
 exports.handler = function(message) {
 	let a,b,c,r11,r12,r21,r22; 
 	let r1,r2;

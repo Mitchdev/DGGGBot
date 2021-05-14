@@ -1,6 +1,6 @@
 exports.name = ['raw']
 exports.permission = 'none'
-exports.slash = {
+exports.slash = [{
     name: 'raw',
     description: 'Shows raw input of message (what bot sees)',
     options: [{
@@ -9,7 +9,7 @@ exports.slash = {
         description: 'Input to return as raw',
         required: true
     }]
-}
+}]
 exports.handler = function(message) {
     var content = `\`${message.content.replace('!raw ', '')}\``;
     if (message.interaction) {

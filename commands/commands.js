@@ -1,9 +1,9 @@
 exports.name = ['commands']
 exports.permission = 'none'
-exports.slash = {
+exports.slash = [{
     name: 'commands',
     description: 'Links to command list on github'
-}
+}]
 exports.handler = function(message) {
     var content = `**Commands** https://github.com/Mitchdev/DGGGBot#readme`;
     if (message.interaction) {

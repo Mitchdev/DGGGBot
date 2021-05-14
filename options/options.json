@@ -57,6 +57,10 @@
 		"log": "824147978918297630"
 	},
 	"api": {
+		"andlinPing": {
+			"url": "",
+			"auth": ""
+		},
 		"translate": {
 			"url": "",
 			"auth": ""
@@ -70,7 +74,7 @@
 			"auth": ""
         },
 		"weather": {
-            "url": "https://api.openweathermap.org/data/2.5/onecall?units=metric&exclude=minutely&appid=",
+            "url": "https://api.openweathermap.org/data/2.5/onecall?exclude=minutely&appid=",
 			"auth": ""
 		},
 		"currency": {

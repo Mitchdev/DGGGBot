@@ -30,12 +30,16 @@ exports.handler = function(message) {
 					var USD = parseFloat(args[1]) / rates[args[2]];
 					var REQ = USD * rates[args[3]];
                     var content = `${args[1]} ${args[2]} = ${REQ.toFixed(2)} ${args[3]}`;
-                    if (message.interaction) {
-                        message.interaction.editReply(content);
-                    } else {
-                        message.channel.send(content);
-                    }
-				}
+                    if (message.interaction) message.interaction.editReply(content);
+                    else message.channel.send(content);
+				} else {
+                    var content = ``;
+                    if (!rates[args[2]] && !rates[args[3]]) content = `Could not find ${args[2]} or ${args[3]}`;
+                    else if (!rates[args[2]]) content = `Could not find ${args[2]}`;
+                    else content = `Could not find ${args[3]}`;
+                    if (message.interaction) message.interaction.editReply(content);
+                    else message.channel.send(content);
+                }
 			}
 		});
 	}

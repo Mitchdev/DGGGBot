@@ -86,16 +86,7 @@ module.exports = function(client) {
 				if (message.content.toLowerCase().startsWith('!')) {
 					var possibleCommand = message.content.toLowerCase().substr(1);
 					possibleCommand = possibleCommand.split(' ')[0];
-
-					var command = commands.find(cmd => {
-						var found = false;
-						for (i = 0; i < cmd.name.length; i++) {
-							if (!found) {
-								found = (possibleCommand == cmd.name[i]);
-							}
-						}
-						return found;
-					});
+                    var command = commands.find(cmd => cmd.name.includes(possibleCommand));
 
 					if (command) {
 						if (command.permission == 'mod') {

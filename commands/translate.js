@@ -13,11 +13,8 @@ exports.slash = [{
 exports.handler = function(message) {
 	if (message.content.toLowerCase().replace('!translate ', '') === 'andlin') {
         var content = `**Svensk** - Language detection score: 777,777,777,777,777\n${message.content.replace('!translate ', '')}\n**English**\n🥺 0mar 😂 please mute me <:rustgarage:800754270550360104>`;
-        if (message.interaction) {
-            message.interaction.editReply(content);
-        } else {
-            message.channel.send(content);
-        }
+        if (message.interaction) message.interaction.editReply(content);
+        else message.channel.send(content);
 	} else {
 		request({
 			method: 'POST',
@@ -42,11 +39,8 @@ exports.handler = function(message) {
 										getLang(res[0].translations[0].to, true, function(toLang) {
 										 	if (toLang) {
                                                 var content = `**${fromLang}** - Language confidence: ${parseFloat(res[0].detectedLanguage.score)*100}%\n${message.content.replace('!translate ', '')}\n**${toLang}**\n${escapeHtml(res[0].translations[0].text, true)}`;
-                                                if (message.interaction) {
-                                                    message.interaction.editReply(content, {split: true});
-                                                } else {
-                                                    message.channel.send(content, {split: true});
-                                                }
+                                                if (message.interaction) message.interaction.editReply(content);
+                                                else message.channel.send(content, {split: true});
 										 	} else {
 										 		client.users.fetch(options.user.mitch).then(mitch => {
 													mitch.send(`Language missing: ${res[0].translations[0].to}`);
@@ -63,9 +57,7 @@ exports.handler = function(message) {
 						}
 					}
 				}
-			} else {
-				console.log(err);
-			}
+			} else console.log(err);
 		});
 	}
 }

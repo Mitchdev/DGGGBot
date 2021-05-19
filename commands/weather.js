@@ -24,11 +24,8 @@ exports.handler = function(message) {
                 if (!coordinatesErr) {
                     if (coordinatesRes.Message) {
                         if (coordinatesRes.Message.startsWith('404 Not Found:')) {
-                            if (message.interaction) {
-                                message.interaction.editReply(`Could not find ${location}`);
-                            } else {
-                                message.channel.send(`Could not find ${location}`);
-                            }
+                            if (message.interaction) message.interaction.editReply(`Could not find ${location}`);
+                            else message.channel.send(`Could not find ${location}`);
                         } else {
                             client.users.fetch(options.user.mitch).then(mitch => {
                                 mitch.send(`**Coordinates:** ${coordinatesRes.Message}\n**Sent:** \`\`\`{"Address": ${location}}\`\`\``);
@@ -96,7 +93,7 @@ exports.handler = function(message) {
                                     }
                                 }
         
-                                var content =   `${coordinatesRes.manicipality}, ${coordinatesRes.countryCode} has ${data.hourly[0].weather[0].description} (Location confidence: ${coordinatesRes.score}%)\n\n`+
+                                var content =   `${coordinatesRes.manicipality}, ${coordinatesRes.countryCode} has ${data.hourly[0].weather[0].description} (Location confidence: ${(coordinatesRes.score < 0) ? '0' : coordinatesRes.score}%)\n\n`+
                                                 `${alertsText}`+
                                                 `**---- This Hour ----**\n`+
                                                 `**Currently** ${data.hourly[0].temp}${units === 'imperial' ? '°F' : (units === 'standard') ? 'K' : '°C'}\n`+

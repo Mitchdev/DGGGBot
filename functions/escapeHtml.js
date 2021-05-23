@@ -1,24 +1,27 @@
 module.exports = function(client) {
-	escapeHtml = function(text, reverse) {
+  escapeHtml = function(text, reverse) {
+    const map = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      '\'': '&#039;',
 
-		var map = {
-			'&': '&amp;',
-			'<': '&lt;',
-			'>': '&gt;',
-			'"': '&quot;',
-			"'": '&#039;',
+      '&amp;': '&',
+      '&lt;': '<',
+      '&gt;': '>',
+      '&quot;': '"',
+      '&#039;': '\'',
+    };
 
-			'&amp;': '&',
-			'&lt;': '<',
-			'&gt;': '>',
-			'&quot;': '"',
-			"&#039;": '\''
-		};
-
-		if (reverse) {
-			return text.replace(/(&amp;)|(&lt;)|(&gt;)|(&quot;)|(&#039;)/g, function(m) { return map[m]; })
-		} else {
-			return text.replace(/[&<>"']/g, function(m) { return map[m]; });
-		}
-	}
-}
+    if (reverse) {
+      return text.replace(/(&amp;)|(&lt;)|(&gt;)|(&quot;)|(&#039;)/g, function(m) {
+        return map[m];
+      });
+    } else {
+      return text.replace(/[&<>"']/g, function(m) {
+        return map[m];
+      });
+    }
+  };
+};

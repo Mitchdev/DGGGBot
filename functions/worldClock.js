@@ -1,13 +1,13 @@
 module.exports = function(client) {
-	worldClock = function(gmtOffset) {
-		var time = new Date()
-		var gmtMS = time.getTime() + (time.getTimezoneOffset() * 60000)
-		var gmtTime = new Date(gmtMS)
+  worldClock = function(gmtOffset) {
+    const time = new Date();
+    const gmtMS = time.getTime() + (time.getTimezoneOffset() * 60000);
+    const gmtTime = new Date(gmtMS);
 
-		var hr = gmtTime.getHours() + gmtOffset
-		var min = gmtTime.getMinutes()
-		var sec = gmtTime.getSeconds()
+    const hr = gmtTime.getHours() + gmtOffset;
+    const min = gmtTime.getMinutes();
+    const sec = gmtTime.getSeconds();
 
-		return hr + ":" + min + ":" + sec
-	}
-}
+    return hr + ':' + min + ':' + sec;
+  };
+};

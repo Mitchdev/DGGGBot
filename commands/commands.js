@@ -1,9 +1,9 @@
-exports.name = ['commands']
-exports.permission = 'none'
+exports.name = ['commands'];
+exports.permission = 'none';
 exports.slash = [{
-    name: 'commands',
-    description: 'Links to command list on github'
-}]
+  name: 'commands',
+  description: 'Links to command list on github',
+}];
 exports.handler = function(interaction) {
-	interaction.editReply(`**Commands** https://github.com/Mitchdev/DGGGBot#readme`).then(msg => msg.suppressEmbeds(true));
-}
+  interaction.editReply(`**Commands** https://github.com/Mitchdev/DGGGBot#readme`).then((msg) => msg.suppressEmbeds(true));
+};

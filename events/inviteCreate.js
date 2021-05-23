@@ -1,5 +1,5 @@
 module.exports = function(client) {
-    client.on('inviteCreate', (invite) => {
-        inviteList.push(invite);
-    });
-}
+  client.on('inviteCreate', (invite) => {
+    inviteList.push(invite);
+  });
+};

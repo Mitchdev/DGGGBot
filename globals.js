@@ -21,5 +21,6 @@ module.exports = function(conf) {
 	feeds = JSON.parse(fs.readFileSync('./options/feeds.json'));
 	mutes = JSON.parse(fs.readFileSync('./options/mutes.json'));
 	emotesUse = JSON.parse(fs.readFileSync('./options/emotes.json'));
+	measurements = JSON.parse(fs.readFileSync('./options/measurements.json'));
 	languageCodes = JSON.parse(fs.readFileSync('./options/lang.json'));
 }

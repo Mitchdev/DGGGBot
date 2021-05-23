@@ -1,4 +1,4 @@
-const { Client, Intents } = require('discord.js');
+const {Client, Intents} = require('discord.js');
 const fs = require('fs');
 const client = new Client({'messageCacheMaxSize': 1000, 'fetchAllMembers': true, 'intents': [Intents.ALL]});
 
@@ -6,8 +6,6 @@ var config = require('./options/options.json');
 var commands = [];
 
 client.on('ready', () => {
-	config['disabled'] = false;
-
     require('./globals')({client: client, config: config, commands: commands});
     require('./init')(commands);
 

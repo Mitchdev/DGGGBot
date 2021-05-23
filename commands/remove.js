@@ -1,8 +1,17 @@
-exports.name = ['remove']
+exports.name = ['removerole']
 exports.permission = 'mod'
-exports.handler = function(message) {
-	message.delete({timeout: 1000});
-	roles.list = roles.list.filter(role => role.name.toLowerCase() != message.content.toLowerCase().replace('!remove ', ''));
-	reloadRolesMessage(message);
+exports.slash = [{
+    name: 'removerole',
+    description: 'Removes a role from the roles channel',
+    options: [{
+        name: 'name',
+        type: 'STRING',
+        description: 'Name of role to remove',
+        required: true
+    }]
+}]
+exports.handler = function(interaction) {
+	roles.list = roles.list.filter(role => role.name.toLowerCase() != interaction.options[0].value.toLowerCase());
+	reloadRolesMessage();
 	updateRoles();
 }

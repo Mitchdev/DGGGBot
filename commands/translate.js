@@ -10,26 +10,24 @@ exports.slash = [{
         required: true
     }]
 }]
-exports.handler = function(message) {
-	if (message.content.toLowerCase().replace('!translate ', '') === 'andlin') {
-        var content = `**Svensk** - Language detection score: 777,777,777,777,777\n${message.content.replace('!translate ', '')}\n**English**\n🥺 0mar 😂 please mute me <:rustgarage:800754270550360104>`;
-        if (message.interaction) message.interaction.editReply(content);
-        else message.channel.send(content);
-	} else {
+exports.handler = function(interaction) {
+	var phrase = interaction.options[0].value;
+	if (phrase.toLowerCase() === 'andlin') interaction.editReply(`**Svensk** - Language detection score: 777,777,777,777,777\n${phrase}\n**English**\n🥺 0mar 😂 please mute me <:rustgarage:800754270550360104>`);
+	else {
 		request({
 			method: 'POST',
 			url: options.api.translate.url,
 			headers: {'Authorization': options.api.translate.auth},
-			json: {"source": "auto", "target": "en", "text": escapeHtml(message.content.replace('!translate ', ''), false)}
+			json: {"source": "auto", "target": "en", "text": escapeHtml(phrase, false)}
 		}, function (err, req, res) {
 			if (!err) {
 				if (res) {
 					if (res.Message) {
 						client.users.fetch(options.user.mitch).then(mitch => {
-							mitch.send(`**Translator:** ${res.Message}\n**Sent:** \`\`\`{"source": "auto", "target": "en", "text": ${escapeHtml(message.content.replace('!translate ', ''), false)}}\`\`\``);
+							mitch.send(`**Translator:** ${res.Message}\n**Sent:** \`\`\`{"source": "auto", "target": "en", "text": ${escapeHtml(phrase, false)}}\`\`\``);
 						});
 						client.users.fetch(options.user.andlin).then(andlin => {
-							andlin.send(`**Translator:** ${res.Message}\n**Sent:** \`\`\`{"source": "auto", "target": "en", "text": ${escapeHtml(message.content.replace('!translate ', ''), false)}}\`\`\``);
+							andlin.send(`**Translator:** ${res.Message}\n**Sent:** \`\`\`{"source": "auto", "target": "en", "text": ${escapeHtml(phrase, false)}}\`\`\``);
 						});
 					} else if (res.length > 0) {
 						if (res[0].translations) {
@@ -37,11 +35,8 @@ exports.handler = function(message) {
 								getLang(res[0].detectedLanguage.language, true, function(fromLang) {
 									if (fromLang) {
 										getLang(res[0].translations[0].to, true, function(toLang) {
-										 	if (toLang) {
-                                                var content = `**${fromLang}** - Language confidence: ${parseFloat(res[0].detectedLanguage.score)*100}%\n${message.content.replace('!translate ', '')}\n**${toLang}**\n${escapeHtml(res[0].translations[0].text, true)}`;
-                                                if (message.interaction) message.interaction.editReply(content);
-                                                else message.channel.send(content, {split: true});
-										 	} else {
+										 	if (toLang) interaction.editReply(`**${fromLang}** - Language confidence: ${parseFloat(res[0].detectedLanguage.score)*100}%\n${phrase}\n**${toLang}**\n${escapeHtml(res[0].translations[0].text, true)}`);
+										 	else {
 										 		client.users.fetch(options.user.mitch).then(mitch => {
 													mitch.send(`Language missing: ${res[0].translations[0].to}`);
 												});

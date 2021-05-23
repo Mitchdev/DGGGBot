@@ -1,0 +1,1177 @@
+[{
+	"name": "Area",
+	"data": [{
+		"full": "Square Kilometer",
+		"short": "km^2",
+		"multi": "Square Kilometers",
+		"base": false,
+		"conversion": {
+			"source": "multiply",
+			"target": "divide",
+			"value": 1000000
+		}
+	}, {
+		"full": "Square Meter",
+		"short": "m^2",
+		"multi": "Square Meters",
+		"base": true
+	}, {
+		"full": "Square Mile",
+		"short": "mi^2",
+		"multi": "Square Miles",
+		"base": false,
+		"conversion": {
+			"source": "multiply",
+			"target": "divide",
+			"value": 2590000
+		}
+	}, {
+		"full": "Square Yard",
+		"short": "yd^2",
+		"multi": "Square Yards",
+		"base": false,
+		"conversion": {
+			"source": "divide",
+			"target": "multiply",
+			"value": 1.196
+		}
+	}, {
+		"full": "Square Foot",
+		"short": "ft^2",
+		"multi": "Square Feet",
+		"base": false,
+		"conversion": {
+			"source": "divide",
+			"target": "multiply",
+			"value": 10.764
+		}
+	}, {
+		"full": "Square Inch",
+		"short": "in^2",
+		"multi": "Square Inches",
+		"base": false,
+		"conversion": {
+			"source": "divide",
+			"target": "multiply",
+			"value": 1550
+		}
+	}, {
+		"full": "Hectare",
+		"short": "ha",
+		"multi": "Hectares",
+		"base": false,
+		"conversion": {
+			"source": "multiply",
+			"target": "divide",
+			"value": 1550
+		}
+	}, {
+		"full": "Acre",
+		"short": "ac",
+		"multi": "Acres",
+		"base": false,
+		"conversion": {
+			"source": "multiply",
+			"target": "divide",
+			"value": 4047
+		}
+	}]
+}, {
+	"name": "Digital Storage",
+	"data": [{
+		"full": "Bit",
+		"short": "b",
+		"multi": "Bits",
+		"base": false,
+		"conversion": {
+			"source": "divide",
+			"target": "multiply",
+			"value": 8
+		}
+	}, {
+		"full": "Kilobit",
+		"short": "kb",
+		"multi": "Kilobits",
+		"base": false,
+		"conversion": {
+			"source": "multiply",
+			"target": "divide",
+			"value": 125
+		}
+	}, {
+		"full": "Kibibit",
+		"short": "Kib",
+		"multi": "Kibibits",
+		"base": false,
+		"conversion": {
+			"source": "multiply",
+			"target": "divide",
+			"value": 128
+		}
+	}, {
+		"full": "Megabit",
+		"short": "Mb",
+		"multi": "Megabits",
+		"base": false,
+		"conversion": {
+			"source": "multiply",
+			"target": "divide",
+			"value": 125000
+		}
+	}, {
+		"full": "Mebibit",
+		"short": "Mib",
+		"multi": "Mebibits",
+		"base": false,
+		"conversion": {
+			"source": "multiply",
+			"target": "divide",
+			"value": 131072
+		}
+	}, {
+		"full": "Gigabit",
+		"short": "Gb",
+		"multi": "Gigabits",
+		"base": false,
+		"conversion": {
+			"source": "multiply",
+			"target": "divide",
+			"value": 125000000
+		}
+	}, {
+		"full": "Gibibit",
+		"short": "Gib",
+		"multi": "Gibibits",
+		"base": false,
+		"conversion": {
+			"source": "multiply",
+			"target": "divide",
+			"value": 134200000
+		}
+	}, {
+		"full": "Terabit",
+		"short": "Tb",
+		"multi": "Terabits",
+		"base": false,
+		"conversion": {
+			"source": "multiply",
+			"target": "divide",
+			"value": 125000000000
+		}
+	}, {
+		"full": "Tebibit",
+		"short": "Tib",
+		"multi": "Tebibits",
+		"base": false,
+		"conversion": {
+			"source": "multiply",
+			"target": "divide",
+			"value": 137400000000
+		}
+	}, {
+		"full": "Petabit",
+		"short": "Pb",
+		"multi": "Petabits",
+		"base": false,
+		"conversion": {
+			"source": "multiply",
+			"target": "divide",
+			"value": 125000000000000
+		}
+	}, {
+		"full": "Pebibit",
+		"short": "Pib",
+		"multi": "Pebibits",
+		"base": false,
+		"conversion": {
+			"source": "multiply",
+			"target": "divide",
+			"value": 140700000000000
+		}
+	}, {
+		"full": "Byte",
+		"short": "B",
+		"multi": "Bytes",
+		"base": true
+	}, {
+		"full": "Kilobyte",
+		"short": "kB",
+		"multi": "Kilobytes",
+		"base": false,
+		"conversion": {
+			"source": "multiply",
+			"target": "divide",
+			"value": 1000
+		}
+	}, {
+		"full": "Kibibyte",
+		"short": "kiB",
+		"multi": "Kibibytes",
+		"base": false,
+		"conversion": {
+			"source": "multiply",
+			"target": "divide",
+			"value": 1024
+		}
+	}, {
+		"full": "Megabyte",
+		"short": "MB",
+		"multi": "Megabytes",
+		"base": false,
+		"conversion": {
+			"source": "multiply",
+			"target": "divide",
+			"value": 1000000
+		}
+	}, {
+		"full": "Mebibyte",
+		"short": "MiB",
+		"multi": "Mebibytes",
+		"base": false,
+		"conversion": {
+			"source": "multiply",
+			"target": "divide",
+			"value": 1049000
+		}
+	}, {
+		"full": "Gigabyte",
+		"short": "GB",
+		"multi": "Gigabytes",
+		"base": false,
+		"conversion": {
+			"source": "multiply",
+			"target": "divide",
+			"value": 1000000000
+		}
+	}, {
+		"full": "Gibibyte",
+		"short": "GiB",
+		"multi": "Gibibytes",
+		"base": false,
+		"conversion": {
+			"source": "multiply",
+			"target": "divide",
+			"value": 1074000000
+		}
+	}, {
+		"full": "Terabyte",
+		"short": "TB",
+		"multi": "Terabytes",
+		"base": false,
+		"conversion": {
+			"source": "multiply",
+			"target": "divide",
+			"value": 1000000000000
+		}
+	}, {
+		"full": "Tebibyte",
+		"short": "TiB",
+		"multi": "Tebibytes",
+		"base": false,
+		"conversion": {
+			"source": "multiply",
+			"target": "divide",
+			"value": 1100000000000
+		}
+	}, {
+		"full": "Petabyte",
+		"short": "PB",
+		"multi": "Petabytes",
+		"base": false,
+		"conversion": {
+			"source": "multiply",
+			"target": "divide",
+			"value": 1000000000000000
+		}
+	}, {
+		"full": "Pebibyte",
+		"short": "PiB",
+		"multi": "Pebibytes",
+		"base": false,
+		"conversion": {
+			"source": "multiply",
+			"target": "divide",
+			"value": 1126000000000000
+		}
+	}]
+}, {
+	"name": "Energy",
+	"data": [{
+		"full": "Joule",
+		"short": "J",
+		"multi": "Joules",
+		"base": true
+	}, {
+		"full": "Watt",
+		"short": "W",
+		"multi": "Watts",
+		"base": false,
+		"conversion": {
+			"source": "multiply",
+			"target": "divide",
+			"value": 1000
+		}
+	}, {
+		"full": "Volt Amp",
+		"short": "VA",
+		"multi": "Volt Amps",
+		"base": false,
+		"conversion": {
+			"source": "multiply",
+			"target": "divide",
+			"value": 1000
+		}
+	}, {
+		"full": "Kilojoule",
+		"short": "kJ",
+		"multi": "Kilojoules",
+		"base": false,
+		"conversion": {
+			"source": "multiply",
+			"target": "divide",
+			"value": 1000
+		}
+	}, {
+		"full": "Gram Calorie",
+		"short": "cal",
+		"multi": "Gram Calories",
+		"base": false,
+		"conversion": {
+			"source": "multiply",
+			"target": "divide",
+			"value": 4.184
+		}
+	}, {
+		"full": "Kilocalorie",
+		"short": "Kcal",
+		"multi": "Kilocalories",
+		"base": false,
+		"conversion": {
+			"source": "multiply",
+			"target": "divide",
+			"value": 4184
+		}
+	}, {
+		"full": "Watt Hour",
+		"short": "Wh",
+		"multi": "Watt Hours",
+		"base": false,
+		"conversion": {
+			"source": "multiply",
+			"target": "divide",
+			"value": 3600
+		}
+	}, {
+		"full": "Kilowatt Hour",
+		"short": "kWh",
+		"multi": "Kilowatts Hours",
+		"base": false,
+		"conversion": {
+			"source": "multiply",
+			"target": "divide",
+			"value": 3600000
+		}
+	}, {
+		"full": "Electronvolt",
+		"short": "eV",
+		"multi": "Electronvolts",
+		"base": false,
+		"conversion": {
+			"source": "divide",
+			"target": "multiply",
+			"value": 6242000000000000000
+		}
+	}, {
+		"full": "British Thermal Unit",
+		"short": "Btu",
+		"multi": "British Thermal Units",
+		"base": false,
+		"conversion": {
+			"source": "multiply",
+			"target": "divide",
+			"value": 1055
+		}
+	}, {
+		"full": "US Therm",
+		"short": "thm",
+		"multi": "US Therms",
+		"base": false,
+		"conversion": {
+			"source": "multiply",
+			"target": "divide",
+			"value": 105500000
+		}
+	}, {
+		"full": "Foot-Pound",
+		"short": "ft⋅lb",
+		"multi": "Foot-Pounds",
+		"base": false,
+		"conversion": {
+			"source": "multiply",
+			"target": "divide",
+			"value": 1.356
+		}
+	}]
+}, {
+	"name": "Frequency",
+	"data": [{
+		"full": "Hertz",
+		"short": "Hz",
+		"multi": "Hertz",
+		"base": true
+	}, {
+		"full": "Kilohertz",
+		"short": "kHz",
+		"multi": "Kilohertz",
+		"base": false,
+		"conversion": {
+			"source": "multiply",
+			"target": "divide",
+			"value": 1000
+		}
+	}, {
+		"full": "Megahertz",
+		"short": "MHz",
+		"multi": "Megahertz",
+		"base": false,
+		"conversion": {
+			"source": "multiply",
+			"target": "divide",
+			"value": 1000000
+		}
+	}, {
+		"full": "Gigahertz",
+		"short": "GHz",
+		"multi": "Gigahertz",
+		"base": false,
+		"conversion": {
+			"source": "multiply",
+			"target": "divide",
+			"value": 1000000000
+		}
+	}, {
+		"full": "Radian",
+		"short": "ω",
+		"multi": "Radians",
+		"base": false,
+		"conversion": {
+			"source": "d2pi",
+			"target": "t2pi",
+			"value": 1000000000
+		}
+	}]
+}, {
+	"name": "Length",
+	"data": [{
+		"full": "Kilometer",
+		"short": "km",
+		"multi": "Kilometers",
+		"base": false,
+		"conversion": {
+			"source": "multiply",
+			"target": "divide",
+			"value": 1000
+		}
+	}, {
+		"full": "Meter",
+		"short": "m",
+		"multi": "Meters",
+		"base": true
+	}, {
+		"full": "Centimeter",
+		"short": "cm",
+		"multi": "Centimeters",
+		"base": false,
+		"conversion": {
+			"source": "divide",
+			"target": "multiply",
+			"value": 100
+		}
+	}, {
+		"full": "Millimeter",
+		"short": "mm",
+		"multi": "Millimeters",
+		"base": false,
+		"conversion": {
+			"source": "divide",
+			"target": "multiply",
+			"value": 1000
+		}
+	}, {
+		"full": "Micrometer",
+		"short": "μm",
+		"multi": "Micrometers",
+		"base": false,
+		"conversion": {
+			"source": "divide",
+			"target": "multiply",
+			"value": 1000000
+		}
+	}, {
+		"full": "Nanometer",
+		"short": "nm",
+		"multi": "Nanometers",
+		"base": false,
+		"conversion": {
+			"source": "divide",
+			"target": "multiply",
+			"value": 1000000000
+		}
+	}, {
+		"full": "Mile",
+		"short": "mi",
+		"multi": "Miles",
+		"base": false,
+		"conversion": {
+			"source": "multiply",
+			"target": "divide",
+			"value": 1609
+		}
+	}, {
+		"full": "Yard",
+		"short": "yd",
+		"multi": "Yards",
+		"base": false,
+		"conversion": {
+			"source": "divide",
+			"target": "multiply",
+			"value": 1.094
+		}
+	}, {
+		"full": "Foot",
+		"short": "ft",
+		"multi": "Feet",
+		"base": false,
+		"conversion": {
+			"source": "divide",
+			"target": "multiply",
+			"value": 3.281
+		}
+	}, {
+		"full": "Inch",
+		"short": "in",
+		"multi": "Inches",
+		"base": false,
+		"conversion": {
+			"source": "divide",
+			"target": "multiply",
+			"value": 39.37
+		}
+	}, {
+		"full": "Nautical Mile",
+		"short": "NM",
+		"multi": "Nautical Miles",
+		"base": false,
+		"conversion": {
+			"source": "multiply",
+			"target": "divide",
+			"value": 1852
+		}
+	}]
+}, {
+	"name": "Mass",
+	"data": [{
+		"full": "Tonne",
+		"short": "t",
+		"multi": "Tonnes",
+		"base": false,
+		"conversion": {
+			"source": "multiply",
+			"target": "divide",
+			"value": 1000
+		}
+	}, {
+		"full": "Kilogram",
+		"short": "kg",
+		"multi": "Kilograms",
+		"base": true
+	}, {
+		"full": "Gram",
+		"short": "g",
+		"multi": "Grams",
+		"base": false,
+		"conversion": {
+			"source": "divide",
+			"target": "multiply",
+			"value": 1000
+		}
+	}, {
+		"full": "Milligram",
+		"short": "mg",
+		"multi": "Milligrams",
+		"base": false,
+		"conversion": {
+			"source": "divide",
+			"target": "multiply",
+			"value": 1000000
+		}
+	}, {
+		"full": "Microgram",
+		"short": "μg",
+		"multi": "Micrograms",
+		"base": false,
+		"conversion": {
+			"source": "divide",
+			"target": "multiply",
+			"value": 1000000000
+		}
+	}, {
+		"full": "Imperial Ton",
+		"short": "t",
+		"multi": "Imperial Tons",
+		"base": false,
+		"conversion": {
+			"source": "multiply",
+			"target": "divide",
+			"value": 1016
+		}
+	}, {
+		"full": "US Ton",
+		"short": "t",
+		"multi": "US Tons",
+		"base": false,
+		"conversion": {
+			"source": "multiply",
+			"target": "divide",
+			"value": 907
+		}
+	}, {
+		"full": "Stone",
+		"short": "st",
+		"multi": "Stones",
+		"base": false,
+		"conversion": {
+			"source": "multiply",
+			"target": "divide",
+			"value": 6.35
+		}
+	}, {
+		"full": "Pound",
+		"short": "lb",
+		"multi": "Pounds",
+		"base": false,
+		"conversion": {
+			"source": "divide",
+			"target": "multiply",
+			"value": 2.205
+		}
+	}, {
+		"full": "Ounce",
+		"short": "oz",
+		"multi": "Ounces",
+		"base": false,
+		"conversion": {
+			"source": "divide",
+			"target": "multiply",
+			"value": 35.274
+		}
+	}]
+}, {
+	"name": "Plane Angle",
+	"data": [{
+		"full": "Degree",
+		"short": "deg",
+		"multi": "Degrees",
+		"base": true
+	}, {
+		"full": "Gradian",
+		"short": "gon",
+		"multi": "Gradians",
+		"base": false,
+		"conversion": {
+			"source": "t180d200",
+			"target": "t200d180",
+			"value": 0
+		}
+	}, {
+		"full": "Milliradian",
+		"short": "mrad",
+		"multi": "Milliradians",
+		"base": false,
+		"conversion": {
+			"source": "t180d1000pi",
+			"target": "t1000pid180",
+			"value": 0
+		}
+	}, {
+		"full": "Radian",
+		"short": "rad",
+		"multi": "Radians",
+		"base": false,
+		"conversion": {
+			"source": "t180dpi",
+			"target": "tpid180",
+			"value": 0
+		}
+	}, {
+		"full": "Minute of Arc",
+		"short": "arcmin",
+		"multi": "Minute of Arc",
+		"base": false,
+		"conversion": {
+			"source": "divide",
+			"target": "multiply",
+			"value": 60
+		}
+	}, {
+		"full": "Second of Arc",
+		"short": "arcsec",
+		"multi": "Second of Arc",
+		"base": false,
+		"conversion": {
+			"source": "divide",
+			"target": "multiply",
+			"value": 3600
+		}
+	}]
+}, {
+	"name": "Pressure",
+	"data": [{
+		"full": "Bar",
+		"short": "bar",
+		"multi": "Bars",
+		"base": false,
+		"conversion": {
+			"source": "multiply",
+			"target": "divide",
+			"value": 100000
+		}
+	}, {
+		"full": "Pascal",
+		"short": "Pa",
+		"multi": "Pascal",
+		"base": true
+	}, {
+		"full": "Pound per Square Inch",
+		"short": "psi",
+		"multi": "Pound per Square Inches",
+		"base": false,
+		"conversion": {
+			"source": "multiply",
+			"target": "divide",
+			"value": 6895
+		}
+	}, {
+		"full": "Standard Atmosphere",
+		"short": "atm",
+		"multi": "Standard Atmospheres",
+		"base": false,
+		"conversion": {
+			"source": "multiply",
+			"target": "divide",
+			"value": 101325
+		}
+	}, {
+		"full": "Torr",
+		"short": "torr",
+		"multi": "Torr",
+		"base": false,
+		"conversion": {
+			"source": "multiply",
+			"target": "divide",
+			"value": 133
+		}
+	}]
+}, {
+	"name": "Speed",
+	"data": [{
+		"full": "Mile per Hour",
+		"short": "mph",
+		"multi": "Miles per Hour",
+		"base": false,
+		"conversion": {
+			"source": "divide",
+			"target": "multiply",
+			"value": 2.237
+		}
+	}, {
+		"full": "Foot per Second",
+		"short": "fps",
+		"multi": "Feet per Second",
+		"base": false,
+		"conversion": {
+			"source": "divide",
+			"target": "multiply",
+			"value": 3.281
+		}
+	}, {
+		"full": "Meter per Second",
+		"short": "ms",
+		"multi": "Meters per Second",
+		"base": true
+	}, {
+		"full": "Kilometer per Hour",
+		"short": "kmh",
+		"multi": "Kilometers per Hour",
+		"base": false,
+		"conversion": {
+			"source": "divide",
+			"target": "multiply",
+			"value": 3.6
+		}
+	}, {
+		"full": "Knot",
+		"short": "kn",
+		"multi": "Knots",
+		"base": false,
+		"conversion": {
+			"source": "divide",
+			"target": "multiply",
+			"value": 1.944
+		}
+	}]
+}, {
+	"name": "Temperature",
+	"data": [{
+		"full": "Celsius",
+		"short": "c",
+		"multi": "Celsius",
+		"base": true
+	}, {
+		"full": "Fahrenheit",
+		"short": "f",
+		"multi": "Fahrenheit",
+		"base": false,
+		"conversion": {
+			"source": "pmi32pt5d9",
+			"target": "pt9d5pp32",
+			"value": 0
+		}
+	}, {
+		"full": "Kelvin",
+		"short": "k",
+		"multi": "Kelvin",
+		"base": false,
+		"conversion": {
+			"source": "minus",
+			"target": "plus",
+			"value": 273.15
+		}
+	}]
+}, {
+	"name": "Time",
+	"data": [{
+		"full": "Femtosecond",
+		"short": "fs",
+		"multi": "Femtoseconds",
+		"base": false,
+		"conversion": {
+			"source": "divide",
+			"target": "multiply",
+			"value": 1000000000000000
+		}
+	}, {
+		"full": "Picosecond",
+		"short": "ps",
+		"multi": "Picoseconds",
+		"base": false,
+		"conversion": {
+			"source": "divide",
+			"target": "multiply",
+			"value": 1000000000000
+		}
+	}, {
+		"full": "Nanosecond",
+		"short": "ns",
+		"multi": "Nanoseconds",
+		"base": false,
+		"conversion": {
+			"source": "divide",
+			"target": "multiply",
+			"value": 1000000000
+		}
+	}, {
+		"full": "Microsecond",
+		"short": "μs",
+		"multi": "Microseconds",
+		"base": false,
+		"conversion": {
+			"source": "divide",
+			"target": "multiply",
+			"value": 1000000
+		}
+	}, {
+		"full": "Millisecond",
+		"short": "ms",
+		"multi": "Milliseconds",
+		"base": false,
+		"conversion": {
+			"source": "divide",
+			"target": "multiply",
+			"value": 1000
+		}
+	}, {
+		"full": "Second",
+		"short": "s",
+		"multi": "Seconds",
+		"base": true
+	}, {
+		"full": "Minute",
+		"short": "min",
+		"multi": "Minutes",
+		"base": false,
+		"conversion": {
+			"source": "multiply",
+			"target": "divide",
+			"value": 60
+		}
+	}, {
+		"full": "Hour",
+		"short": "h",
+		"multi": "Hours",
+		"base": false,
+		"conversion": {
+			"source": "multiply",
+			"target": "divide",
+			"value": 3600
+		}
+	}, {
+		"full": "Day",
+		"short": "d",
+		"multi": "Days",
+		"base": false,
+		"conversion": {
+			"source": "multiply",
+			"target": "divide",
+			"value": 86400
+		}
+	}, {
+		"full": "Week",
+		"short": "wk",
+		"multi": "Weeks",
+		"base": false,
+		"conversion": {
+			"source": "multiply",
+			"target": "divide",
+			"value": 604800
+		}
+	}, {
+		"full": "Month",
+		"short": "mo",
+		"multi": "Months",
+		"base": false,
+		"conversion": {
+			"source": "multiply",
+			"target": "divide",
+			"value": 2628000
+		}
+	}, {
+		"full": "Year",
+		"short": "y",
+		"multi": "Years",
+		"base": false,
+		"conversion": {
+			"source": "multiply",
+			"target": "divide",
+			"value": 31540000
+		}
+	}, {
+		"full": "Decade",
+		"short": "decade",
+		"multi": "Decades",
+		"base": false,
+		"conversion": {
+			"source": "multiply",
+			"target": "divide",
+			"value": 315400000
+		}
+	}, {
+		"full": "Century",
+		"short": "century",
+		"multi": "Centurys",
+		"base": false,
+		"conversion": {
+			"source": "multiply",
+			"target": "divide",
+			"value": 3154000000
+		}
+	}]
+}, {
+	"name": "Volume",
+	"data": [{
+		"full": "US Liquid Gallon",
+		"short": "gal",
+		"multi": "US Liquid Gallons",
+		"base": false,
+		"conversion": {
+			"source": "multiply",
+			"target": "divide",
+			"value": 3.785
+		}
+	}, {
+		"full": "US Liquid Quart",
+		"short": "qt",
+		"multi": "US Liquid Quarts",
+		"base": false,
+		"conversion": {
+			"source": "divide",
+			"target": "multiply",
+			"value": 1.057
+		}
+	}, {
+		"full": "US Liquid Pint",
+		"short": "pt",
+		"multi": "US Liquid Pints",
+		"base": false,
+		"conversion": {
+			"source": "divide",
+			"target": "multiply",
+			"value": 2.113
+		}
+	}, {
+		"full": "US Legal Cup",
+		"short": "cup",
+		"multi": "US Legal Cups",
+		"base": false,
+		"conversion": {
+			"source": "divide",
+			"target": "multiply",
+			"value": 4.167
+		}
+	}, {
+		"full": "US Fluid Ounce",
+		"short": "fl oz",
+		"multi": "US Fluid Ounces",
+		"base": false,
+		"conversion": {
+			"source": "divide",
+			"target": "multiply",
+			"value": 33.814
+		}
+	}, {
+		"full": "US Tablespoon",
+		"short": "tbsp",
+		"multi": "US Tablespoons",
+		"base": false,
+		"conversion": {
+			"source": "divide",
+			"target": "multiply",
+			"value": 67.628
+		}
+	}, {
+		"full": "US Teaspoon",
+		"short": "tsp",
+		"multi": "US Teaspoons",
+		"base": false,
+		"conversion": {
+			"source": "divide",
+			"target": "multiply",
+			"value": 203
+		}
+	}, {
+		"full": "Cubic Meter",
+		"short": "m^3",
+		"multi": "Cubic Meters",
+		"base": false,
+		"conversion": {
+			"source": "multiply",
+			"target": "divide",
+			"value": 1000
+		}
+	}, {
+		"full": "Litre",
+		"short": "L",
+		"multi": "Litres",
+		"base": true
+	}, {
+		"full": "Milliliter",
+		"short": "mL",
+		"multi": "Milliliters",
+		"base": false,
+		"conversion": {
+			"source": "divide",
+			"target": "multiply",
+			"value": 1000
+		}
+	}, {
+		"full": "Imperial Gallon",
+		"short": "gal",
+		"multi": "Imperial Gallons",
+		"base": false,
+		"conversion": {
+			"source": "multiply",
+			"target": "divide",
+			"value": 4.546
+		}
+	}, {
+		"full": "Imperial Quart",
+		"short": "qt",
+		"multi": "Imperial Quarts",
+		"base": false,
+		"conversion": {
+			"source": "multiply",
+			"target": "divide",
+			"value": 1.137
+		}
+	}, {
+		"full": "Imperial Pint",
+		"short": "pt",
+		"multi": "Imperial Pints",
+		"base": false,
+		"conversion": {
+			"source": "divide",
+			"target": "multiply",
+			"value": 1.76
+		}
+	}, {
+		"full": "Imperial Cup",
+		"short": "cup",
+		"multi": "Imperial Cups",
+		"base": false,
+		"conversion": {
+			"source": "divide",
+			"target": "multiply",
+			"value": 3.52
+		}
+	}, {
+		"full": "Imperial Fluid Ounce",
+		"short": "fl oz",
+		"multi": "Imperial Fluid Ounces",
+		"base": false,
+		"conversion": {
+			"source": "divide",
+			"target": "multiply",
+			"value": 35.195
+		}
+	}, {
+		"full": "Imperial Tablespoon",
+		"short": "tbsp",
+		"multi": "Imperial Tablespoons",
+		"base": false,
+		"conversion": {
+			"source": "divide",
+			"target": "multiply",
+			"value": 56.312
+		}
+	}, {
+		"full": "Imperial Teaspoon",
+		"short": "tsp",
+		"multi": "Imperial Teaspoons",
+		"base": false,
+		"conversion": {
+			"source": "divide",
+			"target": "multiply",
+			"value": 169
+		}
+	}, {
+		"full": "Cubic Foot",
+		"short": "ft^3",
+		"multi": "Cubic Feet",
+		"base": false,
+		"conversion": {
+			"source": "multiply",
+			"target": "divide",
+			"value": 28.317
+		}
+	}, {
+		"full": "Cubic Inch",
+		"short": "in^3",
+		"multi": "Cubic Inches",
+		"base": false,
+		"conversion": {
+			"source": "divide",
+			"target": "multiply",
+			"value": 61.024
+		}
+	}]
+}]

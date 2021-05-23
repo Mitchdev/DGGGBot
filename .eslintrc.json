@@ -11,6 +11,6 @@
         "ecmaVersion": 12
     },
     "rules": {
-        "tabWidth": 4
+        "tabWidth": 2
     }
 }

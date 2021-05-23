@@ -4,9 +4,9 @@ exports.slash = [{
     name: 'currency',
     description: 'Converts ammount from one currency to another',
     options: [{
-        name: 'ammount',
+        name: 'amount',
         type: 'STRING',
-        description: 'Ammount in source currency',
+        description: 'Amount in source currency',
         required: true
     }, {
         name: 'source',
@@ -20,27 +20,24 @@ exports.slash = [{
         required: true
     }]
 }]
-exports.handler = function(message) {
-	var args = /([+-]?[0-9]*[.]?[0-9]+)\s(\w\w\w)\s(\w\w\w)/g.exec(message.content.toUpperCase());
-	if (args) {
-		request(options.api.currency.url + options.api.currency.auth, function(err, req, res) {
-			if (!err) {
-				var rates = JSON.parse(res).rates;
-				if (rates[args[2]] && rates[args[3]]) {
-					var USD = parseFloat(args[1]) / rates[args[2]];
-					var REQ = USD * rates[args[3]];
-                    var content = `${args[1]} ${args[2]} = ${REQ.toFixed(2)} ${args[3]}`;
-                    if (message.interaction) message.interaction.editReply(content);
-                    else message.channel.send(content);
-				} else {
-                    var content = ``;
-                    if (!rates[args[2]] && !rates[args[3]]) content = `Could not find ${args[2]} or ${args[3]}`;
-                    else if (!rates[args[2]]) content = `Could not find ${args[2]}`;
-                    else content = `Could not find ${args[3]}`;
-                    if (message.interaction) message.interaction.editReply(content);
-                    else message.channel.send(content);
-                }
+exports.handler = function(interaction) {
+	request(options.api.currency.url + options.api.currency.auth, function(err, req, res) {
+		if (!err) {
+			var rates = JSON.parse(res).rates;
+			var source = interaction.options[1].value.toUpperCase();
+			var target = interaction.options[2].value.toUpperCase();
+			if (rates[source] && rates[target]) {
+				var USD = parseFloat(interaction.options[0].value) / rates[source];
+				var REQ = USD * rates[target];
+				var content = `${interaction.options[0].value} ${source} = ${REQ.toFixed(2)} ${target}`;
+				interaction.editReply(content);
+			} else {
+				var content = ``;
+				if (!rates[source] && !rates[target]) content = `Could not find ${interaction.options[1].value} or ${interaction.options[2].value}`;
+				else if (!rates[source]) content = `Could not find ${interaction.options[1].value}`;
+				else content = `Could not find ${interaction.options[2].value}`;
+				interaction.editReply(content);
 			}
-		});
-	}
+		}
+	});
 }

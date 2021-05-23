@@ -10,10 +10,10 @@ exports.slash = [{
         required: true
     }]
 }]
-exports.handler = function(message) {
+exports.handler = function(interaction) {
 	let a,b,c,r11,r12,r21,r22; 
 	let r1,r2;
-	var diff = message.content.replace('!trinomial ', '');
+	var diff = interaction.options[0].value.toLowerCase();
 	if (diff == 'easy' || diff == 'medium' || diff == 'hard') {
 		setDifficulty(diff);
 	} else {
@@ -126,10 +126,5 @@ exports.handler = function(message) {
 		return ans;	
 	}
 
-    var content = `Question: ${QToString()}\nAnswer: ||${AnsToString(diff)}||`;
-    if (message.interaction) {
-        message.interaction.editReply(content);
-    } else {
-        message.channel.send(content);
-    }
+    interaction.editReply(`Question: ${QToString()}\nAnswer: ||${AnsToString(diff)}||`);
 }

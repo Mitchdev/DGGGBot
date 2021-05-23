@@ -15,22 +15,12 @@ exports.slash = [{
         required: true
     }]
 }]
-exports.handler = function(message) {
-    var args = message.content.split(' ');
-    if (args.length == 3) {
-        if (emotesUse.emotes[args[1]]) {
-            if (emotesUse.emotes[args[2]]) {
-                emotesUse.emotes[args[2]].uses += emotesUse.emotes[args[1]].uses;
-                delete emotesUse.emotes[args[1]];
-                if (message.interaction) message.interaction.editReply(`Synced: ${message.guild.emojis.cache.get(args[2])}`);
-                else message.channel.send(`Synced: ${message.guild.emojis.cache.get(args[2])}`);
-            } else {
-                if (message.interaction) message.interaction.editReply(`Could not find ${args[2]}`);
-                else message.channel.send(`Could not find ${args[2]}`);
-            }
-        } else {
-            if (message.interaction) message.interaction.editReply(`Could not find ${args[1]}`);
-            else message.channel.send(`Could not find ${args[1]}`);
-        }
-    }
+exports.handler = function(interaction) {
+	if (emotesUse.emotes[interaction.options[0].value]) {
+		if (emotesUse.emotes[interaction.options[1].value]) {
+			emotesUse.emotes[interaction.options[1].value].uses += emotesUse.emotes[interaction.options[0].value].uses;
+			delete emotesUse.emotes[interaction.options[0].value];
+			interaction.editReply(`Synced: ${client.guilds.resolve(options.guild).emojis.cache.get(interaction.options[1].value)}`);
+		} else interaction.editReply(`Could not find ${interaction.options[1].value}`);
+	} else interaction.editReply(`Could not find ${interaction.options[0].value}`);
 }

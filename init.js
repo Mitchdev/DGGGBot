@@ -7,7 +7,7 @@ module.exports = function(commands) {
                 fs.readdirSync(dir).forEach(function (file) {
                     if (file.indexOf(".js") > -1) {
                         var command = reload(dir + file);
-                        commands.push(command);
+						commands.push(command);
                         if (command.slash) {
                             var isMod = command.permission;
                             for (var i = 0; i < command.slash.length; i++) {
@@ -19,7 +19,7 @@ module.exports = function(commands) {
                                             permission: true
                                         }]);
                                     }
-                                }).catch(console.error);
+                                }).catch(console.log);
                             }
                         }
                     }

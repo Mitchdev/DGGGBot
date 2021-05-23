@@ -10,11 +10,6 @@ exports.slash = [{
         required: true
     }]
 }]
-exports.handler = function(message) {
-    var content = `\`${message.content.replace('!raw ', '')}\``;
-    if (message.interaction) {
-        message.interaction.editReply(content);
-    } else {
-        message.channel.send(content);
-    }
+exports.handler = function(interaction) {
+    interaction.editReply(`\`${interaction.options[0].value}\``);
 }

@@ -5,10 +5,17 @@ exports.slash = [{
     description: 'Adds a role to the roles channel',
 	defaultPermission: false,
     options: [{
-        name: 'general',
-        type: 'BOOLEAN',
-        description: 'True if general False if gaming',
-        required: true
+        name: 'category',
+        type: 'STRING',
+        description: 'Category you want to role to appear in',
+        required: true,
+		choices: [{
+			name: 'General',
+			value: 'General'
+		}, {
+			name: 'Gaming',
+			value: 'Gaming'
+		}]
     }, {
         name: 'name',
         type: 'STRING',
@@ -34,7 +41,7 @@ exports.slash = [{
 exports.handler = function(interaction) {
 	var role = {
 		"name": interaction.options[1].value,
-		"type": interaction.options[0].value ? 'General' : 'Gaming',
+		"type": interaction.options[0].value,
 		"role": interaction.options[2].value,
 		"reaction": {"type": "", "name": "", "id": ""}
 	};

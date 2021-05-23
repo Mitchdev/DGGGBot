@@ -18,6 +18,7 @@ exports.slash = [{
 }, {
     name: 'weeb',
     description: 'Gives mentions user weeb role for duration',
+	defaultPermission: false,
     options: [{
         name: 'user',
         type: 'USER',
@@ -32,6 +33,7 @@ exports.slash = [{
 }, {
     name: 'wizard',
     description: 'Gives mentions user wizard role for duration',
+	defaultPermission: false,
     options: [{
         name: 'user',
         type: 'USER',

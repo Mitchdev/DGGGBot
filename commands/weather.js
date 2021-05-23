@@ -6,8 +6,18 @@ exports.slash = [{
     options: [{
         name: 'unit',
         type: 'STRING',
-        description: 'metric / imperial / standard',
-        required: true
+        description: 'Unit of measurement',
+        required: true,
+		choices: [{
+			name: 'Metric',
+			value: 'metric'
+		}, {
+			name: 'Standard',
+			value: 'standard'
+		}, {
+			name: 'Imperial',
+			value: 'imperial'
+		}]
     }, {
         name: 'location',
         type: 'STRING',
@@ -16,7 +26,7 @@ exports.slash = [{
     }]
 }]
 exports.handler = function(interaction) {
-	var units = (interaction.options[0].value === 'imperial') ? 'imperial' : (interaction.options[0].value === 'standard') ? 'standard' :'metric'
+	var units = interaction.options[0].value;
 	var location = interaction.options[1].value;
 	if (location != '') {
 		request({

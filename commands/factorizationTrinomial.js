@@ -6,14 +6,24 @@ exports.slash = [{
     options: [{
         name: 'difficulty',
         type: 'STRING',
-        description: 'easy/medium/hard',
-        required: true
+        description: 'Difficulty of the trinomial question',
+        required: true,
+		choices: [{
+			name: 'Easy',
+			value: 'easy'
+		}, {
+			name: 'Medium',
+			value: 'medium'
+		}, {
+			name: 'Hard',
+			value: 'hard'
+		}]
     }]
 }]
 exports.handler = function(interaction) {
 	let a,b,c,r11,r12,r21,r22; 
 	let r1,r2;
-	var diff = interaction.options[0].value.toLowerCase();
+	var diff = interaction.options[0].value;
 	if (diff == 'easy' || diff == 'medium' || diff == 'hard') {
 		setDifficulty(diff);
 	} else {

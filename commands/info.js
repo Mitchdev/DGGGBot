@@ -2,7 +2,7 @@ exports.name = ['info']
 exports.permission = 'none'
 exports.slash = [{
     name: 'info',
-    description: 'Shows uptime & ping'
+    description: 'Shows uptime and ping'
 }]
 exports.handler = function(interaction) {
     var pre = new Date();

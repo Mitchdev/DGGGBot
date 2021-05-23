@@ -34,10 +34,12 @@ module.exports = function(client) {
 					});
 				}
 			} else {
+				interaction.defer()
+				command.handler(interaction);
 			}
         } else {
-            console.log(interaction);
-            interaction.reply('Not a valid command.');
-        }
+			console.log(interaction);
+			interaction.reply('Not a valid command.');
+		}
     });
 }

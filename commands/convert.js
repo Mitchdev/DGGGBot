@@ -1,4 +1,4 @@
-exports.name = ['convert']
+exports.name = ['convert', 'convertlist']
 exports.permission = 'none'
 exports.slash = [{
     name: 'convert',
@@ -19,27 +19,51 @@ exports.slash = [{
         description: 'Target unit',
         required: true
     }]
+}, {
+	name: 'convertlist',
+	description: 'Lists all the measurements',
+	options: [{
+		name: 'measurement',
+		type: 'STRING',
+		description: 'Lists all units for the measurement',
+		required: false
+	}]
 }]
 exports.handler = function(interaction) {
-	var complete = false;
-	for (var i = 0; i < measurements.length; i++) {
-		var source = measurements[i].data.find(unit => {return (unit.full.toLowerCase() === interaction.options[1].value.toLowerCase() || unit.short === interaction.options[1].value || unit.multi.toLowerCase() === interaction.options[1].value.toLowerCase())});
-		var target = measurements[i].data.find(unit => {return (unit.full.toLowerCase() === interaction.options[2].value.toLowerCase() || unit.short === interaction.options[2].value || unit.multi.toLowerCase() === interaction.options[2].value.toLowerCase())});
-		var value = parseFloat(interaction.options[0].value);
-		if (value) {
-			if (source) {
-				if (target) {
-					if (!source.base) value = convertValue(source.conversion.source, source.conversion.value, value);
-					if (!target.base) value = convertValue(target.conversion.target, target.conversion.value, value);
-					interaction.editReply(`**Converting ${measurements[i].name}**\n${parseFloat(interaction.options[0].value)} ${(value > 1 || value < -1) ? source.multi : source.full} (${source.short}) = **${(Math.round(value * 1000) / 1000)}** ${(value > 1 || value < -1) ? target.multi : target.full} (${target.short})`);
-					complete = true;
-					break;
+	if (interaction.commandName === 'convertlist') {
+		if (interaction.options.length == 0) {
+			interaction.editReply(`**Conversion Measurement List**\n${measurements.map(measurement => measurement.name).join('\n')}`);
+		} else {
+			var measurement = measurements.find(m => m.name.toLowerCase() === interaction.options[0].value.toLowerCase());
+			var content = `Could not find measurement`;
+			if (measurement) {
+				content = `**${measurement.name} Units List**\n${measurement.data.map(unit => {
+					return `${unit.full} (${unit.short})`;
+				}).join('\n')}`
+			}
+			interaction.editReply(content);
+		}
+	} else {
+		var complete = false;
+		for (var i = 0; i < measurements.length; i++) {
+			var source = measurements[i].data.find(unit => {return (unit.full.toLowerCase() === interaction.options[1].value.toLowerCase() || unit.short === interaction.options[1].value || unit.multi.toLowerCase() === interaction.options[1].value.toLowerCase())});
+			var target = measurements[i].data.find(unit => {return (unit.full.toLowerCase() === interaction.options[2].value.toLowerCase() || unit.short === interaction.options[2].value || unit.multi.toLowerCase() === interaction.options[2].value.toLowerCase())});
+			var value = parseFloat(interaction.options[0].value);
+			if (value) {
+				if (source) {
+					if (target) {
+						if (!source.base) value = convertValue(source.conversion.source, source.conversion.value, value);
+						if (!target.base) value = convertValue(target.conversion.target, target.conversion.value, value);
+						interaction.editReply(`**Converting ${measurements[i].name}**\n${parseFloat(interaction.options[0].value)} ${(value > 1 || value < -1) ? source.multi : source.full} (${source.short}) = **${(Math.round(value * 1000) / 1000)}** ${(value > 1 || value < -1) ? target.multi : target.full} (${target.short})`);
+						complete = true;
+						break;
+					}
 				}
 			}
 		}
+	
+		if (!complete) interaction.editReply(`Could not convert`);
 	}
-
-	if (!complete) interaction.editReply(`Could not convert`);
 
 	function convertValue(type, conversionValue, value) {
 		switch(type) {

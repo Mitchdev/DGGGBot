@@ -3,6 +3,7 @@ exports.permission = 'mod'
 exports.slash = [{
     name: 'deleteslash',
     description: 'Deletes a slash command that is broken',
+	defaultPermission: false,
     options: [{
         name: 'id',
         type: 'STRING',

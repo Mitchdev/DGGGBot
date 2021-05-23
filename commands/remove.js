@@ -3,6 +3,7 @@ exports.permission = 'mod'
 exports.slash = [{
     name: 'removerole',
     description: 'Removes a role from the roles channel',
+	defaultPermission: false,
     options: [{
         name: 'name',
         type: 'STRING',

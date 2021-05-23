@@ -2,13 +2,16 @@ exports.name = ['feedcreate', 'feeddelete', 'feedsub', 'feedunsub', 'feedinterva
 exports.permission = 'mod'
 exports.slash = [{
     name: 'feedcreate',
-    description: 'Creates a new feed in current channel'
+    description: 'Creates a new feed in current channel',
+	defaultPermission: false
 }, {
     name: 'feeddelete',
-    description: 'Deletes feed in current channel'
+    description: 'Deletes feed in current channel',
+	defaultPermission: false
 }, {
     name: 'feedsub',
     description: 'Adds subreddit to feed',
+	defaultPermission: false,
     options: [{
         name: 'subreddit',
         type: 'STRING',
@@ -18,6 +21,7 @@ exports.slash = [{
 }, {
     name: 'feedunsub',
     description: 'Removes subreddit from feed',
+	defaultPermission: false,
     options: [{
         name: 'subreddit',
         type: 'STRING',
@@ -27,6 +31,7 @@ exports.slash = [{
 }, {
     name: 'feedinterval',
     description: 'Shows current interval or updates interval',
+	defaultPermission: false,
     options: [{
         name: 'interval',
         type: 'INTEGER',

@@ -3,6 +3,7 @@ exports.permission = 'mod'
 exports.slash = [{
     name: 'addrole',
     description: 'Adds a role to the roles channel',
+	defaultPermission: false,
     options: [{
         name: 'general',
         type: 'BOOLEAN',

@@ -3,6 +3,7 @@ exports.permission = 'mod'
 exports.slash = [{
     name: 'emotesync',
     description: 'Syncs emotes in emote usage',
+	defaultPermission: false,
     options: [{
         name: 'old',
         type: 'STRING',

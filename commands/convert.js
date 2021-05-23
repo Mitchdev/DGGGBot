@@ -2,7 +2,7 @@ exports.name = ['convert']
 exports.permission = 'none'
 exports.slash = [{
     name: 'convert',
-    description: 'Converts ammount from one unit to another',
+    description: 'Converts amount from one unit to another',
     options: [{
         name: 'amount',
         type: 'STRING',

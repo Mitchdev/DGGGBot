@@ -3,6 +3,7 @@ exports.permission = 'mod'
 exports.slash = [{
     name: 'mute',
     description: 'Gives mentions user mute role for duration',
+	defaultPermission: false,
     options: [{
         name: 'user',
         type: 'USER',

@@ -29,10 +29,10 @@ exports.handler = function(interaction) {
       if (rates[source] && rates[target]) {
         const USD = parseFloat(interaction.options[0].value) / rates[source];
         const REQ = USD * rates[target];
-        var content = `${interaction.options[0].value} ${source} = ${REQ.toFixed(2)} ${target}`;
+        const content = `${interaction.options[0].value} ${source} = ${REQ.toFixed(2)} ${target}`;
         interaction.editReply(content);
       } else {
-        var content = ``;
+        const content = ``;
         if (!rates[source] && !rates[target]) content = `Could not find ${interaction.options[1].value} or ${interaction.options[2].value}`;
         else if (!rates[source]) content = `Could not find ${interaction.options[1].value}`;
         else content = `Could not find ${interaction.options[2].value}`;

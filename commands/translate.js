@@ -35,12 +35,12 @@ exports.handler = function(interaction) {
                 getLang(res[0].detectedLanguage.language, true, function(fromLang) {
                   if (fromLang) {
                     getLang(res[0].translations[0].to, true, function(toLang) {
-										 	if (toLang) interaction.editReply(`**${fromLang}** - Language confidence: ${parseFloat(res[0].detectedLanguage.score)*100}%\n${phrase}\n**${toLang}**\n${escapeHtml(res[0].translations[0].text, true)}`);
-										 	else {
-										 		client.users.fetch(options.user.mitch).then((mitch) => {
+                      if (toLang) interaction.editReply(`**${fromLang}** - Language confidence: ${parseFloat(res[0].detectedLanguage.score)*100}%\n${phrase}\n**${toLang}**\n${escapeHtml(res[0].translations[0].text, true)}`);
+                      else {
+                        client.users.fetch(options.user.mitch).then((mitch) => {
                           mitch.send(`Language missing: ${res[0].translations[0].to}`);
                         });
-										 	}
+                      }
                     });
                   } else {
                     client.users.fetch(options.user.mitch).then((mitch) => {

@@ -38,8 +38,8 @@ exports.handler = function(interaction) {
             if (isNaN(hours) || isNaN(minutes)) interaction.editReply(`Could not find ${interaction.options[0].value}`);
             else {
               const content = `${coordinatesRes.manicipality}, ${coordinatesRes.countryCode} (Location confidence: ${(coordinatesRes.score < 0) ? '0' : coordinatesRes.score}%)\n`+
-											`**${time.timezone_name} | ${time.timezone_location} | (${time.timezone_abbreviation}) | (GMT${time.gmt_offset >= 0 ? `+`: ``}${time.gmt_offset})**\n`+
-											`${hours}:${minutes}`;
+                              `**${time.timezone_name} | ${time.timezone_location} | (${time.timezone_abbreviation}) | (GMT${time.gmt_offset >= 0 ? `+`: ``}${time.gmt_offset})**\n`+
+                              `${hours}:${minutes}`;
               interaction.editReply(content);
             }
           }

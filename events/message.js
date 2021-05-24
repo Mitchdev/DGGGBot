@@ -17,7 +17,7 @@ module.exports = function(client) {
         client.guilds.fetch(options.guild).then((guild) => {
           const addedIDs = {};
           for (let i = 0; i < emotes.length; i++) {
-            var e = emotes[i].replace('>', '').replace('<:', '').split(':');
+            const e = emotes[i].replace('>', '').replace('<:', '').split(':');
             if (addedIDs[e[1]]) {
               if (addedIDs[e[1]].count < 5) {
                 if (guild.emojis.cache.find((emoji) => emoji.id == e[1])) {
@@ -83,25 +83,25 @@ module.exports = function(client) {
       }
 
       // if (message.content.toLowerCase().startsWith('!')) {
-      // 	var possibleCommand = message.content.toLowerCase().substr(1);
-      // 	possibleCommand = possibleCommand.split(' ')[0];
-      //     var command = commands.find(cmd => cmd.name.includes(possibleCommand));
+      //  var possibleCommand = message.content.toLowerCase().substr(1);
+      //  possibleCommand = possibleCommand.split(' ')[0];
+      //    var command = commands.find(cmd => cmd.name.includes(possibleCommand));
 
-      // 	if (command) {
-      // 		if (!command.onlySlash) {
-      // 			if (command.permission == 'mod') {
-      // 				client.guilds.fetch(options.guild).then(guild => {
-      // 					guild.members.fetch(message.author.id).then(guildMember => {
-      // 						if (guildMember._roles.includes(options.role.mod)) {
-      // 							command.handler(message);
-      // 						}
-      // 					});
-      // 				});
-      // 			} else {
-      // 				command.handler(message);
-      // 			}
-      // 		}
-      // 	}
+      //  if (command) {
+      //    if (!command.onlySlash) {
+      //      if (command.permission == 'mod') {
+      //        client.guilds.fetch(options.guild).then(guild => {
+      //          guild.members.fetch(message.author.id).then(guildMember => {
+      //            if (guildMember._roles.includes(options.role.mod)) {
+      //              command.handler(message);
+      //            }
+      //          });
+      //        });
+      //      } else {
+      //        command.handler(message);
+      //      }
+      //    }
+      //  }
       // }
     }
   });

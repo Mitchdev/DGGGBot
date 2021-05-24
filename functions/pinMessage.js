@@ -11,22 +11,22 @@ module.exports = function(client) {
       }
 
       const embed = new Discord.MessageEmbed()
-		      .setTitle(`Pinned Message from #${message.channel.name}`)
-		      .setURL(`https://discord.com/channels/${message.channel.guild.id}/${message.channel.id}/${message.id}`)
-		      .setColor((message.member) ? (message.member.displayHexColor) ? message.member.displayHexColor : 'white' : 'white')
-		      .setDescription(message.content)
-		      .setTimestamp(message.createdTimestamp);
+          .setTitle(`Pinned Message from #${message.channel.name}`)
+          .setURL(`https://discord.com/channels/${message.channel.guild.id}/${message.channel.id}/${message.id}`)
+          .setColor((message.member) ? (message.member.displayHexColor) ? message.member.displayHexColor : 'white' : 'white')
+          .setDescription(message.content)
+          .setTimestamp(message.createdTimestamp);
 
-		    if (imageURL) {
-		    	embed.setImage(imageURL[0]);
-		    }
+      if (imageURL) {
+        embed.setImage(imageURL[0]);
+      }
 
-		 	const hook = new Discord.WebhookClient('819782869761130537', 'LzhF_ic6OFfHyd4bXp_5ID9krLOgxmwnxPLsuyXgor9ugyB2QSbudZWG34bb-F18BXTU');
+      const hook = new Discord.WebhookClient('819782869761130537', 'LzhF_ic6OFfHyd4bXp_5ID9krLOgxmwnxPLsuyXgor9ugyB2QSbudZWG34bb-F18BXTU');
 
-		 	hook.edit({'name': message.author.username, 'avatar': `https://cdn.discordapp.com/avatars/${message.author.id}/${message.author.avatar}.webp`}).then((webhook) => {
+      hook.edit({'name': message.author.username, 'avatar': `https://cdn.discordapp.com/avatars/${message.author.id}/${message.author.avatar}.webp`}).then((webhook) => {
         webhook.send(embed);
         // message.channel.send(`Pinned a message in <#819782211406397500> (https://discord.com/channels/${message.channel.guild.id}/${message.channel.id}/${message.id})`).then(msg => {
-        // 	msg.suppressEmbeds();
+        //  msg.suppressEmbeds();
         // })
         pins.list.push(message.id);
         updatePins();

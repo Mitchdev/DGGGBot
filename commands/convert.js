@@ -68,7 +68,13 @@ exports.handler = function(interaction) {
 
     if (!complete) interaction.editReply(`Could not convert`);
   }
-
+  /**
+   * Converts value by type and conversionValue
+   * @param {string} type of conversion.
+   * @param {number} conversionValue Conversion value.
+   * @param {number} value Original value.
+   * @return {number} New value.
+   */
   function convertValue(type, conversionValue, value) {
     switch (type) {
       case 'divide':

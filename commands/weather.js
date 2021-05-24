@@ -106,21 +106,21 @@ exports.handler = function(interaction) {
               }
 
               const content = `${coordinatesRes.manicipality}, ${coordinatesRes.countryCode} has ${data.hourly[0].weather[0].description} (Location confidence: ${(coordinatesRes.score < 0) ? '0' : coordinatesRes.score}%)\n\n`+
-											`${alertsText}`+
-											`**---- This Hour ----**\n`+
-											`**Currently** ${data.hourly[0].temp}${units === 'imperial' ? '°F' : (units === 'standard') ? 'K' : '°C'}\n`+
-											`**Feels like** ${data.hourly[0].feels_like}${units === 'imperial' ? '°F' : (units === 'standard') ? 'K' : '°C'}\n`+
-											`**Rain probability** ${data.hourly[0].pop*100}%\n`+
-											`${rainText}${snowText}`+
-											`\n☁️ ${data.hourly[0].clouds}% cloud cover`+
-											`${windText}${sunText}${moonText}\n\n`+
-											`**High** ${data.daily[0].temp.max}${units === 'imperial' ? '°F' : (units === 'standard') ? 'K' : '°C'}\n`+
-											`**Low** ${data.daily[0].temp.min}${units === 'imperial' ? '°F' : (units === 'standard') ? 'K' : '°C'}\n`+
-											`**Dew point** ${data.hourly[0].dew_point}${units === 'imperial' ? '°F' : (units === 'standard') ? 'K' : '°C'}\n`+
-											`**Humidity** ${data.hourly[0].humidity}%\n`+
-											`**Pressure** ${data.hourly[0].pressure}hPa\n`+
-											`**UV** ${data.hourly[0].uvi}\n`+
-											`**Visibility** ${units === 'imperial' ? (data.hourly[0].visibility/1609).toFixed(2)+'mi' : (units === 'standard') ? data.hourly[0].visibility+'m' : (data.hourly[0].visibility/1000).toFixed(2)+'km'}\n`;
+                              `${alertsText}`+
+                              `**---- This Hour ----**\n`+
+                              `**Currently** ${data.hourly[0].temp}${units === 'imperial' ? '°F' : (units === 'standard') ? 'K' : '°C'}\n`+
+                              `**Feels like** ${data.hourly[0].feels_like}${units === 'imperial' ? '°F' : (units === 'standard') ? 'K' : '°C'}\n`+
+                              `**Rain probability** ${data.hourly[0].pop*100}%\n`+
+                              `${rainText}${snowText}`+
+                              `\n☁️ ${data.hourly[0].clouds}% cloud cover`+
+                              `${windText}${sunText}${moonText}\n\n`+
+                              `**High** ${data.daily[0].temp.max}${units === 'imperial' ? '°F' : (units === 'standard') ? 'K' : '°C'}\n`+
+                              `**Low** ${data.daily[0].temp.min}${units === 'imperial' ? '°F' : (units === 'standard') ? 'K' : '°C'}\n`+
+                              `**Dew point** ${data.hourly[0].dew_point}${units === 'imperial' ? '°F' : (units === 'standard') ? 'K' : '°C'}\n`+
+                              `**Humidity** ${data.hourly[0].humidity}%\n`+
+                              `**Pressure** ${data.hourly[0].pressure}hPa\n`+
+                              `**UV** ${data.hourly[0].uvi}\n`+
+                              `**Visibility** ${units === 'imperial' ? (data.hourly[0].visibility/1609).toFixed(2)+'mi' : (units === 'standard') ? data.hourly[0].visibility+'m' : (data.hourly[0].visibility/1000).toFixed(2)+'km'}\n`;
 
               interaction.editReply(content);
             }
@@ -129,7 +129,11 @@ exports.handler = function(interaction) {
       }
     });
   }
-
+  /**
+   * Takes coordinate degree and converts it to a direction
+   * @param {number} deg coordinate degree.
+   * @return {string} direction.
+   */
   function getCardinalDirection(deg) {
     if ((deg > 348.75 && deg <= 360) || (deg < 11.25 && deg >= 0)) return `N`;
     if (deg > 11.25 && deg < 33.75) return `NNE`;

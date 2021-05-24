@@ -30,7 +30,7 @@ module.exports = function(client) {
                   });
                 }
               } else if (filtered[0].data.url.includes('reddit.com/gallery')) {
-                for (const [key, value] of Object.entries(filtered[0].data.media_metadata)) {
+                for (const [key] of Object.entries(filtered[0].data.media_metadata)) {
                   images.push(`https://i.redd.it/${key}.jpg`);
                 }
               } else {

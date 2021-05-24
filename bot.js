@@ -1,5 +1,5 @@
 const {Client, Intents} = require('discord.js');
-const fs = require('fs');
+// const fs = require('fs');
 const client = new Client({'messageCacheMaxSize': 1000, 'fetchAllMembers': true, 'intents': [Intents.ALL]});
 
 const config = require('./options/options.json');

@@ -30,14 +30,14 @@ exports.handler = function(interaction) {
     return;
   }
 
-  /*
-	 * Method to set the difficulty of the Factorization Trinomial(ax^2 +bx+c) object.
-	 * Setting the different difficulties does the following:
-	 * </p>easy-sets the roots to be integers between in the range  [-10,10], and the a coefficient to 1<p>
-	 * </p>medium-sets the roots to be integers between in the range  [-25,25], and the a coefficient to 1<p>
-	 * </p>hard-sets the roots to be rational numbers between in the range  [-15,15]<p>
-	 * @param difficulty the difficulty of which the problem is set to, which can be easy, medium or hard
-	 */
+  /**
+   * Method to set the difficulty of the Factorization Trinomial(ax^2 +bx+c) object.
+   * Setting the different difficulties does the following:
+   *  </p>easy-sets the roots to be integers between in the range  [-10,10], and the a coefficient to 1<p>
+   *  </p>medium-sets the roots to be integers between in the range  [-25,25], and the a coefficient to 1<p>
+   *  </p>hard-sets the roots to be rational numbers between in the range  [-15,15]<p>
+   * @param {number} difficulty of which the problem is set to, which can be easy, medium or hard
+   */
   function setDifficulty(difficulty) {
     if (difficulty == 'easy') {
       r11 = Math.ceil(Math.random()*20) -10;
@@ -90,7 +90,11 @@ exports.handler = function(interaction) {
     }
   }
 
-  function FixCoeff(x) {
+  /**
+   * @param {number} x
+   * @return {string}
+   */
+  function fixCoeff(x) {
     resultCof = '';
     if (Math.abs(x) == 1) {
       if (x < 0) resultCof = '-';
@@ -100,11 +104,19 @@ exports.handler = function(interaction) {
     return resultCof;
   }
 
-  function FixMinus(x) {
+  /**
+   * @param {number} x
+   * @return {string}
+   */
+  function fixMinus(x) {
     return x < 0 ? `+ ${Math.abs(x).toString()}` : `- ${Math.abs(x).toString()}`;
   }
 
-  function FixCoeffMinus(x) {
+  /**
+   * @param {number} x
+   * @return {string}
+   */
+  function fixCoeffMinus(x) {
     resultCof = '+ ';
     if (Math.abs(x) == 1) {
       if (x < 0) resultCof = '- ';
@@ -114,27 +126,30 @@ exports.handler = function(interaction) {
     return resultCof;
   }
 
-  /* Generates the factorisation question as string using generated values for a,b,c
-	 * Returns the factorisation question in the form ax^2 + bx + c
-	 */
-  function QToString() {
-    return `${FixCoeff(a)}x^2 ${FixCoeffMinus(b)}x ${FixCoeffMinus(c)}`;
+  /**
+   * Generates the factorisation question as string using generated values for a,b,c
+   * @return {string} factorisation question in the form ax^2 + bx + c
+   */
+  function qToString() {
+    return `${fixCoeff(a)}x^2 ${fixCoeffMinus(b)}x ${fixCoeffMinus(c)}`;
   }
 
-  /* Generates the factorisation answer as string using generated values for a,b,c dependent on the difficulty
-	 *@return Returns the factorisation answer in the form (mx-r1)(nx-r2) dependent on the difficulty
-	 */
-  function AnsToString(diff) {
+  /**
+   * Generates the factorisation answer as string using generated values for a,b,c dependent on the difficulty.
+   * @param {number} diff
+   * @return {ans} factorisation answer in the form (mx-r1)(nx-r2) dependent on the difficulty
+   */
+  function ansToString(diff) {
     ans = 'Default Trinomial Answer';
     if (diff == 'easy') {
-      ans = `(x ${FixMinus(r1)})(x ${FixMinus(r2)})`;
+      ans = `(x ${fixMinus(r1)})(x ${fixMinus(r2)})`;
     } else if (diff == 'medium') {
-      ans = `(x ${FixMinus(r1)})(x ${FixMinus(r2)})`;
+      ans = `(x ${fixMinus(r1)})(x ${fixMinus(r2)})`;
     } else if (diff == 'hard') {
-      ans = `(${FixCoeff(r12)}x ${FixMinus(r11)})(${FixCoeff(r22)}x ${FixMinus(r21)})`;
+      ans = `(${fixCoeff(r12)}x ${fixMinus(r11)})(${fixCoeff(r22)}x ${fixMinus(r21)})`;
     }
     return ans;
   }
 
-  interaction.editReply(`Question: ${QToString()}\nAnswer: ||${AnsToString(diff)}||`);
+  interaction.editReply(`Question: ${qToString()}\nAnswer: ||${ansToString(diff)}||`);
 };

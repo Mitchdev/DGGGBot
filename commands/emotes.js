@@ -19,7 +19,7 @@ exports.handler = function(interaction) {
   client.guilds.fetch(options.guild).then((guild) => {
     let total = false;
     let all = false;
-    for (var i = 0; i < interaction.options.length; i++) {
+    for (let i = 0; i < interaction.options.length; i++) {
       if (interaction.options[i].name === 'total') total = interaction.options[i].value;
       if (interaction.options[i].name === 'all') all = interaction.options[i].value;
     }
@@ -43,7 +43,7 @@ exports.handler = function(interaction) {
 
     e.sort((a, b) => a.count-b.count);
 
-    for (var i = 0; i < e.length; i++) {
+    for (let i = 0; i < e.length; i++) {
       if (i == 0) {
         combined.unshift([e[i]]);
       } else {
@@ -55,7 +55,7 @@ exports.handler = function(interaction) {
       }
     }
 
-    for (var i = 0; i < combined.length; i++) {
+    for (let i = 0; i < combined.length; i++) {
       if (combined[i].length > Math.round(1950/(totalLen/size))) {
         combined[i] = [{'emotes': combined[i].length, 'count': combined[i][0].count}];
       }

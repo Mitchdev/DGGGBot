@@ -22,8 +22,8 @@ module.exports = function(client) {
           }
         } else if (reaction.message.id == currentVoteID) {
           // TODO:
-          //	Add possiblity for single vote only
-          //		currently people can vote on more than one option.
+          //  Add possiblity for single vote only
+          //    currently people can vote on more than one option.
 
           if (!voteValidReactions.includes(reaction._emoji.name)) {
             reaction.users.remove(user.id);

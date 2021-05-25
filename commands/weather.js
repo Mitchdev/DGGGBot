@@ -129,6 +129,7 @@ exports.handler = function(interaction) {
       }
     });
   }
+
   /**
    * Takes coordinate degree and converts it to a direction
    * @param {number} deg coordinate degree.

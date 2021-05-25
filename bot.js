@@ -1,5 +1,4 @@
 const {Client, Intents} = require('discord.js');
-// const fs = require('fs');
 const client = new Client({'messageCacheMaxSize': 1000, 'fetchAllMembers': true, 'intents': [Intents.ALL]});
 
 const config = require('./options/options.json');
@@ -31,7 +30,7 @@ client.on('ready', () => {
     }, 5000);
   }).catch(console.error);
 
-  console.log('Online!');
+  console.log(`[${new Date().toUTCString()}][INIT] Bot online`);
   client.users.fetch(options.user.mitch).then((mitch) => {
     mitch.send(`Bot restarted!`);
   });

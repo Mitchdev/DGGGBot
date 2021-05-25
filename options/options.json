@@ -1,123 +1,132 @@
 {
-	"token": "",
-	"bot": "784349110517760031",
-	"guild": "768734582648209409",
-	"user": {
-		"mitch": "399186129288560651",
-        "andlin": "98469747905011712"
-	},
-	"emote": {
-		"weird": {
-			"string": "<:WeirdStuff:785230226732613654>",
-			"id": "785230226732613654"
-		},
-		"tony": {
-			"string": "<:tonyW:794911355634712606>",
-			"id": "794911355634712606"
-		},
-		"donowall": {
-			"string": "<:DonoWall:773295613558128671>",
-			"id": "773295613558128671"
-		},
-		"pause": {
-			"string": "<:PauseChamp:813350214927777832>",
-			"id": "813350214927777832"
-		},
-		"pogo": {
-			"string": "<:PogO:788598265951551548>",
-			"id": "788598265951551548"
-		},
-		"ok": {
-			"string": "<:pepok:806462439851163648>",
-			"id": "806462439851163648"
-		},
-		"gun": {
-			"string": "<:Glizzie:806462400769294347>",
-			"id": "806462400769294347"
-		},
-		"sadge": {
-			"string": "<:sadge:778788350840668180>",
-			"id": "778788350840668180"
-		}
-	},
-	"role": {
-		"weebleader": "797782876661088256",
-		"weeb": "787807791192080394",
-		"wizard": "788077328948789298",
-		"mod": "773110638000078888",
-		"mute": "829613714483183631"
-	},
-	"message": {
-		"roles": "805683087601303574"
-	},
-	"channel": {
-		"roles": "798816193405648936",
-		"shitposting": "824029262012088410",
-		"dnd": "786338883699998730",
-		"log": "824147978918297630"
-	},
-	"api": {
-		"andlinPing": {
-			"url": "",
-			"auth": ""
-		},
-		"translate": {
-			"url": "",
-			"auth": ""
-		},
-		"time": {
-			"url": "https://timezone.abstractapi.com/v1/current_time?api_key=",
-			"auth": ""
-		},
-        "coordinates": {
-            "url": "",
-			"auth": ""
-        },
-		"weather": {
-            "url": "https://api.openweathermap.org/data/2.5/onecall?exclude=minutely&appid=",
-			"auth": ""
-		},
-		"currency": {
-			"url": "https://currencyapi.net/api/v1/rates?key=",
-			"auth": ""
-		}
-	},
-	"voteReactions": [
-		"1️⃣",
-		"2️⃣",
-		"3️⃣",
-		"4️⃣",
-		"5️⃣",
-		"6️⃣",
-		"7️⃣",
-		"8️⃣",
-		"9️⃣",
-		"🔟"
-	],
-	"weebPhrases": [
-		"ayaya",
-		"onii-chan",
-		"oniichan",
-		"onii chan",
-		"daijobu",
-		"nani",
-		"omaewashinderu",
-		"omae-wa-shinderu",
-		"omae wa shinderu",
-		"yare-yare",
-		"yare yare",
-		"yareyare",
-		"yare",
-		"tsundere",
-		"baka",
-		"senpai",
-		"kawaii",
-		"manga",
-		"yandere",
-		"chibi",
-		"onee-san",
-		"onee san",
-		"oneesan",
-		"doujinshi"
-	]
+  "token": "",
+  "bot": "784349110517760031",
+  "guild": "768734582648209409",
+  "user": {
+    "mitch": "399186129288560651",
+    "andlin": "98469747905011712"
+  },
+  "emote": {
+    "weird": {
+      "string": "<:WeirdStuff:785230226732613654>",
+      "id": "785230226732613654"
+    },
+    "tony": {
+      "string": "<:tonyW:794911355634712606>",
+      "id": "794911355634712606"
+    },
+    "donowall": {
+      "string": "<:DonoWall:773295613558128671>",
+      "id": "773295613558128671"
+    },
+    "pause": {
+      "string": "<:PauseChamp:813350214927777832>",
+      "id": "813350214927777832"
+    },
+    "pogo": {
+      "string": "<:PogO:788598265951551548>",
+      "id": "788598265951551548"
+    },
+    "ok": {
+      "string": "<:pepok:806462439851163648>",
+      "id": "806462439851163648"
+    },
+    "gun": {
+      "string": "<:Glizzie:806462400769294347>",
+      "id": "806462400769294347"
+    },
+    "sadge": {
+      "string": "<:sadge:778788350840668180>",
+      "id": "778788350840668180"
+    }
+  },
+  "role": {
+    "weebleader": "797782876661088256",
+    "weeb": "787807791192080394",
+    "wizard": "788077328948789298",
+    "mod": "773110638000078888",
+    "mute": "829613714483183631"
+  },
+  "message": {
+    "roles": "805683087601303574"
+  },
+  "channel": {
+    "roles": "798816193405648936",
+    "shitposting": "824029262012088410",
+    "dnd": "786338883699998730",
+    "log": "824147978918297630"
+  },
+  "api": {
+    "andlinPing": {
+      "url": "",
+      "auth": ""
+    },
+    "translate": {
+      "url": "",
+      "auth": ""
+    },
+    "coordinates": {
+      "url": "",
+      "auth": ""
+    },
+    "animal": {
+      "pic": {
+        "ferret": "https://polecat.me/api/ferret",
+        "other": "https://some-random-api.ml/img/"
+      },
+      "fact": {
+        "other": "https://some-random-api.ml/facts/"
+      }
+    },
+    "time": {
+      "url": "https://timezone.abstractapi.com/v1/current_time?api_key=",
+      "auth": ""
+    },
+    "weather": {
+      "url": "https://api.openweathermap.org/data/2.5/onecall?exclude=minutely&appid=",
+      "auth": ""
+    },
+    "currency": {
+      "url": "https://currencyapi.net/api/v1/rates?key=",
+      "auth": ""
+    }
+  },
+  "voteReactions": [
+    "1️⃣",
+    "2️⃣",
+    "3️⃣",
+    "4️⃣",
+    "5️⃣",
+    "6️⃣",
+    "7️⃣",
+    "8️⃣",
+    "9️⃣",
+    "🔟"
+  ],
+  "weebPhrases": [
+    "ayaya",
+    "onii-chan",
+    "oniichan",
+    "onii chan",
+    "daijobu",
+    "nani",
+    "omaewashinderu",
+    "omae-wa-shinderu",
+    "omae wa shinderu",
+    "yare-yare",
+    "yare yare",
+    "yareyare",
+    "yare",
+    "tsundere",
+    "baka",
+    "senpai",
+    "kawaii",
+    "manga",
+    "yandere",
+    "chibi",
+    "onee-san",
+    "onee san",
+    "oneesan",
+    "doujinshi"
+  ]
 }

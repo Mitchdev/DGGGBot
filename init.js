@@ -12,25 +12,36 @@ module.exports = function(commands) {
             commands.push(command);
             if (command.slash) {
               for (let i = 0; i < command.slash.length; i++) {
-                if (command.permission === 'mod') {
-                  guildCommands++;
-                  guild.commands.create(command.slash[i]).then((cmd) => {
-                    cmd.setPermissions([{
-                      id: '773110638000078888',
-                      type: 'ROLE',
-                      permission: true,
-                    }]);
-                  }).catch(console.log);
-                } else {
+                if (command.permission === 'none') {
                   globalCommands++;
                   client.application.commands.create(command.slash[i]).catch(console.log);
+                } else {
+                  guildCommands++;
+                  guild.commands.create(command.slash[i]).then((cmd) => {
+                    if (command.permission === 'mod') {
+                      cmd.setPermissions([{
+                        id: '773110638000078888',
+                        type: 'ROLE',
+                        permission: true,
+                      }]);
+                    } else if (command.permission === 'weeb/wizard') {
+                      cmd.setPermissions([{
+                        id: '788077328948789298',
+                        type: 'ROLE',
+                        permission: true,
+                      }, {
+                        id: '787807791192080394',
+                        type: 'ROLE',
+                        permission: true,
+                      }]);
+                    }
+                  }).catch(console.log);
                 }
               }
             }
           }
         });
         reloadGlobals(client);
-        console.log(`[${new Date().toUTCString()}][INIT] ${commands.length} Total commands loaded`);
         console.log(`[${new Date().toUTCString()}][INIT] ${globalCommands} Global commands loaded`);
         console.log(`[${new Date().toUTCString()}][INIT] ${guildCommands} Guild commands loaded`);
       });

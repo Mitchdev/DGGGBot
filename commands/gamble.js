@@ -59,18 +59,24 @@ exports.handler = function(interaction) {
       found.gambled = true;
       const random = Math.floor(Math.random() * interaction.options[1].value) + 1;
       const percentage = (interaction.options[1].value-1)*10;
-      if (random === 1) {
-        interaction.editReply(`Win! Subtracting ${percentage}% from your timeleft.\n${found.timeRaw} - ${secondsToDuration(Math.round(found.time*(percentage/100)))} = ${secondsToDuration(found.time - Math.round(found.time*(percentage/100)))}`);
-        found.time = found.time - Math.round(found.time*(percentage/100));
-        found.timeRaw = secondsToDuration(found.time);
-        mutes.list.push(found);
-        updateMutes();
+      const difference = (new Date().getTime() - new Date(found.startTime).getTime()) / 1000;
+      const time = (parseInt(found.time) - parseInt(difference) <= 0) ? 0 : parseInt(found.time) - parseInt(difference);
+      if (time > 0) {
+        if (random === 1) {
+          interaction.editReply(`**Win!** Subtracting ${percentage}% from your timeleft.\n${secondsToDhms(time)}- ${secondsToDhms(Math.round(time*(percentage/100)))}= ${secondsToDhms(time - Math.round(time*(percentage/100)))}`);
+          found.time = found.time - Math.round(time*(percentage/100));
+          found.timeRaw = secondsToDuration(found.time);
+          mutes.list.push(found);
+          updateMutes();
+        } else {
+          interaction.editReply(`**Lost!** Adding ${percentage}% to your timeleft.\n${secondsToDhms(time)}+ ${secondsToDhms(Math.round(time*(percentage/100)))}= ${secondsToDhms(time + Math.round(time*(percentage/100)))}`);
+          found.time = found.time + Math.round(time*(percentage/100));
+          found.timeRaw = secondsToDuration(found.time);
+          mutes.list.push(found);
+          updateMutes();
+        }
       } else {
-        interaction.editReply(`Lost! Adding ${percentage}% to your timeleft.\n${found.timeRaw} + ${secondsToDuration(Math.round(found.time*(percentage/100)))} = ${secondsToDuration(found.time + Math.round(found.time*(percentage/100)))}`);
-        found.time = found.time + Math.round(found.time*(percentage/100));
-        found.timeRaw = secondsToDuration(found.time);
-        mutes.list.push(found);
-        updateMutes();
+        interaction.editReply('You don\'t have this role as a temp role.');
       }
     } else {
       interaction.editReply('You\'ve already gambled this temp role.');

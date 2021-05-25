@@ -14,6 +14,6 @@ exports.handler = function(interaction) {
   interaction.editReply((sorted.length > 0) ? `${sorted.map((m) => {
     const difference = (new Date().getTime() - new Date(m.startTime).getTime()) / 1000;
     const time = (parseInt(m.time) - parseInt(difference) <= 0) ? 0 : parseInt(m.time) - parseInt(difference);
-    return `${m.username} is a ${m.roleName} until ${secondsToDhms(time)}`;
+    return `${m.username} is a ${m.roleName} until ${secondsToDhms(time)}${m.gambled ? '' : ' | **Can Gamble**'}`;
   }).join('\n')}` : `Nobody is a mute/weeb/wizard`);
 };

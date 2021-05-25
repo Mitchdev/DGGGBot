@@ -23,31 +23,31 @@ exports.slash = [{
     required: true,
     choices: [{
       name: '2 - (+/-)10% timeleft',
-      value: 2
+      value: 2,
     }, {
       name: '3 - (+/-)20% timeleft',
-      value: 3
+      value: 3,
     }, {
       name: '4 - (+/-)30% timeleft',
-      value: 4
+      value: 4,
     }, {
       name: '5 - (+/-)40% timeleft',
-      value: 5
+      value: 5,
     }, {
       name: '6 - (+/-)50% timeleft',
-      value: 6
+      value: 6,
     }, {
       name: '7 - (+/-)60% timeleft',
-      value: 7
+      value: 7,
     }, {
       name: '8 - (+/-)70% timeleft',
-      value: 8
+      value: 8,
     }, {
       name: '9 - (+/-)80% timeleft',
-      value: 9
+      value: 9,
     }, {
       name: '10 - (+/-)90% timeleft',
-      value: 10
+      value: 10,
     }],
   }],
 }];

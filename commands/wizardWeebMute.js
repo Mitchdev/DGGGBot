@@ -72,7 +72,7 @@ exports.handler = function(interaction) {
                 'startTime': startTime,
                 'time': time,
                 'timeRaw': timeRaw,
-                'gambled': false,
+                'gamble': 3,
               });
               updateMutes();
             } else if (Math.round(Math.random() * 20) == 14) {
@@ -97,7 +97,7 @@ exports.handler = function(interaction) {
                 'startTime': startTime,
                 'time': time,
                 'timeRaw': timeRaw,
-                'gambled': false,
+                'gamble': 3,
               });
               updateMutes();
             }
@@ -118,7 +118,7 @@ exports.handler = function(interaction) {
             'startTime': startTime,
             'time': time,
             'timeRaw': timeRaw,
-            'gambled': false,
+            'gamble': 3,
           });
           updateMutes();
         } else {

@@ -19,7 +19,7 @@ exports.slash = [{
   }, {
     name: 'odds',
     type: 'INTEGER',
-    description: '1 out of X gamble (Keep in mind you can only gamble once per temp role)',
+    description: '1 out of X gamble (Keep in mind you can only gamble 3 per temp role)',
     required: true,
     choices: [{
       name: '2 - (+/-)10% timeleft',
@@ -54,9 +54,9 @@ exports.slash = [{
 exports.handler = function(interaction) {
   const found = mutes.list.find((m) => (m.user == interaction.user.id && m.role == options.role[interaction.options[0].value]));
   if (found) {
-    if (!found.gambled) {
+    if (found.gamble > 0) {
       mutes.list = mutes.list.filter((m) => ((m.user != interaction.user.id) || (m.role != options.role[interaction.options[0].value])));
-      found.gambled = true;
+      found.gamble -= 1;
       const random = Math.floor(Math.random() * interaction.options[1].value) + 1;
       const percentage = (interaction.options[1].value-1)*10;
       const difference = (new Date().getTime() - new Date(found.startTime).getTime()) / 1000;
@@ -79,7 +79,7 @@ exports.handler = function(interaction) {
         interaction.editReply('You don\'t have this role as a temp role.');
       }
     } else {
-      interaction.editReply('You\'ve already gambled this temp role.');
+      interaction.editReply('You\'ve used all your gambles.');
     }
   } else {
     interaction.editReply('You don\'t have this role as a temp role.');

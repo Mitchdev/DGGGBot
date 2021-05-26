@@ -4,37 +4,44 @@ exports.slash = [{
   name: 'emotes',
   description: 'Shows emote usage since last emote added',
   options: [{
-    name: 'total',
-    type: 'BOOLEAN',
-    description: 'Shows emote useage since the begining',
-    required: false,
+    name: 'timeframe',
+    type: 'STRING',
+    description: 'Timeframe of emote uses',
+    required: true,
+    choices: [{
+      name: 'Last added',
+      value: 'false',
+    }, {
+      name: 'Total',
+      value: 'true',
+    }],
   }, {
-    name: 'all',
-    type: 'BOOLEAN',
-    description: 'Shows all the emotes',
-    required: false,
+    name: 'size',
+    type: 'STRING',
+    description: 'Size of shown emote uses',
+    required: true,
+    choices: [{
+      name: 'Top/Bottom 5',
+      value: 'false',
+    }, {
+      name: 'All',
+      value: 'true',
+    }],
   }],
 }];
 exports.handler = function(interaction) {
   client.guilds.fetch(options.guild).then((guild) => {
-    let total = false;
-    let all = false;
-    for (let i = 0; i < interaction.options.length; i++) {
-      if (interaction.options[i].name === 'total') total = interaction.options[i].value;
-      if (interaction.options[i].name === 'all') all = interaction.options[i].value;
-    }
-
-    const e = [];
-    const combined = [];
-    const totalLen = 0;
+    let e = [];
+    let combined = [];
+    let totalLen = 0;
     let size = 0;
 
     guild.emojis.cache.each((emoji) => {
       if (!emoji.animated) {
-        total += parseInt(`<:${emoji.name}:${emoji.id}>`.length);
+        totalLen += parseInt(`<:${emoji.name}:${emoji.id}>`.length);
         size++;
         if (emotesUse.emotes[emoji.id]) {
-          e.push({'name': emoji.name, 'id': emoji.id, 'count': total ? emotesUse.emotes[emoji.id].uses : emotesUse.emotes[emoji.id].newUses});
+          e.push({'name': emoji.name, 'id': emoji.id, 'count': (interaction.options[0].value === 'true') ? emotesUse.emotes[emoji.id].uses : emotesUse.emotes[emoji.id].newUses});
         } else {
           e.push({'name': emoji.name, 'id': emoji.id, 'count': 0});
         }
@@ -61,9 +68,9 @@ exports.handler = function(interaction) {
       }
     }
 
-    const difference = (new Date().getTime() - new Date(total ? emotesUse.started : emotesUse.newStarted).getTime()) / 1000;
-    if (all) {
-      const content = 'Emote usage since '+secondsToDhms(parseInt(difference))+'ago ('+new Date(total ? emotesUse.started : emotesUse.newStarted).toUTCString()+')\n'+combined.map((l) => {
+    const difference = (new Date().getTime() - new Date((interaction.options[0].value === 'true') ? emotesUse.started : emotesUse.newStarted).getTime()) / 1000;
+    if ((interaction.options[1].value === 'true')) {
+      let content = 'Emote usage since '+secondsToDhms(parseInt(difference))+'ago ('+new Date((interaction.options[0].value === 'true') ? emotesUse.started : emotesUse.newStarted).toUTCString()+')\n'+combined.map((l) => {
         if (l) {
           if (l[0].emotes) {
             return l[0].count + ' - ' + l[0].emotes + ' emotes';
@@ -76,11 +83,12 @@ exports.handler = function(interaction) {
           return;
         }
       }).join('\n');
-      interaction.editReply(content.length > 2000 ? `Working on a fix to post more than 2000 characters` : content);
+
+      splitMessage(interaction, content);
     } else {
       const top5 = [combined[0], combined[1], combined[2], combined[3], combined[4]];
       const bottom5 = [combined[combined.length-1], combined[combined.length-2], combined[combined.length-3], combined[combined.length-4], combined[combined.length-5]];
-      interaction.editReply('Emote usage since '+secondsToDhms(parseInt(difference))+'ago ('+new Date(total ? emotesUse.started : emotesUse.newStarted).toUTCString()+')\n**Most used**\n'+top5.map((l) => {
+      interaction.editReply('Emote usage since '+secondsToDhms(parseInt(difference))+'ago ('+new Date((interaction.options[0].value === 'true') ? emotesUse.started : emotesUse.newStarted).toUTCString()+')\n**Most used**\n'+top5.map((l) => {
         if (l) {
           if (l[0].emotes) {
             return l[0].count + ' - ' + l[0].emotes + ' emotes';

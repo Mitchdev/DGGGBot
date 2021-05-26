@@ -9,7 +9,6 @@ module.exports = function(conf) {
   voteValidReactions = [];
   inviteList = [];
   gunCooldown = false;
-  timedout = false;
   feedTimers = {};
 
   client = conf.client;

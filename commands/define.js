@@ -11,7 +11,6 @@ exports.slash = [{
   }],
 }];
 exports.handler = function(interaction) {
-  if (!timedout) {
     const prase = interaction.options[0].value.toLowerCase();
     if (prase == 'mitch') {
       const content = `**mitch**\nThe best moderator.`;
@@ -23,28 +22,14 @@ exports.handler = function(interaction) {
           if (data.length > 0) {
             if (data[0].example) {
               if ((`**${prase}**\n${data[0].definition}\n\n${data[0].example}`).length >= 2000) interaction.editReply(options.emote.donowall.string);
-              else {
-                interaction.editReply(`**${prase}**\n${data[0].definition}\n\n${data[0].example}`);
-                setTimeout(function() {
-                  timedout = false;
-                }, 30*1000);
-                timedout = true;
-              }
+              else interaction.editReply(`**${prase}**\n${data[0].definition}\n\n${data[0].example}`);
             } else {
               if ((`**${prase}**\n${data[0].definition}`).length >= 2000) interaction.editReply(options.emote.donowall.string);
-              else {
-                interaction.editReply(`**${prase}**\n${data[0].definition}`);
-                setTimeout(function() {
-                  timedout = false;
-                }, 30*1000);
-                timedout = true;
-              }
+              else interaction.editReply(`**${prase}**\n${data[0].definition}`);
             }
           } else interaction.editReply(`Couldn\'t find anything for **${prase}**.`);
         }
       });
     }
-  } else {
-    interaction.editReply(options.emote.donowall.string);
   }
 };

@@ -31,8 +31,8 @@ exports.slash = [{
 }];
 exports.handler = function(interaction) {
   client.guilds.fetch(options.guild).then((guild) => {
-    let e = [];
-    let combined = [];
+    const e = [];
+    const combined = [];
     let totalLen = 0;
     let size = 0;
 
@@ -70,7 +70,7 @@ exports.handler = function(interaction) {
 
     const difference = (new Date().getTime() - new Date((interaction.options[0].value === 'true') ? emotesUse.started : emotesUse.newStarted).getTime()) / 1000;
     if ((interaction.options[1].value === 'true')) {
-      let content = 'Emote usage since '+secondsToDhms(parseInt(difference))+'ago ('+new Date((interaction.options[0].value === 'true') ? emotesUse.started : emotesUse.newStarted).toUTCString()+')\n'+combined.map((l) => {
+      const content = 'Emote usage since '+secondsToDhms(parseInt(difference))+'ago ('+new Date((interaction.options[0].value === 'true') ? emotesUse.started : emotesUse.newStarted).toUTCString()+')\n'+combined.map((l) => {
         if (l) {
           if (l[0].emotes) {
             return l[0].count + ' - ' + l[0].emotes + ' emotes';

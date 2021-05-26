@@ -91,7 +91,7 @@ exports.slash = [{
         name: '#5',
         value: 5,
       }],
-    }]
+    }],
   }],
 }];
 exports.handler = function(interaction) {
@@ -121,11 +121,13 @@ exports.handler = function(interaction) {
             updateMutes();
           }
         } else if (interaction.options[0].name === 'horse') {
-          let horseDistance = [0, 0, 0, 0, 0];
+          const horseDistance = [0, 0, 0, 0, 0];
           interaction.editReply(`**You picked #${interaction.options[0].options[1].value} in the horse race**\n${horseDistance.map((dist, index) => {
             return `🏁 ${('- '.repeat(5-dist)).trim()} 🏇 #${index+1}`;
           }).join('\n')}`);
-          setTimeout(function() {updateHorse(horseDistance, time)}, 750);
+          setTimeout(function() {
+            updateHorse(horseDistance, time);
+          }, 750);
         }
       } else {
         interaction.editReply('You don\'t have this role as a temp role.');
@@ -137,8 +139,13 @@ exports.handler = function(interaction) {
     interaction.editReply('You don\'t have this role as a temp role.');
   }
 
+  /**
+   * Updates the horse race message.
+   * @param {array} array of horse distances
+   * @param {number} time current temp role time
+   */
   function updateHorse(array, time) {
-    let horseDistance = array;
+    const horseDistance = array;
     const horse = Math.floor(Math.random() * 5);
     horseDistance[horse]++;
     if (horseDistance[horse] == 5) {
@@ -163,7 +170,9 @@ exports.handler = function(interaction) {
       interaction.editReply(`**You picked #${interaction.options[0].options[1].value} in the horse race**\n${horseDistance.map((dist, index) => {
         return `🏁 ${('- '.repeat(5-dist)).trim()} 🏇 #${index+1}`;
       }).join('\n')}`);
-      setTimeout(function() {updateHorse(horseDistance, time)}, 750);
+      setTimeout(function() {
+        updateHorse(horseDistance, time);
+      }, 750);
     }
   }
 };

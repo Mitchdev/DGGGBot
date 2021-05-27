@@ -123,11 +123,9 @@ exports.handler = function(interaction) {
         } else if (interaction.options[0].name === 'horse') {
           const horseDistance = [0, 0, 0, 0, 0];
           interaction.editReply(`**You picked #${interaction.options[0].options[1].value} in the horse race**\n${horseDistance.map((dist, index) => {
-            return `🏁 ${('- '.repeat(5-dist)).trim()} 🏇 #${index+1}`;
+            return `🏁 ${('- '.repeat(10-dist)).trim()} 🏇 #${index+1}`;
           }).join('\n')}`);
-          setTimeout(function() {
-            updateHorse(horseDistance, time);
-          }, 750);
+          setTimeout(() => updateHorse(horseDistance, time), 750);
         }
       } else {
         interaction.editReply('You don\'t have this role as a temp role.');
@@ -145,21 +143,26 @@ exports.handler = function(interaction) {
    * @param {number} time current temp role time
    */
   function updateHorse(array, time) {
+    let horseRaceEnd = false;
     const horseDistance = array;
-    const horse = Math.floor(Math.random() * 5);
-    horseDistance[horse]++;
-    if (horseDistance[horse] == 5) {
-      if ((horse+1) === interaction.options[0].options[1].value) {
+    const horseMove = [Math.floor(Math.random() * 2), Math.floor(Math.random() * 2), Math.floor(Math.random() * 2), Math.floor(Math.random() * 2), Math.floor(Math.random() * 2)];
+    if ((horseMove[0] + horseMove[1] + horseMove[2] + horseMove[3] + horseMove[4]) === 0) horseMove[Math.floor(Math.random() * 5)] = 1;
+    for (let i = 0; i < horseDistance.length; i++) {
+      horseDistance[i] += horseMove[i];
+      if (horseDistance[i] === 10) horseRaceEnd = true;
+    }
+    if (horseRaceEnd) {
+      if (horseDistance[interaction.options[0].options[1].value-1] === 10) {
         interaction.editReply(`**You picked #${interaction.options[0].options[1].value} in the horse race**\n${horseDistance.map((dist, index) => {
-          return `🏁 ${('- '.repeat(5-dist)).trim()} 🏇 #${index+1}`;
+          return `🏁 ${('- '.repeat(10-dist)).trim()} 🏇 #${index+1}`;
         }).join('\n')}\n\n**Win!** Subtracting 40% from your timeleft.\n${secondsToDhms(time)}- ${secondsToDhms(Math.round(time*0.4))}= ${secondsToDhms(time - Math.round(time*0.4))}`);
-        found.time = found.time - Math.round(time*(percentage/100));
+        found.time = found.time - Math.round(time*0.4);
         found.timeRaw = secondsToDuration(found.time);
         mutes.list.push(found);
         updateMutes();
       } else {
         interaction.editReply(`**You picked #${interaction.options[0].options[1].value} in the horse race**\n${horseDistance.map((dist, index) => {
-          return `🏁 ${('- '.repeat(5-dist)).trim()} 🏇 #${index+1}`;
+          return `🏁 ${('- '.repeat(10-dist)).trim()} 🏇 #${index+1}`;
         }).join('\n')}\n\n**Lost!** Adding 40% to your timeleft.\n${secondsToDhms(time)}+ ${secondsToDhms(Math.round(time*0.4))}= ${secondsToDhms(time + Math.round(time*0.4))}`);
         found.time = found.time + Math.round(time*0.4);
         found.timeRaw = secondsToDuration(found.time);
@@ -168,11 +171,9 @@ exports.handler = function(interaction) {
       }
     } else {
       interaction.editReply(`**You picked #${interaction.options[0].options[1].value} in the horse race**\n${horseDistance.map((dist, index) => {
-        return `🏁 ${('- '.repeat(5-dist)).trim()} 🏇 #${index+1}`;
+        return `🏁 ${('- '.repeat(10-dist)).trim()} 🏇 #${index+1}`;
       }).join('\n')}`);
-      setTimeout(function() {
-        updateHorse(horseDistance, time);
-      }, 750);
+      setTimeout(() => updateHorse(horseDistance, time), 750);
     }
   }
 };

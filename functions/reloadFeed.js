@@ -16,18 +16,20 @@ module.exports = function(client) {
               feeds.list[feedIndex].posted.push(filtered[0].data.id);
 
               if (filtered[0].data.url.includes('redgifs.com')) {
-                if (filtered[0].data.secure_media.oembed.thumbnail_url) {
-                  const image = filtered[0].data.secure_media.oembed.thumbnail_url.split('.');
-                  if (image.length > 0) {
-                    image[image.length-1] = 'mp4';
-                    images.push(image.join('.'));
+                if (filtered[0].data.secure_media) {
+                  if (filtered[0].data.secure_media.oembed.thumbnail_url) {
+                    const image = filtered[0].data.secure_media.oembed.thumbnail_url.split('.');
+                    if (image.length > 0) {
+                      image[image.length-1] = 'mp4';
+                      images.push(image.join('.'));
+                    } else {
+                      images.push(filtered[0].data.preview.reddit_video_preview);
+                    }
                   } else {
-                    images.push(filtered[0].data.preview.reddit_video_preview);
+                    client.users.fetch(options.user.mitch).then((mitch) => {
+                      mitch.send(`**Reddit:** https://reddit.com${filtered[0].data.permalink}.json`);
+                    });
                   }
-                } else {
-                  client.users.fetch(options.user.mitch).then((mitch) => {
-                    mitch.send(`**Reddit:** https://reddit.com${filtered[0].data.permalink}.json`);
-                  });
                 }
               } else if (filtered[0].data.url.includes('reddit.com/gallery')) {
                 for (const [key] of Object.entries(filtered[0].data.media_metadata)) {

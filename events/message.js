@@ -65,7 +65,7 @@ module.exports = function(client) {
                     'startTime': new Date(),
                     'time': 86400,
                     'timeRaw': '1d',
-                    'gamble': 3,
+                    'gamble': 5,
                   });
                   updateMutes();
                 } else {

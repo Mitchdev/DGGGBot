@@ -1,10 +1,12 @@
-exports.name = ['feeds'];
-exports.permission = 'none';
-exports.slash = [{
+exports.commands = {'feeds': 'none'};
+exports.buttons = {};
+exports.slashes = [{
   name: 'feeds',
   description: 'Lists all the feeds',
 }];
-exports.handler = function(interaction) {
+exports.commandHandler = function(interaction) {
+  interaction.defer();
+  
   interaction.editReply(`**Feeds**\n${feeds.list.map((item) => {
     return `${client.channels.cache.find((c) => c.id === item.channel)} every ${item.interval} seconds`;
   }).join('\n')}`);

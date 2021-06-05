@@ -1,6 +1,6 @@
-exports.name = ['feed'];
-exports.permission = 'mod';
-exports.slash = [{
+exports.commands = {'feed': 'mod'};
+exports.buttons = {};
+exports.slashes = [{
   name: 'feed',
   description: 'Feed commands',
   defaultPermission: false,
@@ -48,40 +48,42 @@ exports.slash = [{
     }],
   }],
 }];
-exports.handler = function(interaction) {
-  const command = interaction.options[0];
+exports.commandHandler = function(interaction) {
+  interaction.defer();
+
+  const command = interaction.options.first();
   const feedIndex = feeds.list.findIndex((feed) => feed.channel == interaction.channelID);
   if (feedIndex >= 0) {
     if (command.name === 'list') {
       if (feedIndex >= 0) interaction.editReply(`**Subs in the feed**\n${feeds.list[feedIndex].subs.join('\n')}`);
       else interaction.editReply(`No feed in this channel`);
     } else if (command.name === 'sub') {
-      request(`https://www.reddit.com/subreddits/search.json?q=${command.options[0].value}&nsfw=1&include_over_18=on`, (err, req, res) => {
+      request(`https://www.reddit.com/subreddits/search.json?q=${command.options.get('subreddit').value}&nsfw=1&include_over_18=on`, (err, req, res) => {
         const data = JSON.parse(res);
         if (data.data.dist > 0) {
           const filtered = data.data.children.filter((item) => {
-            return item.data.display_name.toLowerCase() === command.options[0].value;
+            return item.data.display_name.toLowerCase() === command.options.get('subreddit').value;
           });
           if (filtered.length > 0) {
-            feeds.list[feedIndex].subs.push(command.options[0].value);
-            interaction.editReply(`Added ${command.options[0].value} to the feed.`);
+            feeds.list[feedIndex].subs.push(command.options.get('subreddit').value);
+            interaction.editReply(`Added ${command.options.get('subreddit').value} to the feed.`);
             updateFeed();
-          } else interaction.editReply(`Could not find subreddit ${command.options[0].value}`);
-        } else interaction.editReply(`Could not find subreddit ${command.options[0].value}`);
+          } else interaction.editReply(`Could not find subreddit ${command.options.get('subreddit').value}`);
+        } else interaction.editReply(`Could not find subreddit ${command.options.get('subreddit').value}`);
       });
     } else if (command.name === 'unsub') {
-      if (feeds.list[feedIndex].subs.includes(command.options[0].value)) {
+      if (feeds.list[feedIndex].subs.includes(command.options.get('subreddit').value)) {
         feeds.list[feedIndex].subs = feeds.list[feedIndex].subs.filter((item) => {
-          return item !== command.options[0].value;
+          return item !== command.options.get('subreddit').value;
         });
-        interaction.editReply(`Removed ${command.options[0].value} from the feed.`);
+        interaction.editReply(`Removed ${command.options.get('subreddit').value} from the feed.`);
         updateFeed();
       } else interaction.editReply(`Subreddit not in feed.`);
     } else if (command.name === 'interval') {
       if (command.options.length > 0) {
-        if (command.options[0].value > 10) {
-          interaction.editReply(`Updated interval from ${feeds.list[feedIndex].interval} seconds to ${command.options[0].value} seconds.`);
-          feeds.list[feedIndex].interval = command.options[0].value;
+        if (command.options.get('interval').value > 10) {
+          interaction.editReply(`Updated interval from ${feeds.list[feedIndex].interval} seconds to ${command.options.get('interval').value} seconds.`);
+          feeds.list[feedIndex].interval = command.options.get('interval').value;
           clearInterval(feedTimers[feeds.list[feedIndex].channel]);
           feedTimer(feedIndex);
           updateFeed();

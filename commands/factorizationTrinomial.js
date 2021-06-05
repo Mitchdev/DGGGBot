@@ -1,6 +1,6 @@
-exports.name = ['trinomial'];
-exports.permission = 'none';
-exports.slash = [{
+exports.commands = {'trinomial': 'none'};
+exports.buttons = {};
+exports.slashes = [{
   name: 'trinomial',
   description: 'Gives a factorisation trinomial question and answer',
   options: [{
@@ -20,10 +20,12 @@ exports.slash = [{
     }],
   }],
 }];
-exports.handler = function(interaction) {
+exports.commandHandler = function(interaction) {
+  interaction.defer();
+
   let a; let b; let c; let r11; let r12; let r21; let r22;
   let r1; let r2;
-  const diff = interaction.options[0].value;
+  const diff = interaction.options.get('difficulty').value;
   if (diff == 'easy' || diff == 'medium' || diff == 'hard') {
     setDifficulty(diff);
   } else {

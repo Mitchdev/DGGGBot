@@ -1,6 +1,6 @@
-exports.name = ['wizard', 'weeb', 'mute'];
-exports.permission = 'mod';
-exports.slash = [{
+exports.commands = {'mute': 'mod', 'weeb': 'mod', 'wizard': 'mod'};
+exports.buttons = {};
+exports.slashes = [{
   name: 'mute',
   description: 'Gives mentions user mute role for duration',
   defaultPermission: false,
@@ -46,10 +46,12 @@ exports.slash = [{
     required: true,
   }],
 }];
-exports.handler = function(interaction) {
+exports.commandHandler = function(interaction) {
+  interaction.defer();
+  
   const roleRaw = interaction.commandName === 'wizard' ? 'Wizard' : interaction.commandName === 'weeb' ? 'Weeb' : 'Mute';
   const roleID = roleRaw == 'Wizard' ? options.role.wizard : (roleRaw == 'Weeb' ? options.role.weeb : options.role.mute);
-  const timeRaw = interaction.options[1].value;
+  const timeRaw = interaction.options.get('duration').value;
   const time = timeToSeconds(timeRaw);
 
   if (time != null && time > 0) {
@@ -57,7 +59,7 @@ exports.handler = function(interaction) {
       client.guilds.resolve(options.guild).roles.fetch(roleID).then((role) => {
         const startTime = new Date();
         const inc = mutes.list.filter((m) => {
-          return m.user == interaction.options[0].user.id && m.role == roleID;
+          return m.user == interaction.options.get('user').user.id && m.role == roleID;
         });
         if (inc.length == 0) {
           if (!gunCooldown) {
@@ -87,11 +89,11 @@ exports.handler = function(interaction) {
                 gunCooldown = false;
               }, 600000);
             } else {
-              if (!interaction.options[0].member._roles.includes(roleID)) interaction.options[0].member.roles.add(role);
-              interaction.editReply(`${options.emote.ok.string} ${interaction.options[0].user.username} is a ${roleRaw} for ${timeRaw}`);
+              if (!interaction.options.get('user').member._roles.includes(roleID)) interaction.options.get('user').member.roles.add(role);
+              interaction.editReply(`${options.emote.ok.string} ${interaction.options.get('user').user.username} is a ${roleRaw} for ${timeRaw}`);
               mutes.list.push({
-                'user': interaction.options[0].user.id,
-                'username': interaction.options[0].user.username,
+                'user': interaction.options.get('user').user.id,
+                'username': interaction.options.get('user').user.username,
                 'role': roleID,
                 'roleName': roleRaw,
                 'startTime': startTime,
@@ -104,15 +106,15 @@ exports.handler = function(interaction) {
           } else {
             interaction.editReply(`Fixing the gun...`);
           }
-        } else if (interaction.user.id != interaction.options[0].user.id) {
-          if (!interaction.options[0].member._roles.includes(roleID)) interaction.options[0].member.roles.add(role);
-          interaction.editReply(`${options.emote.ok.string} Updated ${interaction.options[0].user.username}\'s ${roleRaw} time from ${inc[0].timeRaw} to ${timeRaw}`);
+        } else if (interaction.user.id != interaction.options.get('user').user.id) {
+          if (!interaction.options.get('user').member._roles.includes(roleID)) interaction.options.get('user').member.roles.add(role);
+          interaction.editReply(`${options.emote.ok.string} Updated ${interaction.options.get('user').user.username}\'s ${roleRaw} time from ${inc[0].timeRaw} to ${timeRaw}`);
           mutes.list = mutes.list.filter((m) => {
-            return (m.user != interaction.options[0].user.id) || (m.role != roleID);
+            return (m.user != interaction.options.get('user').user.id) || (m.role != roleID);
           });
           mutes.list.push({
-            'user': interaction.options[0].user.id,
-            'username': interaction.options[0].user.username,
+            'user': interaction.options.get('user').user.id,
+            'username': interaction.options.get('user').user.username,
             'role': roleID,
             'roleName': roleRaw,
             'startTime': startTime,

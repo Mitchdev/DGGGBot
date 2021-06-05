@@ -1,5 +1,5 @@
 module.exports = function(client) {
   updatePins = function() {
-    fs.writeFileSync('./options/pins.json', JSON.stringify(pins));
+    fs.writeFileSync(dpath.join(__dirname, '../options/pins.json'), JSON.stringify(pins));
   };
 };

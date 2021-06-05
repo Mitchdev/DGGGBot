@@ -1,10 +1,12 @@
-exports.name = ['shame'];
-exports.permission = 'none';
-exports.slash = [{
+exports.commands = {'shame': 'none'};
+exports.buttons = {};
+exports.slashes = [{
   name: 'shame',
   description: 'Shows list of indefinitely roled users',
 }];
-exports.handler = function(interaction) {
+exports.commandHandler = function(interaction) {
+  interaction.defer();
+  
   client.guilds.fetch(options.guild).then((guild) => {
     guild.roles.fetch(options.role.wizard).then((wizardRole) => {
       const wizardUsers = [];

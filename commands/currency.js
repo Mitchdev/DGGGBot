@@ -1,6 +1,6 @@
-exports.name = ['currency'];
-exports.permission = 'none';
-exports.slash = [{
+exports.commands = {'currency': 'none'};
+exports.buttons = {};
+exports.slashes = [{
   name: 'currency',
   description: 'Converts ammount from one currency to another',
   options: [{
@@ -20,21 +20,23 @@ exports.slash = [{
     required: true,
   }],
 }];
-exports.handler = function(interaction) {
+exports.commandHandler = function(interaction) {
+  interaction.defer();
+  
   request(options.api.currency.url + options.api.currency.auth, function(err, req, res) {
     if (!err) {
       const rates = JSON.parse(res).rates;
-      const source = interaction.options[1].value.toUpperCase();
-      const target = interaction.options[2].value.toUpperCase();
+      const source = interaction.options.get('source').value.toUpperCase();
+      const target = interaction.options.get('target').value.toUpperCase();
       if (rates[source] && rates[target]) {
-        const USD = parseFloat(interaction.options[0].value) / rates[source];
+        const USD = parseFloat(interaction.options.get('amount').value) / rates[source];
         const REQ = USD * rates[target];
-        interaction.editReply(`${interaction.options[0].value} ${source} = ${REQ.toFixed(2)} ${target}`);
+        interaction.editReply(`${interaction.options.get('amount').value} ${source} = ${REQ.toFixed(2)} ${target}`);
       } else {
         let content = ``;
-        if (!rates[source] && !rates[target]) content = `Could not find ${interaction.options[1].value} or ${interaction.options[2].value}`;
-        else if (!rates[source]) content = `Could not find ${interaction.options[1].value}`;
-        else content = `Could not find ${interaction.options[2].value}`;
+        if (!rates[source] && !rates[target]) content = `Could not find ${interaction.options.get('source').value} or ${interaction.options.get('target').value}`;
+        else if (!rates[source]) content = `Could not find ${interaction.options.get('source').value}`;
+        else content = `Could not find ${interaction.options.get('target').value}`;
         interaction.editReply(content);
       }
     }

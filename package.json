@@ -21,6 +21,7 @@
     "eslint-config-google": "^0.14.0"
   },
   "dependencies": {
+    "@pm2/io": "^5.0.0",
     "discord.js": "github:discordjs/discord.js",
     "fs": "0.0.1-security",
     "os": "^0.1.1",

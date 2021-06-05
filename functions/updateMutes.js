@@ -1,5 +1,5 @@
 module.exports = function(client) {
   updateMutes = function() {
-    fs.writeFileSync('./options/mutes.json', JSON.stringify(mutes));
+    fs.writeFileSync(dpath.join(__dirname, '../options/mutes.json'), JSON.stringify(mutes));
   };
 };

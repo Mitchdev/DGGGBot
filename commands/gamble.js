@@ -1,13 +1,13 @@
-exports.name = ['gamble'];
-exports.permission = 'weeb/wizard';
-exports.slash = [{
+exports.commands = {'gamble': 'weeb/wizard'};
+exports.buttons = {'acceptduel': 'none', 'denyduel': 'none'};
+exports.slashes = [{
   name: 'gamble',
   description: 'Gamble a temporary role time',
   defaultPermission: false,
   options: [{
     name: 'odds',
-    type: 'SUB_COMMAND',
     description: 'Basic odds gamble',
+    type: 'SUB_COMMAND',
     options: [{
       name: 'role',
       type: 'STRING',
@@ -56,8 +56,8 @@ exports.slash = [{
     }],
   }, {
     name: 'horse',
-    type: 'SUB_COMMAND',
     description: 'Horse racing gamble',
+    type: 'SUB_COMMAND',
     options: [{
       name: 'role',
       type: 'STRING',
@@ -92,49 +92,97 @@ exports.slash = [{
         value: 5,
       }],
     }],
+  }, {
+    name: 'duel',
+    description: 'Duel another player',
+    type: 'SUB_COMMAND_GROUP',
+    options: [{
+      name: 'create',
+      description: 'Create a duel with another player',
+      type: 'SUB_COMMAND',
+      options: [{
+        name: 'role',
+        type: 'STRING',
+        description: 'Role to gamble',
+        required: true,
+        choices: [{
+          name: 'Weeb',
+          value: 'weeb',
+        }, {
+          name: 'Wizard',
+          value: 'wizard',
+        }],
+      }, {
+        name: 'user',
+        type: 'USER',
+        description: 'User to duel',
+        required: true,
+      }],
+    }],
   }],
 }];
-exports.handler = function(interaction) {
-  const found = mutes.list.find((m) => (m.user == interaction.user.id && m.role == options.role[interaction.options[0].options[0].value]));
-  if (found) {
-    if (found.gamble > 0) {
-      const difference = (new Date().getTime() - new Date(found.startTime).getTime()) / 1000;
-      const time = (parseInt(found.time) - parseInt(difference) <= 0) ? 0 : parseInt(found.time) - parseInt(difference);
-      if (time > 0) {
-        mutes.list = mutes.list.filter((m) => ((m.user != interaction.user.id) || (m.role != options.role[interaction.options[0].options[0].value])));
-        found.gamble -= 1;
+exports.commandHandler = function(interaction, Discord) {
+  interaction.defer();
+  
+  if (interaction.options.first().name === 'odds') {
+    const foundUser = userHasRole(interaction.user.id, options.role[interaction.options.first().options.get('role').value], true);
+    if (foundUser.err) interaction.editReply(foundUser.err);
+    else {
+      const random = Math.floor(Math.random() * interaction.options.first().options.get('odds').value) + 1;
+      const percentage = (interaction.options.first().options.get('odds').value-1)*10;
+      foundUser.found.gamble -= 1;
+      if (random === 1) {
+        mutes.list = mutes.list.filter((m) => ((m.user != interaction.user.id) || (m.role != options.role[interaction.options.first().options.get('role').value])));
+        interaction.editReply(`**Win!** Subtracting ${percentage}% from your timeleft.\n${secondsToDhms(foundUser.time)}- ${secondsToDhms(Math.round(foundUser.time*(percentage/100)))}= ${secondsToDhms(foundUser.time - Math.round(foundUser.time*(percentage/100)))}`);
+        foundUser.found.time = foundUser.found.time - Math.round(foundUser.time*(percentage/100));
+        foundUser.found.timeRaw = secondsToDuration(foundUser.found.time);
+        mutes.list.push(foundUser.found);
         updateMutes();
-        if (interaction.options[0].name === 'odds') {
-          const random = Math.floor(Math.random() * interaction.options[0].options[1].value) + 1;
-          const percentage = (interaction.options[0].options[1].value-1)*10;
-          if (random === 1) {
-            interaction.editReply(`**Win!** Subtracting ${percentage}% from your timeleft.\n${secondsToDhms(time)}- ${secondsToDhms(Math.round(time*(percentage/100)))}= ${secondsToDhms(time - Math.round(time*(percentage/100)))}`);
-            found.time = found.time - Math.round(time*(percentage/100));
-            found.timeRaw = secondsToDuration(found.time);
-            mutes.list.push(found);
-            updateMutes();
-          } else {
-            interaction.editReply(`**Lost!** Adding ${percentage}% to your timeleft.\n${secondsToDhms(time)}+ ${secondsToDhms(Math.round(time*(percentage/100)))}= ${secondsToDhms(time + Math.round(time*(percentage/100)))}`);
-            found.time = found.time + Math.round(time*(percentage/100));
-            found.timeRaw = secondsToDuration(found.time);
-            mutes.list.push(found);
-            updateMutes();
-          }
-        } else if (interaction.options[0].name === 'horse') {
-          const horseDistance = [0, 0, 0, 0, 0];
-          interaction.editReply(`**You picked #${interaction.options[0].options[1].value} in the horse race**\n${horseDistance.map((dist, index) => {
-            return `🏁 ${('- '.repeat(10-dist)).trim()} 🏇 #${index+1}`;
-          }).join('\n')}`);
-          setTimeout(() => updateHorse(horseDistance, time), 750);
-        }
       } else {
-        interaction.editReply('You don\'t have this role as a temp role.');
+        mutes.list = mutes.list.filter((m) => ((m.user != interaction.user.id) || (m.role != options.role[interaction.options.first().options.get('role').value])));
+        interaction.editReply(`**Lost!** Adding ${percentage}% to your timeleft.\n${secondsToDhms(foundUser.time)}+ ${secondsToDhms(Math.round(foundUser.time*(percentage/100)))}= ${secondsToDhms(foundUser.time + Math.round(foundUser.time*(percentage/100)))}`);
+        foundUser.found.time = foundUser.found.time + Math.round(foundUser.time*(percentage/100));
+        foundUser.found.timeRaw = secondsToDuration(foundUser.found.time);
+        mutes.list.push(foundUser.found);
+        updateMutes();
       }
-    } else {
-      interaction.editReply('You\'ve used all your gambles.');
     }
-  } else {
-    interaction.editReply('You don\'t have this role as a temp role.');
+  } else if (interaction.options.first().name === 'horse') {
+    const foundUser = userHasRole(interaction.user.id, options.role[interaction.options.first().options.get('role').value], true);
+    if (foundUser.err) interaction.editReply(foundUser.err);
+    else {
+      const horseDistance = [0, 0, 0, 0, 0];
+      foundUser.found.gamble -= 1;
+      interaction.editReply(`**You picked #${interaction.options.first().options.get('horse').value} in the horse race**\n${horseDistance.map((dist, index) => {
+        return `🏁 ${('- '.repeat(10-dist)).trim()} 🏇 #${index+1}`;
+      }).join('\n')}`);
+      setTimeout(() => updateHorse(horseDistance, foundUser), 750);
+    }
+  } else if (interaction.options.first().name === 'duel') {
+    if (interaction.options.first().options.first().name === 'create') {
+      const foundUser1 = userHasRole(interaction.user.id, options.role[interaction.options.first().options.first().options.get('role').value], false);
+      const foundUser2 = userHasRole(interaction.options.first().options.first().options.get('user').value, options.role[interaction.options.first().options.first().options.get('role').value], false);
+      if (foundUser1.err) interaction.editReply(foundUser1.err);
+      else if (foundUser2.err || interaction.user.id == interaction.options.first().options.first().options.get('user').value) interaction.editReply(`Cannot duel this user`);
+      else {
+        if (gambleDuels[foundUser2.found.user]) {
+          interaction.editReply(`${interaction.options.first().options.first().options.get('user').member.username} already has a duel waiting to accept`);
+        } else {
+          foundUser1["username"] = interaction.member.displayName;
+          foundUser2["username"] = interaction.options.first().options.first().options.get('user').member.displayName;
+          gambleDuels[foundUser2.found.user] = {"user1": foundUser1, "user2": foundUser2}
+          const row = new Discord.MessageActionRow().addComponents(new Discord.MessageButton({custom_id: 'acceptduel', label: 'Accept', style: 'SUCCESS', disabled: false})).addComponents(new Discord.MessageButton({custom_id: 'denyduel', label: 'Deny', style: 'DANGER', disabled: false}));
+          interaction.editReply(`<@!${interaction.options.first().options.first().options.get('user').value}>, ${interaction.member.displayName} wants to duel. (You have 2m to accept)`, {components: [row]});
+          setTimeout(() => {
+            if (gambleDuels[foundUser2.found.user]) {
+              delete gambleDuels[foundUser2.found.user];
+              const row = new Discord.MessageActionRow().addComponents(new Discord.MessageButton({custom_id: 'null', label: `${foundUser2.username} failed to accept`, style: 'DANGER', disabled: true}));
+              interaction.editReply(`<@!${interaction.options.first().options.first().options.get('user').value}>, ${interaction.member.displayName} wants to duel. (You have 2m to accept)`, {components: [row]})
+            }
+          }, 120000);
+        }
+      }
+    }
   }
 
   /**
@@ -142,7 +190,7 @@ exports.handler = function(interaction) {
    * @param {array} array of horse distances
    * @param {number} time current temp role time
    */
-  function updateHorse(array, time) {
+  function updateHorse(array, foundUser) {
     let horseRaceEnd = false;
     const horseDistance = array;
     const horseMove = [Math.floor(Math.random() * 2), Math.floor(Math.random() * 2), Math.floor(Math.random() * 2), Math.floor(Math.random() * 2), Math.floor(Math.random() * 2)];
@@ -152,28 +200,66 @@ exports.handler = function(interaction) {
       if (horseDistance[i] === 10) horseRaceEnd = true;
     }
     if (horseRaceEnd) {
-      if (horseDistance[interaction.options[0].options[1].value-1] === 10) {
-        interaction.editReply(`**You picked #${interaction.options[0].options[1].value} in the horse race**\n${horseDistance.map((dist, index) => {
+      mutes.list = mutes.list.filter((m) => ((m.user != interaction.user.id) || (m.role != options.role[interaction.options.first().options.get('role').value])));
+      if (horseDistance[interaction.options.first().options.get('horse').value-1] === 10) {
+        interaction.editReply(`**You picked #${interaction.options.first().options.get('horse').value} in the horse race**\n${horseDistance.map((dist, index) => {
           return `🏁 ${('- '.repeat(10-dist)).trim()} 🏇 #${index+1}`;
-        }).join('\n')}\n\n**Win!** Subtracting 40% from your timeleft.\n${secondsToDhms(time)}- ${secondsToDhms(Math.round(time*0.4))}= ${secondsToDhms(time - Math.round(time*0.4))}`);
-        found.time = found.time - Math.round(time*0.4);
-        found.timeRaw = secondsToDuration(found.time);
-        mutes.list.push(found);
+        }).join('\n')}\n\n**Win!** Subtracting 40% from your timeleft.\n${secondsToDhms(foundUser.time)}- ${secondsToDhms(Math.round(foundUser.time*0.4))}= ${secondsToDhms(foundUser.time - Math.round(foundUser.time*0.4))}`);
+        foundUser.found.time = foundUser.found.time - Math.round(foundUser.time*0.4);
+        foundUser.found.timeRaw = secondsToDuration(foundUser.found.time);
+        mutes.list.push(foundUser.found);
         updateMutes();
       } else {
-        interaction.editReply(`**You picked #${interaction.options[0].options[1].value} in the horse race**\n${horseDistance.map((dist, index) => {
+        mutes.list = mutes.list.filter((m) => ((m.user != interaction.user.id) || (m.role != options.role[interaction.options.first().options.get('role').value])));
+        interaction.editReply(`**You picked #${interaction.options.first().options.get('horse').value} in the horse race**\n${horseDistance.map((dist, index) => {
           return `🏁 ${('- '.repeat(10-dist)).trim()} 🏇 #${index+1}`;
-        }).join('\n')}\n\n**Lost!** Adding 40% to your timeleft.\n${secondsToDhms(time)}+ ${secondsToDhms(Math.round(time*0.4))}= ${secondsToDhms(time + Math.round(time*0.4))}`);
-        found.time = found.time + Math.round(time*0.4);
-        found.timeRaw = secondsToDuration(found.time);
-        mutes.list.push(found);
+        }).join('\n')}\n\n**Lost!** Adding 40% to your timeleft.\n${secondsToDhms(foundUser.time)}+ ${secondsToDhms(Math.round(foundUser.time*0.4))}= ${secondsToDhms(foundUser.time + Math.round(foundUser.time*0.4))}`);
+        foundUser.found.time = foundUser.found.time + Math.round(foundUser.found.time*0.4);
+        foundUser.found.timeRaw = secondsToDuration(foundUser.time);
+        mutes.list.push(foundUser.found);
         updateMutes();
       }
     } else {
-      interaction.editReply(`**You picked #${interaction.options[0].options[1].value} in the horse race**\n${horseDistance.map((dist, index) => {
+      interaction.editReply(`**You picked #${interaction.options.first().options.get('horse').value} in the horse race**\n${horseDistance.map((dist, index) => {
         return `🏁 ${('- '.repeat(10-dist)).trim()} 🏇 #${index+1}`;
       }).join('\n')}`);
-      setTimeout(() => updateHorse(horseDistance, time), 750);
+      setTimeout(() => updateHorse(horseDistance, foundUser), 750);
+    }
+  }
+};
+exports.buttonHandler = function(interaction, Discord) {
+  if (interaction.customID === 'acceptduel') {
+    const foundData = gambleDuels[interaction.user.id];
+    if (foundData) {
+
+      const row = new Discord.MessageActionRow().addComponents(new Discord.MessageButton({custom_id: 'null', label: `${interaction.user.username} accepted`, style: 'SUCCESS', disabled: true}));
+      interaction.update(interaction.message.content, {components: [row]})
+
+      const user1Win = (Math.floor(Math.random() * 2) === 1)
+      const winner = user1Win ? foundData.user1 : foundData.user2;
+      const loser = user1Win ? foundData.user2 : foundData.user1;
+      mutes.list = mutes.list.filter((m) => ((m.user != winner.found.user) || (m.role != winner.found.role)));
+      mutes.list = mutes.list.filter((m) => ((m.user != loser.found.user) || (m.role != loser.found.role)));
+
+      interaction.message.reply(`<@!${foundData.user1.found.user}> vs <@!${foundData.user2.found.user}>\n\n${winner.username} won!\n`+
+        `Transfering 20% of ${winner.username}s timeleft to ${loser.username}s timeleft.\n\n`+
+        `**${winner.username}** ${secondsToDhms(winner.time)}- ${secondsToDhms(Math.round(winner.time*0.2))}= ${secondsToDhms(winner.time - Math.round(winner.time*0.2))}\n`+
+        `**${loser.username}** ${secondsToDhms(loser.time)}+ ${secondsToDhms(Math.round(winner.time*0.2))}= ${secondsToDhms(loser.time + Math.round(winner.time*0.2))}`);
+
+      winner.found.time = winner.found.time - Math.round(winner.time*0.2);
+      loser.found.time = loser.found.time + Math.round(winner.time*0.2);
+      winner.found.timeRaw = secondsToDuration(winner.found.time);
+      loser.found.timeRaw = secondsToDuration(loser.found.time);
+      mutes.list.push(winner.found, loser.found);
+      updateMutes();
+      delete gambleDuels[interaction.user.id];
+    }
+  } else if (interaction.customID === 'denyduel') {
+    const foundData = gambleDuels[interaction.user.id];
+    if (foundData) {
+      const row = new Discord.MessageActionRow().addComponents(new Discord.MessageButton({custom_id: 'null', label: `${interaction.user.username} denined`, style: 'DANGER', disabled: true}));
+      interaction.update(interaction.message.content, {components: [row]})
+      delete gambleDuels[interaction.user.id];
     }
   }
 };

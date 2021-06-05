@@ -1,6 +1,6 @@
-exports.name = ['emotes'];
-exports.permission = 'none';
-exports.slash = [{
+exports.commands = {'emotes': 'none'};
+exports.buttons = {};
+exports.slashes = [{
   name: 'emotes',
   description: 'Shows emote usage since last emote added',
   options: [{
@@ -29,7 +29,9 @@ exports.slash = [{
     }],
   }],
 }];
-exports.handler = function(interaction) {
+exports.commandHandler = function(interaction) {
+  interaction.defer();
+  
   client.guilds.fetch(options.guild).then((guild) => {
     const e = [];
     const combined = [];
@@ -41,7 +43,7 @@ exports.handler = function(interaction) {
         totalLen += parseInt(`<:${emoji.name}:${emoji.id}>`.length);
         size++;
         if (emotesUse.emotes[emoji.id]) {
-          e.push({'name': emoji.name, 'id': emoji.id, 'count': (interaction.options[0].value === 'true') ? emotesUse.emotes[emoji.id].uses : emotesUse.emotes[emoji.id].newUses});
+          e.push({'name': emoji.name, 'id': emoji.id, 'count': (interaction.options.get('timeframe').value === 'true') ? emotesUse.emotes[emoji.id].uses : emotesUse.emotes[emoji.id].newUses});
         } else {
           e.push({'name': emoji.name, 'id': emoji.id, 'count': 0});
         }
@@ -68,9 +70,9 @@ exports.handler = function(interaction) {
       }
     }
 
-    const difference = (new Date().getTime() - new Date((interaction.options[0].value === 'true') ? emotesUse.started : emotesUse.newStarted).getTime()) / 1000;
-    if ((interaction.options[1].value === 'true')) {
-      const content = 'Emote usage since '+secondsToDhms(parseInt(difference))+'ago ('+new Date((interaction.options[0].value === 'true') ? emotesUse.started : emotesUse.newStarted).toUTCString()+')\n'+combined.map((l) => {
+    const difference = (new Date().getTime() - new Date((interaction.options.get('timeframe').value === 'true') ? emotesUse.started : emotesUse.newStarted).getTime()) / 1000;
+    if ((interaction.options.get('size').value === 'true')) {
+      const content = 'Emote usage since '+secondsToDhms(parseInt(difference))+'ago ('+new Date((interaction.options.get('timeframe').value === 'true') ? emotesUse.started : emotesUse.newStarted).toUTCString()+')\n'+combined.map((l) => {
         if (l) {
           if (l[0].emotes) {
             return l[0].count + ' - ' + l[0].emotes + ' emotes';
@@ -88,7 +90,7 @@ exports.handler = function(interaction) {
     } else {
       const top5 = [combined[0], combined[1], combined[2], combined[3], combined[4]];
       const bottom5 = [combined[combined.length-1], combined[combined.length-2], combined[combined.length-3], combined[combined.length-4], combined[combined.length-5]];
-      interaction.editReply('Emote usage since '+secondsToDhms(parseInt(difference))+'ago ('+new Date((interaction.options[0].value === 'true') ? emotesUse.started : emotesUse.newStarted).toUTCString()+')\n**Most used**\n'+top5.map((l) => {
+      interaction.editReply('Emote usage since '+secondsToDhms(parseInt(difference))+'ago ('+new Date((interaction.options.get('timeframe').value === 'true') ? emotesUse.started : emotesUse.newStarted).toUTCString()+')\n**Most used**\n'+top5.map((l) => {
         if (l) {
           if (l[0].emotes) {
             return l[0].count + ' - ' + l[0].emotes + ' emotes';

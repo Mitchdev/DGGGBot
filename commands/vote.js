@@ -1,6 +1,6 @@
-exports.name = ['vote'];
-exports.permission = 'none';
-exports.slash = [{
+exports.commands = {'vote': 'none'};
+exports.buttons = {};
+exports.slashes = [{
   name: 'vote',
   description: 'Starts a vote for x duration',
   options: [{
@@ -60,17 +60,15 @@ exports.slash = [{
     required: false,
   }],
 }];
-exports.handler = function(interaction) {
-  const question = interaction.options[1].value;
-  const time = timeToSeconds(interaction.options[0].value);
-  const answers = [];
-
-  for (let i = 2; i < interaction.options.length; i++) {
-    answers.push(interaction.options[i].value);
-  }
-
+exports.commandHandler = function(interaction) {
+  interaction.defer();
+  
+  const question = interaction.options.get('question').value;
+  const time = timeToSeconds(interaction.options.get('duration').value);
+  const answers = interaction.options.filter(option => (option.name != 'duration' && option.name != 'question')).map(option => option.value);
+  
   if (time != null && time > 0) {
-    interaction.editReply(`**Vote** started for ${interaction.options[0].value}\n${question}\n`+answers.map((a, i) => {
+    interaction.editReply(`**Vote** started for ${interaction.options.get('duration').value}\n${question}\n`+answers.map((a, i) => {
       return `${options.voteReactions[i]} ${a}`;
     }).join('\n')).then((vote) => {
       currentVoteID = vote.id;

@@ -1,6 +1,7 @@
-exports.name = ['r', 'roll'];
-exports.permission = 'none';
-exports.handler = function(message) {
+exports.commands = {'roll': 'none'};
+exports.buttons = {};
+exports.slashes =  [];
+exports.commandHandler = function(message) {
   // var diceMatch = /!(?:r )?(?:roll )?(\d+)(d)(\d+)/g.exec(message.content.toLowerCase());
   // if (diceMatch) {
   //  var args = message.content.toLowerCase().replace(diceMatch[0], '');

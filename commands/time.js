@@ -1,6 +1,6 @@
-exports.name = ['time'];
-exports.permission = 'none';
-exports.slash = [{
+exports.commands = {'time': 'none'};
+exports.buttons = {};
+exports.slashes = [{
   name: 'time',
   description: 'Gets the local time of a location',
   options: [{
@@ -10,23 +10,25 @@ exports.slash = [{
     required: true,
   }],
 }];
-exports.handler = function(interaction) {
+exports.commandHandler = function(interaction) {
+  interaction.defer();
+  
   request({
     method: 'POST',
     url: options.api.coordinates.url,
     headers: {'Authorization': options.api.coordinates.auth},
-    json: {'Address': interaction.options[0].value},
+    json: {'Address': interaction.options.get('location').value},
   }, (coordinatesErr, coordinatesReq, coordinatesRes) => {
     if (!coordinatesErr) {
       if (coordinatesRes.Message) {
         if (coordinatesRes.Message.startsWith('404 Not Found:')) {
-          interaction.editReply(`Could not find ${interaction.options[0].value}`);
+          interaction.editReply(`Could not find ${interaction.options.get('location').value}`);
         } else {
           client.users.fetch(options.user.mitch).then((mitch) => {
-            mitch.send(`**Coordinates:** ${coordinatesRes.Message}\n**Sent:** \`\`\`{"Address": ${interaction.options[0].value}}\`\`\``);
+            mitch.send(`**Coordinates:** ${coordinatesRes.Message}\n**Sent:** \`\`\`{"Address": ${interaction.options.get('location').value}}\`\`\``);
           });
           client.users.fetch(options.user.andlin).then((andlin) => {
-            andlin.send(`**Coordinates:** ${coordinatesRes.Message}\n**Sent:** \`\`\`{"Address": ${interaction.options[0].value}}\`\`\``);
+            andlin.send(`**Coordinates:** ${coordinatesRes.Message}\n**Sent:** \`\`\`{"Address": ${interaction.options.get('location').value}}\`\`\``);
           });
         }
       } else {
@@ -35,7 +37,7 @@ exports.handler = function(interaction) {
             const time = JSON.parse(res);
             const hours = (new Date(time.datetime).getHours() < 10) ? '0' + new Date(time.datetime).getHours() : new Date(time.datetime).getHours();
             const minutes = (new Date(time.datetime).getMinutes() < 10) ? '0' + new Date(time.datetime).getMinutes() : new Date(time.datetime).getMinutes();
-            if (isNaN(hours) || isNaN(minutes)) interaction.editReply(`Could not find ${interaction.options[0].value}`);
+            if (isNaN(hours) || isNaN(minutes)) interaction.editReply(`Could not find ${interaction.options.get('location').value}`);
             else {
               const content = `${coordinatesRes.manicipality}, ${coordinatesRes.countryCode} (Location confidence: ${(coordinatesRes.score < 0) ? '0' : coordinatesRes.score}%)\n`+
                               `**${time.timezone_name} | ${time.timezone_location} | (${time.timezone_abbreviation}) | (GMT${time.gmt_offset >= 0 ? `+`: ``}${time.gmt_offset})**\n`+

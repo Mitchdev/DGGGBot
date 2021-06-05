@@ -12,8 +12,6 @@ client.on('ready', () => {
   loadEvents(client);
   loadFunctions(client);
 
-  client.channels.resolve(options.channel.roles).messages.fetch(options.message.roles);
-
   client.guilds.fetch(options.guild).then((guild) => {
     guild.fetchInvites().then((invites) => {
       invites.each((invite) => {
@@ -33,6 +31,13 @@ client.on('ready', () => {
   console.log(`[${new Date().toUTCString()}][INIT] Bot online`);
   client.users.fetch(options.user.mitch).then((mitch) => {
     mitch.send(`Bot restarted!`);
+    const errorLog = fs.readFileSync(dpath.join(__dirname, '../../.pm2/logs/bot-error.log'), {encoding:'utf8'});
+    const errorLogArray = errorLog.split('\n');
+    const timestamp = errorLogArray[errorLogArray.length-2].match(/(\d\d\d\d\-\d\d\-\d\d\T\d\d\:\d\d\:\d\d\:)/g);
+    if (timestamp) {
+      const lastestError = errorLogArray.filter((line) => line.startsWith(timestamp[0])).join('\n');
+      mitch.send(`Latest Error:\n\`\`\`${lastestError}\`\`\``, {split: true});
+    }
   });
 });
 

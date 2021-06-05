@@ -1,10 +1,12 @@
-exports.name = ['list'];
-exports.permission = 'none';
-exports.slash = [{
+exports.commands = {'list': 'none'};
+exports.buttons = {};
+exports.slashes = [{
   name: 'list',
   description: 'Shows list of temporarily roled users',
 }];
-exports.handler = function(interaction) {
+exports.commandHandler = function(interaction) {
+  interaction.defer();
+  
   const sorted = mutes.list.sort((a, b) => {
     const differenceA = (new Date().getTime() - new Date(a.startTime).getTime()) / 1000;
     const differenceB = (new Date().getTime() - new Date(b.startTime).getTime()) / 1000;

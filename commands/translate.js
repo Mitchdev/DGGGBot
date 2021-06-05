@@ -1,6 +1,6 @@
-exports.name = ['translate'];
-exports.permission = 'none';
-exports.slash = [{
+exports.commands = {'translate': 'none'};
+exports.buttons = {};
+exports.slashes = [{
   name: 'translate',
   description: 'Translate a phrase into english',
   options: [{
@@ -10,8 +10,10 @@ exports.slash = [{
     required: true,
   }],
 }];
-exports.handler = function(interaction) {
-  const phrase = interaction.options[0].value;
+exports.commandHandler = function(interaction) {
+  interaction.defer();
+  
+  const phrase = interaction.options.get('phrase').value;
   if (phrase.toLowerCase() === 'andlin') interaction.editReply(`**Svensk** - Language detection score: 777,777,777,777,777\n${phrase}\n**English**\n🥺 0mar 😂 please mute me <:rustgarage:800754270550360104>`);
   else {
     request({

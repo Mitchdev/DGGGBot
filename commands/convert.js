@@ -1,6 +1,6 @@
-exports.name = ['convert', 'convertlist'];
-exports.permission = 'none';
-exports.slash = [{
+exports.commands = {'convert': 'none', 'convertlist': 'none'};
+exports.buttons = {};
+exports.slashes = [{
   name: 'convert',
   description: 'Converts amount from one unit to another',
   options: [{
@@ -29,12 +29,14 @@ exports.slash = [{
     required: false,
   }],
 }];
-exports.handler = function(interaction) {
+exports.commandHandler = function(interaction) {
+  interaction.defer();
+  
   if (interaction.commandName === 'convertlist') {
-    if (interaction.options.length == 0) {
+    if (!interaction.options.get('measurement')) {
       interaction.editReply(`**Conversion Measurement List**\n${measurements.map((measurement) => measurement.name).join('\n')}`);
     } else {
-      const measurement = measurements.find((m) => m.name.toLowerCase() === interaction.options[0].value.toLowerCase());
+      const measurement = measurements.find((m) => m.name.toLowerCase() === interaction.options.get('measurement').value.toLowerCase());
       let content = `Could not find measurement`;
       if (measurement) {
         content = `**${measurement.name} Units List**\n${measurement.data.map((unit) => {
@@ -47,18 +49,18 @@ exports.handler = function(interaction) {
     let complete = false;
     for (let i = 0; i < measurements.length; i++) {
       const source = measurements[i].data.find((unit) => {
-        return (unit.full.toLowerCase() === interaction.options[1].value.toLowerCase() || unit.short === interaction.options[1].value || unit.multi.toLowerCase() === interaction.options[1].value.toLowerCase());
+        return (unit.full.toLowerCase() === interaction.options.get('source').value.toLowerCase() || unit.short === interaction.options.get('source').value || unit.multi.toLowerCase() === interaction.options.get('source').value.toLowerCase());
       });
       const target = measurements[i].data.find((unit) => {
-        return (unit.full.toLowerCase() === interaction.options[2].value.toLowerCase() || unit.short === interaction.options[2].value || unit.multi.toLowerCase() === interaction.options[2].value.toLowerCase());
+        return (unit.full.toLowerCase() === interaction.options.get('target').value.toLowerCase() || unit.short === interaction.options.get('target').value || unit.multi.toLowerCase() === interaction.options.get('target').value.toLowerCase());
       });
-      let value = parseFloat(interaction.options[0].value);
+      let value = parseFloat(interaction.options.get('amount').value);
       if (value) {
         if (source) {
           if (target) {
             if (!source.base) value = convertValue(source.conversion.source, source.conversion.value, value);
             if (!target.base) value = convertValue(target.conversion.target, target.conversion.value, value);
-            interaction.editReply(`**Converting ${measurements[i].name}**\n${parseFloat(interaction.options[0].value)} ${(value > 1 || value < -1) ? source.multi : source.full} (${source.short}) = **${(Math.round(value * 1000) / 1000)}** ${(value > 1 || value < -1) ? target.multi : target.full} (${target.short})`);
+            interaction.editReply(`**Converting ${measurements[i].name}**\n${parseFloat(interaction.options.get('amount').value)} ${(value > 1 || value < -1) ? source.multi : source.full} (${source.short}) = **${(Math.round(value * 1000) / 1000)}** ${(value > 1 || value < -1) ? target.multi : target.full} (${target.short})`);
             complete = true;
             break;
           }

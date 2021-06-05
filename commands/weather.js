@@ -1,6 +1,6 @@
-exports.name = ['weather'];
-exports.permission = 'none';
-exports.slash = [{
+exports.commands = {'weather': 'none'};
+exports.buttons = {};
+exports.slashes = [{
   name: 'weather',
   description: 'Gets weather from a location',
   options: [{
@@ -25,9 +25,11 @@ exports.slash = [{
     required: true,
   }],
 }];
-exports.handler = function(interaction) {
-  const units = interaction.options[0].value;
-  const location = interaction.options[1].value;
+exports.commandHandler = function(interaction) {
+  interaction.defer();
+  
+  const units = interaction.options.get('unit').value;
+  const location = interaction.options.get('location').value;
   if (location != '') {
     request({
       method: 'POST',

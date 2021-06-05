@@ -1,6 +1,6 @@
-exports.name = ['raw'];
-exports.permission = 'none';
-exports.slash = [{
+exports.commands = {'raw': 'none'};
+exports.buttons = {};
+exports.slashes = [{
   name: 'raw',
   description: 'Shows raw input of message (what bot sees)',
   options: [{
@@ -10,6 +10,7 @@ exports.slash = [{
     required: true,
   }],
 }];
-exports.handler = function(interaction) {
-  interaction.editReply(`\`${interaction.options[0].value}\``);
+exports.commandHandler = function(interaction) {
+  interaction.defer({ephemeral: true});
+  interaction.editReply(`\`${interaction.options.get('input').value}\``, {ephemeral: true});
 };

@@ -1,6 +1,6 @@
-exports.name = ['define'];
-exports.permission = 'none';
-exports.slash = [{
+exports.commands = {'define': 'none'};
+exports.buttons = {};
+exports.slashes = [{
   name: 'define',
   description: 'Gets definition of a phrase via urban dictionary',
   options: [{
@@ -10,8 +10,10 @@ exports.slash = [{
     required: true,
   }],
 }];
-exports.handler = function(interaction) {
-  const prase = interaction.options[0].value.toLowerCase();
+exports.commandHandler = function(interaction) {
+  interaction.defer();
+  
+  const prase = interaction.options.get('phrase').value.toLowerCase();
   if (prase == 'mitch') {
     const content = `**mitch**\nThe best moderator.`;
     interaction.editReply(content);

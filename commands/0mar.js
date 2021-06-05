@@ -1,10 +1,11 @@
-exports.name = ['0mar'];
-exports.permission = 'none';
-exports.slash = [{
+exports.commands = {'0mar': 'none'};
+exports.buttons = {};
+exports.slashes = [{
   name: '0mar',
   description: '0MAR LMAO',
 }];
-exports.handler = function(interaction) {
+exports.commandHandler = function(interaction, Discord) {
+  interaction.defer();
   interaction.editReply(`0m${generateNumber()}r`);
 
   /**

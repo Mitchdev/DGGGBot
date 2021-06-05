@@ -1,6 +1,6 @@
-exports.name = ['animal'];
-exports.permission = 'none';
-exports.slash = [{
+exports.commands = {'animal': 'none'};
+exports.buttons = {};
+exports.slashes = [{
   name: 'animal',
   description: 'Animal command',
   options: [{
@@ -76,7 +76,7 @@ exports.slash = [{
         value: 'fox',
       }, {
         name: 'Koala',
-        value: 'fox',
+        value: 'koala',
       }, {
         name: 'Bird',
         value: 'birb',
@@ -99,25 +99,28 @@ exports.slash = [{
     }],
   }],
 }];
-exports.handler = function(interaction) {
+exports.commandHandler = function(interaction) {
+  interaction.defer();
+
+  const animalCode = {'dog': 'Dog', 'cat': 'Cat', 'panda': 'Panda', 'red_panda': 'Red Panda', 'fox': 'Fox', 'koala': 'Koala', 'birb': 'Bird', 'racoon': 'Racoon', 'kangaroo': 'Kangaroo', 'elephant': 'Elepant', 'giraffe': 'Giraffe', 'whale': 'Whale'}
   const animalPics = ['ferret', 'dog', 'cat', 'panda', 'red_panda', 'fox', 'koala', 'birb', 'racoon', 'kangaroo', 'whale'];
   const animalFacts = ['dog', 'cat', 'panda', 'fox', 'koala', 'birb', 'racoon', 'kangaroo', 'elephant', 'giraffe', 'whale'];
-  let animal = interaction.options[0].options[0].value;
-  if (interaction.options[0].name === 'pic') {
+  let animal = interaction.options.first().options.first().value;
+  if (interaction.options.first().name === 'pic') {
     if (animal === 'random') animal = animalPics[Math.floor(Math.random() * animalPics.length)];
     if (animal === 'ferret') {
       request(options.api.animal.pic.ferret, (err, req, res) => {
-        if (!err) interaction.editReply(JSON.parse(res).url);
+        if (!err) interaction.editReply(`**Ferret**\n${JSON.parse(res).url}`);
       });
     } else {
       request(options.api.animal.pic.other + animal, (err, req, res) => {
-        if (!err) interaction.editReply(JSON.parse(res).link);
+        if (!err) interaction.editReply(`**${animalCode[animal]}**\n${JSON.parse(res).link}`);
       });
     }
   } else {
     if (animal === 'random') animal = animalFacts[Math.floor(Math.random() * animalFacts.length)];
     request(options.api.animal.fact.other + animal, (err, req, res) => {
-      if (!err) interaction.editReply(JSON.parse(res).fact);
+      if (!err) interaction.editReply(`**${animalCode[animal]}**\n${JSON.parse(res).fact}`);
     });
   }
 };

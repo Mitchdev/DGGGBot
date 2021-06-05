@@ -1,6 +1,6 @@
-exports.name = ['emotesync'];
-exports.permission = 'mod';
-exports.slash = [{
+exports.commands = {'emotesync': 'mitch'};
+exports.buttons = {};
+exports.slashes = [{
   name: 'emotesync',
   description: 'Syncs emotes in emote usage',
   defaultPermission: false,
@@ -16,12 +16,14 @@ exports.slash = [{
     required: true,
   }],
 }];
-exports.handler = function(interaction) {
-  if (emotesUse.emotes[interaction.options[0].value]) {
-    if (emotesUse.emotes[interaction.options[1].value]) {
-      emotesUse.emotes[interaction.options[1].value].uses += emotesUse.emotes[interaction.options[0].value].uses;
-      delete emotesUse.emotes[interaction.options[0].value];
-      interaction.editReply(`Synced: ${client.guilds.resolve(options.guild).emojis.cache.get(interaction.options[1].value)}`);
-    } else interaction.editReply(`Could not find ${interaction.options[1].value}`);
-  } else interaction.editReply(`Could not find ${interaction.options[0].value}`);
+exports.commandHandler = function(interaction) {
+  interaction.defer({ephemeral: true});
+  
+  if (emotesUse.emotes[interaction.options.get('old').value]) {
+    if (emotesUse.emotes[interaction.options.get('new').value]) {
+      emotesUse.emotes[interaction.options.get('new').value].uses += emotesUse.emotes[interaction.options.get('old').value].uses;
+      delete emotesUse.emotes[interaction.options.get('old').value];
+      interaction.editReply(`Synced: ${client.guilds.resolve(options.guild).emojis.cache.get(interaction.options.get('new').value)}`, {ephemeral: true});
+    } else interaction.editReply(`Could not find ${interaction.options.get('new').value}`, {ephemeral: true});
+  } else interaction.editReply(`Could not find ${interaction.options.get('old').value}`, {ephemeral: true});
 };

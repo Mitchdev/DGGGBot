@@ -1,6 +1,7 @@
 module.exports = function(conf) {
   fs = require('fs');
   os = require('os');
+  io = require('@pm2/io')
   request = require('request');
   dpath = require('path');
   reload = require('require-reload')(require);
@@ -10,16 +11,18 @@ module.exports = function(conf) {
   inviteList = [];
   gunCooldown = false;
   feedTimers = {};
+  recentReactions = [];
+  gambleDuels = {};
 
   client = conf.client;
   options = conf.config;
   commands = conf.commands;
 
-  roles = JSON.parse(fs.readFileSync('./options/roles.json'));
-  pins = JSON.parse(fs.readFileSync('./options/pins.json'));
-  feeds = JSON.parse(fs.readFileSync('./options/feeds.json'));
-  mutes = JSON.parse(fs.readFileSync('./options/mutes.json'));
-  emotesUse = JSON.parse(fs.readFileSync('./options/emotes.json'));
-  measurements = JSON.parse(fs.readFileSync('./options/measurements.json'));
-  languageCodes = JSON.parse(fs.readFileSync('./options/lang.json'));
+  roles = JSON.parse(fs.readFileSync(dpath.join(__dirname, './options/roles.json')));
+  pins = JSON.parse(fs.readFileSync(dpath.join(__dirname, './options/pins.json')));
+  feeds = JSON.parse(fs.readFileSync(dpath.join(__dirname, './options/feeds.json')));
+  mutes = JSON.parse(fs.readFileSync(dpath.join(__dirname, './options/mutes.json')));
+  emotesUse = JSON.parse(fs.readFileSync(dpath.join(__dirname, './options/emotes.json')));
+  measurements = JSON.parse(fs.readFileSync(dpath.join(__dirname, './options/measurements.json')));
+  languageCodes = JSON.parse(fs.readFileSync(dpath.join(__dirname, './options/lang.json')));
 };

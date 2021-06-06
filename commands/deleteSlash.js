@@ -15,24 +15,20 @@ exports.commandHandler = function(interaction) {
   interaction.defer({ephemeral: true});
   
   if (interaction.options.get('id')) {
-    client.guilds.resolve(options.guild).commands.resolve(interaction.options.get('id').value).delete().then((success) => {
-      interaction.editReply('Deleted', {ephemeral: true});
-    }).catch((err) => {
-      client.application.commands.resolve(interaction.options.get('id').value).delete().then((success) => {
-        interaction.editReply('Deleted', {ephemeral: true});
-      }).catch((err) => {
-        interaction.editReply('Could not delete', {ephemeral: true});
-      });
-    });
+    const clientCommand = client.application.commands.resolve(interaction.options.get('id').value);
+    const guildCommand = client.guilds.resolve(options.guild).commands.resolve(interaction.options.get('id').value);
+    if (guildCommand) {
+      guildCommand.delete().catch((err) => interaction.editReply(`Could not delete ${guildCommand.name}`, {ephemeral: true}));
+      interaction.editReply(`Deleted ${guildCommand.name}`, {ephemeral: true});
+    } else if (clientCommand) {
+      clientCommand.delete().catch((err) => interaction.editReply(`Could not delete ${clientCommand.name}`, {ephemeral: true}));
+      interaction.editReply(`Deleted ${clientCommand.name}`, {ephemeral: true});
+    } else {
+      interaction.editReply(`Could not find command ${interaction.options.get('id')}`, {ephemeral: true});
+    }
   } else {
     client.guilds.resolve(options.guild).commands.set([]);
     client.application.commands.set([]);
-    interaction.editReply('Deleted', {ephemeral: true});
+    interaction.editReply('Deleted all commands', {ephemeral: true});
   }
-
-  // client.guilds.resolve('768734582648209409').commands.resolve(interaction.options.get('id').value).delete().then((success) => {
-  //   interaction.editReply('Deleted', {ephemeral: true});
-  // }).catch((err) => {
-  //   interaction.editReply('Could not delete', {ephemeral: true});
-  // });
 };

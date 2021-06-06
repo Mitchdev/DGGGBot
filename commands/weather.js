@@ -2,7 +2,7 @@ exports.commands = {'weather': 'none'};
 exports.buttons = {};
 exports.slashes = [{
   name: 'weather',
-  description: 'Gets weather from a location',
+  description: 'Gets current weather from a location',
   options: [{
     name: 'unit',
     type: 'STRING',
@@ -33,8 +33,8 @@ exports.commandHandler = function(interaction) {
   if (location != '') {
     request({
       method: 'POST',
-      url: options.api.coordinates.url,
-      headers: {'Authorization': options.api.coordinates.auth},
+      url: process.env.ANDLIN_ADDRESS_API,
+      headers: {'Authorization': process.env.ANDLIN_TOKEN},
       json: {'Address': location},
     }, (coordinatesErr, coordinatesReq, coordinatesRes) => {
       if (!coordinatesErr) {
@@ -49,7 +49,7 @@ exports.commandHandler = function(interaction) {
             });
           }
         } else {
-          request(options.api.weather.url + options.api.weather.auth + `&lat=${coordinatesRes.lat}&lon=${coordinatesRes.lon}${(units === 'standard') ? '' : `&units=${units}`}`, (err, req, res) => {
+          request(process.env.WEATHER_API.replace('|lat|', coordinatesRes.lat).replace('|lon|', coordinatesRes.lon).replace('|units|', units), (err, req, res) => {
             if (!err) {
               const data = JSON.parse(res);
               let sunText = '';

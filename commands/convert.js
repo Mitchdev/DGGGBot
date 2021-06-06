@@ -21,7 +21,7 @@ exports.slashes = [{
   }],
 }, {
   name: 'convertlist',
-  description: 'Lists all the measurements',
+  description: 'List all measurement or units of measurement',
   options: [{
     name: 'measurement',
     type: 'STRING',

@@ -1,5 +1,4 @@
 {
-  "token": "",
   "bot": "784349110517760031",
   "guild": "768734582648209409",
   "user": {
@@ -55,41 +54,6 @@
     "shitposting": "824029262012088410",
     "dnd": "786338883699998730",
     "log": "824147978918297630"
-  },
-  "api": {
-    "andlinPing": {
-      "url": "",
-      "auth": ""
-    },
-    "translate": {
-      "url": "",
-      "auth": ""
-    },
-    "coordinates": {
-      "url": "",
-      "auth": ""
-    },
-    "animal": {
-      "pic": {
-        "ferret": "https://polecat.me/api/ferret",
-        "other": "https://some-random-api.ml/img/"
-      },
-      "fact": {
-        "other": "https://some-random-api.ml/facts/"
-      }
-    },
-    "time": {
-      "url": "https://timezone.abstractapi.com/v1/current_time?api_key=",
-      "auth": ""
-    },
-    "weather": {
-      "url": "https://api.openweathermap.org/data/2.5/onecall?exclude=minutely&appid=",
-      "auth": ""
-    },
-    "currency": {
-      "url": "https://currencyapi.net/api/v1/rates?key=",
-      "auth": ""
-    }
   },
   "voteReactions": [
     "1️⃣",

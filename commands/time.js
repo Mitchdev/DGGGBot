@@ -15,8 +15,8 @@ exports.commandHandler = function(interaction) {
   
   request({
     method: 'POST',
-    url: options.api.coordinates.url,
-    headers: {'Authorization': options.api.coordinates.auth},
+    url: process.env.ANDLIN_ADDRESS_API,
+    headers: {'Authorization': process.env.ANDLIN_TOKEN},
     json: {'Address': interaction.options.get('location').value},
   }, (coordinatesErr, coordinatesReq, coordinatesRes) => {
     if (!coordinatesErr) {
@@ -32,7 +32,7 @@ exports.commandHandler = function(interaction) {
           });
         }
       } else {
-        request(options.api.time.url + options.api.time.auth + '&location='+coordinatesRes.lat+','+coordinatesRes.lon, function(err, req, res) {
+        request(process.env.TIME_API.replace('|lat|', coordinatesRes.lat).replace('|lon|', coordinatesRes.lon), function(err, req, res) {
           if (!err) {
             const time = JSON.parse(res);
             const hours = (new Date(time.datetime).getHours() < 10) ? '0' + new Date(time.datetime).getHours() : new Date(time.datetime).getHours();

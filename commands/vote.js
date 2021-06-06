@@ -2,7 +2,7 @@ exports.commands = {'vote': 'none'};
 exports.buttons = {};
 exports.slashes = [{
   name: 'vote',
-  description: 'Starts a vote for x duration',
+  description: 'Starts a vote for specified duration',
   options: [{
     name: 'duration',
     type: 'STRING',

@@ -1,3 +1,4 @@
+require('dotenv').config();
 const {Client, Intents} = require('discord.js');
 const client = new Client({'messageCacheMaxSize': 1000, 'fetchAllMembers': true, 'intents': [Intents.ALL]});
 
@@ -28,7 +29,7 @@ client.on('ready', () => {
     }, 5000);
   }).catch(console.error);
 
-  console.log(`[${new Date().toUTCString()}][INIT] Bot online`);
+  console.log(`[INIT] Bot online`);
   client.users.fetch(options.user.mitch).then((mitch) => {
     mitch.send(`Bot restarted!`);
     const errorLog = fs.readFileSync(dpath.join(__dirname, '../../.pm2/logs/bot-error.log'), {encoding:'utf8'});
@@ -41,4 +42,4 @@ client.on('ready', () => {
   });
 });
 
-client.login(config.token);
+client.login(process.env.BOT_TOKEN);

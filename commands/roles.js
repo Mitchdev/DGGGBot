@@ -1,60 +1,60 @@
 exports.commands = {'roles': 'mod'};
-exports.buttons = {};
+exports.buttons = {'autoroles': 'none'};
 exports.slashes = [{
   name: 'roles',
   description: 'Roles Command',
   defaultPermission: false,
   options: [{
     name: 'reload',
-    description: 'Reloads roles channel if bugged',
+    description: 'Reloads roles channel message',
     type: 'SUB_COMMAND',
-  }]
-}, {
-  name: 'remove',
-  description: 'Removes a role from the roles channel',
-  type: 'SUB_COMMAND',
-  options: [{
-    name: 'name',
-    type: 'STRING',
-    description: 'Name of role to remove',
-    required: true,
-  }],
-}, {
-  name: 'add',
-  description: 'Adds a role to the roles channel',
-  type: 'SUB_COMMAND',
-  options: [{
-    name: 'category',
-    type: 'STRING',
-    description: 'Category you want to role to appear in',
-    required: true,
-    choices: [{
-      name: 'General',
-      value: 'General',
-    }, {
-      name: 'Gaming',
-      value: 'Gaming',
+  }, {
+    name: 'remove',
+    description: 'Removes a role from the roles channel',
+    type: 'SUB_COMMAND',
+    options: [{
+      name: 'name',
+      type: 'STRING',
+      description: 'Name of role to remove',
+      required: true,
     }],
   }, {
-    name: 'name',
-    type: 'STRING',
-    description: 'Name of role',
-    required: true,
-  }, {
-    name: 'role',
-    type: 'ROLE',
-    description: 'Role that gets added when doing the reaction',
-    required: true,
-  }, {
-    name: 'emoji',
-    type: 'STRING',
-    description: 'Emoji for reaction',
-    required: true,
-  }, {
-    name: 'position',
-    type: 'INTEGER',
-    description: 'Position in category',
-    required: false,
+    name: 'add',
+    description: 'Adds a role to the roles channel',
+    type: 'SUB_COMMAND',
+    options: [{
+      name: 'category',
+      type: 'STRING',
+      description: 'Category you want to role to appear in',
+      required: true,
+      choices: [{
+        name: 'General',
+        value: 'General',
+      }, {
+        name: 'Gaming',
+        value: 'Gaming',
+      }],
+    }, {
+      name: 'name',
+      type: 'STRING',
+      description: 'Name of role',
+      required: true,
+    }, {
+      name: 'role',
+      type: 'ROLE',
+      description: 'Role that gets added when doing the reaction',
+      required: true,
+    }, {
+      name: 'emoji',
+      type: 'STRING',
+      description: 'Emoji for reaction',
+      required: true,
+    }, {
+      name: 'position',
+      type: 'INTEGER',
+      description: 'Position in category',
+      required: false,
+    }],
   }],
 }];
 exports.commandHandler = function(interaction, Discord) {
@@ -106,5 +106,21 @@ exports.commandHandler = function(interaction, Discord) {
     }
 
     addRole(role, interaction.options.first().options.get('position')?.value, interaction, Discord);
+  }
+};
+exports.buttonHandler = function(interaction) {
+  interaction.defer({ephemeral: true});
+
+  const foundRole = roles.list.find((role) => role.name === interaction.customID.split('|')[1]);
+  if (foundRole) {
+    interaction.member.guild.roles.fetch(foundRole.role).then((role) => {
+      if (interaction.member._roles.includes(foundRole.role)) {
+        interaction.member.roles.remove(role);
+        interaction.editReply(`${foundRole.name} role removed`, {ephemeral: true});
+      } else {
+        interaction.member.roles.add(role);
+        interaction.editReply(`${foundRole.name} role added`, {ephemeral: true});
+      }
+    }).catch(console.error)
   }
 };

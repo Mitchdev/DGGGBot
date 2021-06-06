@@ -13,18 +13,18 @@ exports.slashes = [{
 exports.commandHandler = function(interaction) {
   interaction.defer();
   
-  const prase = interaction.options.get('phrase').value.toLowerCase();
-  if (prase == 'mitch') {
+  const phrase = interaction.options.get('phrase').value.toLowerCase();
+  if (phrase == 'mitch') {
     const content = `**mitch**\nThe best moderator.`;
     interaction.editReply(content);
   } else {
-    request('http://api.urbandictionary.com/v0/define?term=' + prase, function(err, res) {
+    request(process.env.URBAN_API.replace('|phrase|', phrase), function(err, res) {
       if (!err && res) {
         const data = JSON.parse(res.body).list;
         if (data.length > 0) {
-          if (data[0].example) splitMessage(interaction, `**${prase}**\n${data[0].definition}\n\n${data[0].example}`);
-          else splitMessage(interaction, `**${prase}**\n${data[0].definition}`);
-        } else interaction.editReply(`Couldn\'t find anything for **${prase}**.`);
+          if (data[0].example) splitMessage(interaction, `**${phrase}**\n${data[0].definition}\n\n${data[0].example}`);
+          else splitMessage(interaction, `**${phrase}**\n${data[0].definition}`);
+        } else interaction.editReply(`Couldn\'t find anything for **${phrase}**.`);
       }
     });
   }

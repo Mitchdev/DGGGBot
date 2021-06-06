@@ -6,19 +6,19 @@ exports.slashes = [{
   defaultPermission: false,
   options: [{
     name: 'list',
-    description: 'Lists all the subs in the feed',
+    description: 'Lists all the subs in the feed of the current channel',
     type: 'SUB_COMMAND',
   }, {
     name: 'create',
-    description: 'Creates a new feed in current channel',
+    description: 'Creates a new feed in the current channel',
     type: 'SUB_COMMAND',
   }, {
     name: 'delete',
-    description: 'Deletes feed in current channel',
+    description: 'Deletes the feed in the current channel',
     type: 'SUB_COMMAND',
   }, {
     name: 'sub',
-    description: 'Adds subreddit to feed',
+    description: 'Adds subreddit to feed in the current channel',
     type: 'SUB_COMMAND',
     options: [{
       name: 'subreddit',
@@ -28,7 +28,7 @@ exports.slashes = [{
     }],
   }, {
     name: 'unsub',
-    description: 'Removes subreddit from feed',
+    description: 'Removes subreddit from the feed in the current channel',
     type: 'SUB_COMMAND',
     options: [{
       name: 'subreddit',
@@ -38,12 +38,12 @@ exports.slashes = [{
     }],
   }, {
     name: 'interval',
-    description: 'Shows current interval or updates interval',
+    description: 'Shows current interval or updates the interval for the feed in the current channel',
     type: 'SUB_COMMAND',
     options: [{
       name: 'interval',
       type: 'INTEGER',
-      description: 'How often posts get shown',
+      description: 'How often posts get shown in seconds',
       required: false,
     }],
   }],

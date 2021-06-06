@@ -13,6 +13,8 @@ module.exports = function(conf) {
   feedTimers = {};
   recentReactions = [];
   gambleDuels = {};
+  connect4Games = {};
+  tictactoeGames = {};
 
   client = conf.client;
   options = conf.config;

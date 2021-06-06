@@ -2,7 +2,7 @@ exports.commands = {'currency': 'none'};
 exports.buttons = {};
 exports.slashes = [{
   name: 'currency',
-  description: 'Converts ammount from one currency to another',
+  description: 'Converts amount from one currency to another',
   options: [{
     name: 'amount',
     type: 'STRING',
@@ -23,7 +23,7 @@ exports.slashes = [{
 exports.commandHandler = function(interaction) {
   interaction.defer();
   
-  request(options.api.currency.url + options.api.currency.auth, function(err, req, res) {
+  request(process.env.CURRENCY_URL, function(err, req, res) {
     if (!err) {
       const rates = JSON.parse(res).rates;
       const source = interaction.options.get('source').value.toUpperCase();

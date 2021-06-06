@@ -2,7 +2,7 @@ exports.commands = {'emotes': 'none'};
 exports.buttons = {};
 exports.slashes = [{
   name: 'emotes',
-  description: 'Shows emote usage since last emote added',
+  description: 'Shows emote usage',
   options: [{
     name: 'timeframe',
     type: 'STRING',

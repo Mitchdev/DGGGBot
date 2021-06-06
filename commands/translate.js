@@ -2,7 +2,7 @@ exports.commands = {'translate': 'none'};
 exports.buttons = {};
 exports.slashes = [{
   name: 'translate',
-  description: 'Translate a phrase into english',
+  description: 'Translates a phrase into english',
   options: [{
     name: 'phrase',
     type: 'STRING',
@@ -18,8 +18,8 @@ exports.commandHandler = function(interaction) {
   else {
     request({
       method: 'POST',
-      url: options.api.translate.url,
-      headers: {'Authorization': options.api.translate.auth},
+      url: process.env.ANDLIN_TRANSLATE_API,
+      headers: {'Authorization': process.env.ANDLIN_TOKEN},
       json: {'source': 'auto', 'target': 'en', 'text': escapeHtml(phrase, false)},
     }, function(err, req, res) {
       if (!err) {

@@ -3,8 +3,10 @@ module.exports = function(commands) {
     commands = [];
     try {
       client.guilds.fetch(options.guild).then((guild) => {
-        let globalCommands = 0;
-        let guildCommands = 0;
+        let userCommands = 0;
+        let modCommands = 0;
+        let roleCommands = 0;
+        let mitchCommands = 0;
         const dir = dpath.resolve(__dirname, './commands') + '/';
         fs.readdirSync(dir).forEach(function(file) {
           if (file.indexOf('.js') > -1) {
@@ -12,45 +14,60 @@ module.exports = function(commands) {
             commands.push(command);
             for (let i = 0; i < command.slashes.length; i++) {
               if (command.commands[command.slashes[i].name] === 'none') {
-                globalCommands++;
-                client.application.commands.create(command.slashes[i]).catch(console.log);
-              } else {
-                guildCommands++;
-                guild.commands.create(command.slashes[i]).then((cmd) => {
-                  if (command.commands[command.slashes[i].name] === 'mod') {
-                    cmd.setPermissions([{
-                      id: '773110638000078888',
-                      type: 'ROLE',
-                      permission: true,
-                    }]);
-                  } else if (command.commands[command.slashes[i].name] === 'weeb/wizard') {
-                    cmd.setPermissions([{
-                      id: '788077328948789298',
-                      type: 'ROLE',
-                      permission: true,
-                    }, {
-                      id: '787807791192080394',
-                      type: 'ROLE',
-                      permission: true,
-                    }]);
-                  } else if (command.commands[command.slashes[i].name] === 'mitch') {
-                    cmd.setPermissions([{
-                      id: '399186129288560651',
-                      type: 'USER',
-                      permission: true,
-                    }]);
-                  }
+                userCommands++;
+                client.application.commands.create(command.slashes[i]).then((cmd) => {
+                  console.log(`[INIT] Command loaded ${cmd.name}`);
                 }).catch(console.log);
+              } else if (command.commands[command.slashes[i].name] === 'mod') {
+                modCommands++;
+                guild.commands.create(command.slashes[i]).then((cmd) => {
+                  cmd.setPermissions([{
+                    id: '773110638000078888',
+                    type: 'ROLE',
+                    permission: true,
+                  }]);
+                  console.log(`[INIT] Command loaded ${cmd.name}`);
+                }).catch(console.log);
+              } else if (command.commands[command.slashes[i].name] === 'weeb/wizard') {
+                roleCommands++;
+                guild.commands.create(command.slashes[i]).then((cmd) => {
+                  cmd.setPermissions([{
+                    id: '788077328948789298',
+                    type: 'ROLE',
+                    permission: true,
+                  }, {
+                    id: '787807791192080394',
+                    type: 'ROLE',
+                    permission: true,
+                  }]);
+                  console.log(`[INIT] Command loaded ${cmd.name}`);
+                }).catch(console.log);
+              } else if (command.commands[command.slashes[i].name] === 'mitch') {
+                mitchCommands++;
+                guild.commands.create(command.slashes[i]).then((cmd) => {
+                  cmd.setPermissions([{
+                    id: '399186129288560651',
+                    type: 'USER',
+                    permission: true,
+                  }]);
+                  console.log(`[INIT] Command loaded ${cmd.name}`);
+                }).catch(console.log);
+              } else {
+                console.log(`<==== INVALID_CMD ====>`);
+                console.log(command);
+                console.log(`<==== INVALID_CMD END ====>`);
               }
             }
           }
         });
         reloadGlobals(client);
-        console.log(`[${new Date().toUTCString()}][INIT] ${globalCommands} Global commands loaded`);
-        console.log(`[${new Date().toUTCString()}][INIT] ${guildCommands} Guild commands loaded`);
+        console.log(`[INIT] ${userCommands} User base commands loading`);
+        console.log(`[INIT] ${modCommands} Mod base commands loading`);
+        console.log(`[INIT] ${roleCommands} Role base commands loading`);
+        console.log(`[INIT] ${mitchCommands} Mitch base commands loading`);
       });
     } catch (e) {
-      console.error(`[${new Date().toUTCString()}][INIT] Unable to load command: `, e.stack);
+      console.error(`[INIT] Unable to load command: `, e.stack);
     }
   };
   loadEvents = function(client) {
@@ -63,9 +80,9 @@ module.exports = function(commands) {
           events++;
         }
       });
-      console.log(`[${new Date().toUTCString()}][INIT] ${events} Events loaded`);
+      console.log(`[INIT] ${events} Events loaded`);
     } catch (e) {
-      console.error(`[${new Date().toUTCString()}][INIT] Unable to load event: `, e.stack);
+      console.error(`[INIT] Unable to load event: `, e.stack);
     }
   };
   loadFunctions = function(client) {
@@ -78,9 +95,9 @@ module.exports = function(commands) {
           functions++;
         }
       });
-      console.log(`[${new Date().toUTCString()}][INIT] ${functions} Functions loaded`);
+      console.log(`[INIT] ${functions} Functions loaded`);
     } catch (e) {
-      console.error(`[${new Date().toUTCString()}][INIT] Unable to load function: `, e.stack);
+      console.error(`[INIT] Unable to load function: `, e.stack);
     }
   };
   reloadGlobals = function(client) {

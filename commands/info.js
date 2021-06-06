@@ -10,8 +10,8 @@ exports.commandHandler = function(interaction) {
   const pre = new Date();
   request({
     method: 'POST',
-    url: options.api.andlinPing.url,
-    headers: {'Authorization': options.api.andlinPing.auth},
+    url: process.env.ANDLIN_PING_API,
+    headers: {'Authorization': process.env.ANDLIN_TOKEN},
   }, () => {
     const post = new Date();
     interaction.editReply(`**Client Uptime** ${secondsToDhms(client.uptime/1000)}\n**System Uptime** ${secondsToDhms(os.uptime())}\n\n**Discord API Ping** ${Math.round(client.ws.ping)}ms\n**Andlin API Ping** ${(post - pre)}ms`);

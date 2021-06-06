@@ -33,9 +33,9 @@ exports.commandHandler = function(interaction, Discord) {
 
   function makeID() {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let result = [];
-    for ( var i = 0; i < 10; i++ ) result += chars.charAt(Math.floor(Math.random() * chars.length));
-    return result;
+    let id = [];
+    for (let i = 0; i < 10; i++) id += chars.charAt(Math.floor(Math.random() * chars.length));
+    return id;
   }
 };
 exports.buttonHandler = function(interaction, Discord) {};

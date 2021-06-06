@@ -49,12 +49,6 @@ exports.commandHandler = function(interaction, Discord) {
         this.interaction.editReply(`**TIC TAC TOE**\n${this.player1.user}**[X]** vs **[O]**${this.player2.user}\n\n**${this.turn.member.displayName} won!**`, {components: this.buttons});
         delete tictactoeGames[this.id];
       } else if (this.filled === 9) {
-        for (let i = 0; i < 3; i++) {
-          for (let j = 0; j < 3; j++) {
-            //this.buttons[i].components[j].style = 'DANGER';
-            this.buttons[i].components[j].disabled = true;
-          }
-        }
         this.interaction.editReply(`**TIC TAC TOE**\n${this.player1.user}**[X]** vs **[O]**${this.player2.user}\n\n**Draw!**`, {components: this.buttons});
         delete tictactoeGames[this.id];
       } else {
@@ -107,9 +101,9 @@ exports.commandHandler = function(interaction, Discord) {
 
   function makeID() {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let result = [];
-    for ( var i = 0; i < 10; i++ ) result += chars.charAt(Math.floor(Math.random() * chars.length));
-    return result;
+    let id = '';
+    for (let i = 0; i < 10; i++) id += chars.charAt(Math.floor(Math.random() * chars.length));
+    return id;
   }
 };
 exports.buttonHandler = function(interaction, Discord) {

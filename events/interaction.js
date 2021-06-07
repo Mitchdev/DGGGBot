@@ -5,13 +5,13 @@ module.exports = function(client) {
       const command = commands.find((cmd) => cmd.commands[interaction.commandName] != undefined);
       if (command) {
         if (command.commands[interaction.commandName] === 'mod') {
-          if (interaction.member._roles.includes(process.env.ROLE_MOD)) command.commandHandler(interaction, Discord);
+          if (interaction.member._roles.includes(process.env.ROLE_MOD)) command.commandHandler(interaction, Discord, client);
         } else if (command.commands[interaction.commandName] === 'dev') {
-          if (interaction.user.id === '399186129288560651') command.commandHandler(interaction, Discord);
+          if (interaction.user.id === '399186129288560651') command.commandHandler(interaction, Discord, client);
         } else if (command.commands[interaction.commandName] === 'weeb/wizard') {
           if (interaction.member._roles.includes(process.env.ROLE_WEEB) || interaction.member._roles.includes(process.env.ROLE_WIZARD)) command.commandHandler(interaction, Discord);
         } else {
-          command.commandHandler(interaction, Discord);
+          command.commandHandler(interaction, Discord, client);
         }
       } else {
         console.log('<==== COMMAND ====>');
@@ -22,13 +22,13 @@ module.exports = function(client) {
       const command = commands.find((cmd) => cmd.buttons[interaction.customID.split('|')[0]] != undefined);
       if (command) {
         if (command.buttons[interaction.customID.split('|')[0]] === 'mod') {
-          if (interaction.member._roles.includes(process.env.ROLE_MOD)) command.buttonHandler(interaction, Discord);
+          if (interaction.member._roles.includes(process.env.ROLE_MOD)) command.buttonHandler(interaction, Discord, client);
         } else if (command.buttons[interaction.customID.split('|')[0]] === 'dev') {
-          if (interaction.user.id === process.env.DEV_ID) command.buttonHandler(interaction, Discord);
+          if (interaction.user.id === process.env.DEV_ID) command.buttonHandler(interaction, Discord, client);
         } else if (command.buttons[interaction.customID.split('|')[0]] === 'weeb/wizard') {
           if (interaction.member._roles.includes(process.env.ROLE_WEEB) || interaction.member._roles.includes(process.env.ROLE_WIZARD)) command.buttonHandler(interaction, Discord);
         } else {
-          command.buttonHandler(interaction, Discord);
+          command.buttonHandler(interaction, Discord, client);
         }
       } else {
         console.log('<==== BUTTON ====>');

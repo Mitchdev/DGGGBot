@@ -1,4 +1,16 @@
 module.exports = function(commands) {
+  reloadCommands = function(client) {
+    commands = [];
+    const dir = dpath.resolve(__dirname, './commands') + '/';
+    fs.readdirSync(dir).forEach(function(file) {
+      if (file.indexOf('.js') > -1) {
+        const command = reload(dir + file);
+        commands.push(command);
+      }
+    });
+    reloadGlobals(client);
+    console.log(`[INIT] Command handlers reloaded`);
+  };
   loadCommands = function(client) {
     commands = [];
     try {
@@ -44,12 +56,7 @@ module.exports = function(commands) {
                 }).catch(console.log);
               } else if (command.commands[command.slashes[i].name] === 'dev') {
                 devCommands++;
-                guild.commands.create(command.slashes[i]).then((cmd) => {
-                  cmd.setPermissions([{
-                    id: '399186129288560651',
-                    type: 'USER',
-                    permission: true,
-                  }]);
+                client.application.commands.create(command.slashes[i]).then((cmd) => {
                   console.log(`[INIT] Command loaded ${cmd.name}`);
                 }).catch(console.log);
               } else {

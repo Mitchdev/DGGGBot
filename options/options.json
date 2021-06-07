@@ -71,5 +71,115 @@
     "onee san",
     "oneesan",
     "doujinshi"
-  ]
+  ],
+  "scrabbleLetters": {
+    "BLANK": {
+      "points": 0,
+      "amountLeft": 2
+    },
+    "E": {
+      "points": 1,
+      "amountLeft": 12
+    },
+    "A": {
+      "points": 1,
+      "amountLeft": 9
+    },
+    "I": {
+      "points": 1,
+      "amountLeft": 9
+    },
+    "O": {
+      "points": 1,
+      "amountLeft": 8
+    },
+    "N": {
+      "points": 1,
+      "amountLeft": 6
+    },
+    "R": {
+      "points": 1,
+      "amountLeft": 6
+    },
+    "T": {
+      "points": 1,
+      "amountLeft": 6
+    },
+    "L": {
+      "points": 1,
+      "amountLeft": 4
+    },
+    "S": {
+      "points": 1,
+      "amountLeft": 4
+    },
+    "U": {
+      "points": 1,
+      "amountLeft": 4
+    },
+    "D": {
+      "points": 2,
+      "amountLeft": 4
+    },
+    "G": {
+      "points": 2,
+      "amountLeft": 3
+    },
+    "B": {
+      "points": 3,
+      "amountLeft": 2
+    },
+    "C": {
+      "points": 3,
+      "amountLeft": 2
+    },
+    "M": {
+      "points": 3,
+      "amountLeft": 2
+    },
+    "P": {
+      "points": 3,
+      "amountLeft": 2
+    },
+    "F": {
+      "points": 4,
+      "amountLeft": 2
+    },
+    "H": {
+      "points": 4,
+      "amountLeft": 2
+    },
+    "V": {
+      "points": 4,
+      "amountLeft": 2
+    },
+    "W": {
+      "points": 4,
+      "amountLeft": 2
+    },
+    "Y": {
+      "points": 4,
+      "amountLeft": 2
+    },
+    "K": {
+      "points": 5,
+      "amountLeft": 1
+    },
+    "J": {
+      "points": 8,
+      "amountLeft": 1
+    },
+    "X": {
+      "points": 8,
+      "amountLeft": 1
+    },
+    "Q": {
+      "points": 10,
+      "amountLeft": 1
+    },
+    "Z": {
+      "points": 10,
+      "amountLeft": 1
+    }
+  }
 }

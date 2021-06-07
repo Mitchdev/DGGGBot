@@ -1,10 +1,9 @@
 module.exports = function(conf) {
   fs = require('fs');
-  os = require('os');
-  io = require('@pm2/io');
-  request = require('request');
   dpath = require('path');
   reload = require('require-reload')(require);
+  request = require('request');
+  os = require('os');
 
   currentVoteID = null;
   voteValidReactions = [];
@@ -15,7 +14,8 @@ module.exports = function(conf) {
   gambleDuels = {};
   connect4Games = {};
   tictactoeGames = {};
-
+  scrabbleGames = {};
+  
   client = conf.client;
   options = conf.config;
   commands = conf.commands;

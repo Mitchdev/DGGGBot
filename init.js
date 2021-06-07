@@ -2,11 +2,11 @@ module.exports = function(commands) {
   loadCommands = function(client) {
     commands = [];
     try {
-      client.guilds.fetch(options.guild).then((guild) => {
+      client.guilds.fetch(process.env.GUILD_ID).then((guild) => {
         let userCommands = 0;
         let modCommands = 0;
         let roleCommands = 0;
-        let mitchCommands = 0;
+        let devCommands = 0;
         const dir = dpath.resolve(__dirname, './commands') + '/';
         fs.readdirSync(dir).forEach(function(file) {
           if (file.indexOf('.js') > -1) {
@@ -42,8 +42,8 @@ module.exports = function(commands) {
                   }]);
                   console.log(`[INIT] Command loaded ${cmd.name}`);
                 }).catch(console.log);
-              } else if (command.commands[command.slashes[i].name] === 'mitch') {
-                mitchCommands++;
+              } else if (command.commands[command.slashes[i].name] === 'dev') {
+                devCommands++;
                 guild.commands.create(command.slashes[i]).then((cmd) => {
                   cmd.setPermissions([{
                     id: '399186129288560651',
@@ -64,7 +64,7 @@ module.exports = function(commands) {
         console.log(`[INIT] ${userCommands} User base commands loading`);
         console.log(`[INIT] ${modCommands} Mod base commands loading`);
         console.log(`[INIT] ${roleCommands} Role base commands loading`);
-        console.log(`[INIT] ${mitchCommands} Mitch base commands loading`);
+        console.log(`[INIT] ${devCommands} Dev base commands loading`);
       });
     } catch (e) {
       console.error(`[INIT] Unable to load command: `, e.stack);

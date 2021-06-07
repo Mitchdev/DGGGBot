@@ -32,7 +32,7 @@ exports.slashes = [{
 exports.commandHandler = function(interaction) {
   interaction.defer();
   
-  client.guilds.fetch(options.guild).then((guild) => {
+  client.guilds.fetch(process.env.GUILD_ID).then((guild) => {
     const e = [];
     const combined = [];
     let totalLen = 0;

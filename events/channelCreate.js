@@ -1,10 +1,10 @@
 module.exports = function(client) {
   client.on('channelCreate', (channel) => {
     if (channel.type == 'text') {
-      if (channel.guild.id == options.guild) {
+      if (channel.guild.id == process.env.GUILD_ID) {
         channel.overwritePermissions([
           {
-            id: options.role.mute,
+            id: process.env.ROLE_MUTE,
             deny: ['SEND_MESSAGES', 'ADD_REACTIONS'],
           }, {
             id: '252128902418268161',

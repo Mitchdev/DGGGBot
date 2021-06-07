@@ -1,6 +1,6 @@
 module.exports = function(client) {
   client.on('messageReactionAdd', (reaction, user) => {
-    if (user.id != options.bot) {
+    if (user.id != process.env.BOT_ID) {
       if (reaction.message.id == currentVoteID) {
         // TODO:
         //  Add possiblity for single vote only
@@ -24,7 +24,7 @@ module.exports = function(client) {
           recentReactions = recentReactions.filter((r) => r != id);
         }, 5000);
 
-        client.guilds.fetch(options.guild).then((guild) => {
+        client.guilds.fetch(process.env.GUILD_ID).then((guild) => {
           if (guild.emojis.cache.find((emoji) => emoji.id == reaction._emoji.id)) {
             if (emotesUse.emotes[reaction._emoji.id]) {
               emotesUse.emotes[reaction._emoji.id].uses++;

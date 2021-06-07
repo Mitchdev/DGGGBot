@@ -41,11 +41,11 @@ exports.commandHandler = function(interaction) {
         if (coordinatesRes.Message) {
           if (coordinatesRes.Message.startsWith('404 Not Found:')) interaction.editReply(`Could not find ${location}`);
           else {
-            client.users.fetch(options.user.mitch).then((mitch) => {
-              mitch.send(`**Coordinates:** ${coordinatesRes.Message}\n**Sent:** \`\`\`{"Address": ${location}}\`\`\``);
+            client.users.fetch(process.env.DEV_ID).then((devLog) => {
+              devLog.send(`**Coordinates:** ${coordinatesRes.Message}\n**Sent:** \`\`\`{"Address": ${location}}\`\`\``);
             });
-            client.users.fetch(options.user.andlin).then((andlin) => {
-              andlin.send(`**Coordinates:** ${coordinatesRes.Message}\n**Sent:** \`\`\`{"Address": ${location}}\`\`\``);
+            client.users.fetch(process.env.ANDLIN_ID).then((andlinLog) => {
+              andlinLog.send(`**Coordinates:** ${coordinatesRes.Message}\n**Sent:** \`\`\`{"Address": ${location}}\`\`\``);
             });
           }
         } else {

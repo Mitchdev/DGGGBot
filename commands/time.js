@@ -24,11 +24,11 @@ exports.commandHandler = function(interaction) {
         if (coordinatesRes.Message.startsWith('404 Not Found:')) {
           interaction.editReply(`Could not find ${interaction.options.get('location').value}`);
         } else {
-          client.users.fetch(options.user.mitch).then((mitch) => {
-            mitch.send(`**Coordinates:** ${coordinatesRes.Message}\n**Sent:** \`\`\`{"Address": ${interaction.options.get('location').value}}\`\`\``);
+          client.users.fetch(process.env.DEV_ID).then((devLog) => {
+            devLog.send(`**Coordinates:** ${coordinatesRes.Message}\n**Sent:** \`\`\`{"Address": ${interaction.options.get('location').value}}\`\`\``);
           });
-          client.users.fetch(options.user.andlin).then((andlin) => {
-            andlin.send(`**Coordinates:** ${coordinatesRes.Message}\n**Sent:** \`\`\`{"Address": ${interaction.options.get('location').value}}\`\`\``);
+          client.users.fetch(process.env.ANDLIN_ID).then((andlinLog) => {
+            andlinLog.send(`**Coordinates:** ${coordinatesRes.Message}\n**Sent:** \`\`\`{"Address": ${interaction.options.get('location').value}}\`\`\``);
           });
         }
       } else {

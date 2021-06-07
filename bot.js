@@ -13,7 +13,7 @@ client.on('ready', () => {
   loadEvents(client);
   loadFunctions(client);
 
-  client.guilds.fetch(options.guild).then((guild) => {
+  client.guilds.fetch(process.env.GUILD_ID).then((guild) => {
     guild.fetchInvites().then((invites) => {
       invites.each((invite) => {
         inviteList.push(invite);
@@ -30,14 +30,15 @@ client.on('ready', () => {
   }).catch(console.error);
 
   console.log(`[INIT] Bot online`);
-  client.users.fetch(options.user.mitch).then((mitch) => {
-    mitch.send(`Bot restarted!`);
+  client.users.fetch(process.env.DEV_ID).then((devLog) => {
+    devLog.send(`Bot restarted!`);
     const errorLog = fs.readFileSync(dpath.join(__dirname, '../../.pm2/logs/bot-error.log'), {encoding:'utf8'});
     const errorLogArray = errorLog.split('\n');
     const timestamp = errorLogArray[errorLogArray.length-2].match(/(\d\d\d\d\-\d\d\-\d\d\T\d\d\:\d\d\:\d\d\:)/g);
     if (timestamp) {
       const lastestError = errorLogArray.filter((line) => line.startsWith(timestamp[0])).join('\n');
-      mitch.send(`Latest Error:\n\`\`\`${lastestError}\`\`\``, {split: true});
+      devLog.send(`Latest Error:`);
+      devLog.send(lastestError, {code: 'xl', split: true});
     }
   });
 });

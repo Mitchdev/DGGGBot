@@ -1,6 +1,6 @@
 module.exports = function(client) {
   client.on('messageUpdate', (oldMessage, newMessage) => {
-    if (newMessage.author.id != options.bot && oldMessage.content != newMessage.content) {
+    if (newMessage.author.id != process.env.BOT_ID && oldMessage.content != newMessage.content) {
       const Discord = require('discord.js');
       const embed = new Discord.MessageEmbed()
           .setTitle(`**${newMessage.author.username}s edited message in #${newMessage.channel.name}**`)

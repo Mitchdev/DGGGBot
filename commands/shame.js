@@ -7,14 +7,14 @@ exports.slashes = [{
 exports.commandHandler = function(interaction) {
   interaction.defer();
   
-  client.guilds.fetch(options.guild).then((guild) => {
-    guild.roles.fetch(options.role.wizard).then((wizardRole) => {
+  client.guilds.fetch(process.env.GUILD_ID).then((guild) => {
+    guild.roles.fetch(process.env.ROLE_WIZARD).then((wizardRole) => {
       const wizardUsers = [];
       const weebUsers = [];
       const biggestWeebUsers = [];
       wizardRole.members.each((member) => {
         const inc = mutes.list.filter((m) => {
-          return (m.user == member.user.id && m.role == options.role.wizard);
+          return (m.user == member.user.id && m.role == process.env.ROLE_WIZARD);
         });
         if (inc.length == 0) wizardUsers.push(member.user.username);
       });

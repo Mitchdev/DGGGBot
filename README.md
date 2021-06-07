@@ -2,6 +2,14 @@
 
 A Discord bot for the dgg gaming discord community.
 
+## Installation
+**[Node.js](https://nodejs.org) 14.0.0 or newer is required.**
+This bot uses Discord.js master version see docs [here](https://discord.js.org/#/docs/main/master/general/welcome)
+
+Once you download the repo run `npm install` to install all the packages
+You must edit the `.env` file and put in your token and ids
+Then you can do `node bot.js` to run it.
+
 ## Command References
 
 | Reference   | Meaning                                           |

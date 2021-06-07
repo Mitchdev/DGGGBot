@@ -26,8 +26,8 @@ module.exports = function(client) {
                       images.push(filtered[0].data.preview.reddit_video_preview);
                     }
                   } else {
-                    client.users.fetch(options.user.mitch).then((mitch) => {
-                      mitch.send(`**Reddit:** https://reddit.com${filtered[0].data.permalink}.json`);
+                    client.users.fetch(process.env.DEV_ID).then((devLog) => {
+                      devLog.send(`**Reddit:** https://reddit.com${filtered[0].data.permalink}.json`);
                     });
                   }
                 }

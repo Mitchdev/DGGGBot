@@ -46,10 +46,10 @@ exports.commandHandler = function(interaction, Discord) {
             this.buttons[i].components[j].disabled = true;
           }
         }
-        this.interaction.editReply(`**TIC TAC TOE**\n${this.player1.user}**[X]** vs **[O]**${this.player2.user}\n\n**${this.turn.member.displayName} won!**`, {components: this.buttons});
+        this.interaction.editReply(`**TIC TAC TOE**\n${this.player1.user} **[X]** vs **[O]** ${this.player2.user}\n\n**[${this.turnSymbol === '❌' ? 'X' : 'O'}] ${this.turn.member.displayName} won!**`, {components: this.buttons});
         delete tictactoeGames[this.id];
       } else if (this.filled === 9) {
-        this.interaction.editReply(`**TIC TAC TOE**\n${this.player1.user}**[X]** vs **[O]**${this.player2.user}\n\n**Draw!**`, {components: this.buttons});
+        this.interaction.editReply(`**TIC TAC TOE**\n${this.player1.user} **[X]** vs **[O]** ${this.player2.user}\n\n**Draw!**`, {components: this.buttons});
         delete tictactoeGames[this.id];
       } else {
         if (this.turnSymbol === '❌') {
@@ -59,7 +59,7 @@ exports.commandHandler = function(interaction, Discord) {
           this.turnSymbol = '❌';
           this.turn = this.player1;
         }
-        this.interaction.editReply(`**TIC TAC TOE**\n${this.player1.user}**[X]** vs **[O]**${this.player2.user}\n\n**[${this.turnSymbol === '❌' ? 'X' : 'O'}]**${this.turn.member.displayName}s turn`, {components: this.buttons});
+        this.interaction.editReply(`**TIC TAC TOE**\n${this.player1.user} **[X]** vs **[O]** ${this.player2.user}\n\n**[${this.turnSymbol === '❌' ? 'X' : 'O'}]** ${this.turn.member.displayName}s turn`, {components: this.buttons});
       }
     }
 

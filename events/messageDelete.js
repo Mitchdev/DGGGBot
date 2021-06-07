@@ -1,6 +1,6 @@
 module.exports = function(client) {
   client.on('messageDelete', (message) => {
-    if (message.author.id != options.bot) {
+    if (message.author.id != process.env.BOT_ID) {
       const Discord = require('discord.js');
       const embed = new Discord.MessageEmbed()
           .setTitle(`**${message.author.username}s deleted message in #${message.channel.name}**`)

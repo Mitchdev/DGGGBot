@@ -49,14 +49,14 @@ exports.slashes = [{
 exports.commandHandler = function(interaction) {
   interaction.defer();
   
-  const roleRaw = interaction.commandName === 'wizard' ? 'Wizard' : interaction.commandName === 'weeb' ? 'Weeb' : 'Mute';
-  const roleID = roleRaw == 'Wizard' ? options.role.wizard : (roleRaw == 'Weeb' ? options.role.weeb : options.role.mute);
+  const roleRaw = `ROLE_${interaction.commandName.toUpperCase()}`;
+  const roleID = process.env[roleRaw];
   const timeRaw = interaction.options.get('duration').value;
   const time = timeToSeconds(timeRaw);
 
   if (time != null && time > 0) {
     if (time <= 2592000) {
-      client.guilds.resolve(options.guild).roles.fetch(roleID).then((role) => {
+      client.guilds.resolve(process.env.GUILD_ID).roles.fetch(roleID).then((role) => {
         const startTime = new Date();
         const inc = mutes.list.filter((m) => {
           return m.user == interaction.options.get('user').user.id && m.role == roleID;
@@ -80,11 +80,6 @@ exports.commandHandler = function(interaction) {
             } else if (Math.round(Math.random() * 20) == 14) {
               interaction.editReply(`Looks like the gun jammed.`);
               gunCooldown = true;
-
-              client.users.fetch(options.user.mitch).then((mitch) => {
-                mitch.send(`My gun broke`);
-              });
-
               setTimeout(function() {
                 gunCooldown = false;
               }, 600000);

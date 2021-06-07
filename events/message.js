@@ -1,20 +1,18 @@
 module.exports = function(client) {
   client.on('message', (message) => {
-    if (message.author.id != options.bot) {
-      if (message.channel.type == 'dm') {
-        client.users.fetch(options.user.mitch).then((mitch) => {
-          if (mitch.id != message.author.id) {
-            mitch.send(`DM: ${message.author.username}#${message.author.discriminator}: ${message.content}`);
-          }
+    if (message.author.id != process.env.BOT_ID) {
+      if (message.channel.type == 'dm' && process.env.DEV_ID != message.author.id) {
+        client.users.fetch(process.env.DEV_ID).then((devLog) => {
+          devLog.send(`DM: ${message.author.username}#${message.author.discriminator}: ${message.content}`);
         });
       } else if (message.content.length >= 750) {
         message.react(message.guild.emojis.cache.get(options.emote.donowall.id));
       }
-      if (message.author.id == options.user.mitch && message.content.startsWith('!eval')) executeEval(message);
+      if (message.author.id == process.env.DEV_ID && message.content.startsWith('!eval')) executeEval(message);
 
       const emotes = message.content.match(/<:.+?:\d+>/gmi);
       if (emotes) {
-        client.guilds.fetch(options.guild).then((guild) => {
+        client.guilds.fetch(process.env.GUILD_ID).then((guild) => {
           const addedIDs = {};
           for (let i = 0; i < emotes.length; i++) {
             const e = emotes[i].replace('>', '').replace('<:', '').split(':');
@@ -51,16 +49,16 @@ module.exports = function(client) {
 
       for (let i = 0; i < options.weebPhrases.length; i++) {
         if (new RegExp('(<=\\s|\\b|\:)'+ options.weebPhrases[i] +'(?=[]\\b|\\s|$|\:)').test(message.content.toLowerCase())) {
-          client.guilds.fetch(options.guild).then((guild) => {
+          client.guilds.fetch(process.env.GUILD_ID).then((guild) => {
             guild.members.fetch(message.author.id).then((guildMember) => {
-              guild.roles.fetch(options.role.weeb).then((role) => {
-                if (!guildMember._roles.includes(options.role.weeb)) {
+              guild.roles.fetch(process.env.ROLE_WEEB).then((role) => {
+                if (!guildMember._roles.includes(process.env.ROLE_WEEB)) {
                   guildMember.roles.add(role);
                   message.channel.send(options.emote.weird.string);
                   mutes.list.push({
                     'user': message.author.id,
                     'username': message.author.username,
-                    'role': options.role.weeb,
+                    'role': process.env.ROLE_WEEB,
                     'roleName': 'Weeb',
                     'startTime': new Date(),
                     'time': 86400,
@@ -69,8 +67,8 @@ module.exports = function(client) {
                   });
                   updateMutes();
                 } else {
-                  guild.roles.fetch(options.role.weebleader).then((weebLeader) => {
-                    if (!guildMember._roles.includes(options.role.weebleader)) {
+                  guild.roles.fetch(process.env.ROLE_WEEBLEADER).then((weebLeader) => {
+                    if (!guildMember._roles.includes(process.env.ROLE_WEEBLEADER)) {
                       weebLeader.members.each((member) => member.roles.remove(weebLeader));
                       guildMember.roles.add(weebLeader);
                       message.channel.send(options.emote.weird.string);
@@ -82,28 +80,6 @@ module.exports = function(client) {
           }).catch(console.error);
         }
       }
-
-      // if (message.content.toLowerCase().startsWith('!')) {
-      //  var possibleCommand = message.content.toLowerCase().substr(1);
-      //  possibleCommand = possibleCommand.split(' ')[0];
-      //    var command = commands.find(cmd => cmd.name.includes(possibleCommand));
-
-      //  if (command) {
-      //    if (!command.onlySlash) {
-      //      if (command.permission == 'mod') {
-      //        client.guilds.fetch(options.guild).then(guild => {
-      //          guild.members.fetch(message.author.id).then(guildMember => {
-      //            if (guildMember._roles.includes(options.role.mod)) {
-      //              command.handler(message);
-      //            }
-      //          });
-      //        });
-      //      } else {
-      //        command.handler(message);
-      //      }
-      //    }
-      //  }
-      // }
     }
   });
 };

@@ -15,10 +15,10 @@ exports.slashes = [{
       required: true,
       choices: [{
         name: 'Weeb',
-        value: 'weeb',
+        value: 'ROLE_WEEB',
       }, {
         name: 'Wizard',
-        value: 'wizard',
+        value: 'ROLE_WIZARD',
       }],
     }, {
       name: 'odds',
@@ -65,10 +65,10 @@ exports.slashes = [{
       required: true,
       choices: [{
         name: 'Weeb',
-        value: 'weeb',
+        value: 'ROLE_WEEB',
       }, {
         name: 'Wizard',
-        value: 'wizard',
+        value: 'ROLE_WIZARD',
       }],
     }, {
       name: 'horse',
@@ -103,10 +103,10 @@ exports.slashes = [{
       required: true,
       choices: [{
         name: 'Weeb',
-        value: 'weeb',
+        value: 'ROLE_WEEB',
       }, {
         name: 'Wizard',
-        value: 'wizard',
+        value: 'ROLE_WIZARD',
       }],
     }, {
       name: 'user',
@@ -120,21 +120,21 @@ exports.commandHandler = function(interaction, Discord) {
   interaction.defer();
   
   if (interaction.options.first().name === 'odds') {
-    const foundUser = userHasRole(interaction.user.id, options.role[interaction.options.first().options.get('role').value], true);
+    const foundUser = userHasRole(interaction.user.id, process.env[interaction.options.first().options.get('role').value], true);
     if (foundUser.err) interaction.editReply(foundUser.err);
     else {
       const random = Math.floor(Math.random() * interaction.options.first().options.get('odds').value) + 1;
       const percentage = (interaction.options.first().options.get('odds').value-1)*10;
       foundUser.found.gamble -= 1;
       if (random === 1) {
-        mutes.list = mutes.list.filter((m) => ((m.user != interaction.user.id) || (m.role != options.role[interaction.options.first().options.get('role').value])));
+        mutes.list = mutes.list.filter((m) => ((m.user != interaction.user.id) || (m.role != process.env[interaction.options.first().options.get('role').value])));
         interaction.editReply(`**Win!** Subtracting ${percentage}% from your timeleft.\n${secondsToDhms(foundUser.time)}- ${secondsToDhms(Math.round(foundUser.time*(percentage/100)))}= ${secondsToDhms(foundUser.time - Math.round(foundUser.time*(percentage/100)))}`);
         foundUser.found.time = foundUser.found.time - Math.round(foundUser.time*(percentage/100));
         foundUser.found.timeRaw = secondsToDuration(foundUser.found.time);
         mutes.list.push(foundUser.found);
         updateMutes();
       } else {
-        mutes.list = mutes.list.filter((m) => ((m.user != interaction.user.id) || (m.role != options.role[interaction.options.first().options.get('role').value])));
+        mutes.list = mutes.list.filter((m) => ((m.user != interaction.user.id) || (m.role != process.env[interaction.options.first().options.get('role').value])));
         interaction.editReply(`**Lost!** Adding ${percentage}% to your timeleft.\n${secondsToDhms(foundUser.time)}+ ${secondsToDhms(Math.round(foundUser.time*(percentage/100)))}= ${secondsToDhms(foundUser.time + Math.round(foundUser.time*(percentage/100)))}`);
         foundUser.found.time = foundUser.found.time + Math.round(foundUser.time*(percentage/100));
         foundUser.found.timeRaw = secondsToDuration(foundUser.found.time);
@@ -143,7 +143,7 @@ exports.commandHandler = function(interaction, Discord) {
       }
     }
   } else if (interaction.options.first().name === 'horse') {
-    const foundUser = userHasRole(interaction.user.id, options.role[interaction.options.first().options.get('role').value], true);
+    const foundUser = userHasRole(interaction.user.id, process.env[interaction.options.first().options.get('role').value], true);
     if (foundUser.err) interaction.editReply(foundUser.err);
     else {
       const horseDistance = [0, 0, 0, 0, 0];
@@ -155,8 +155,8 @@ exports.commandHandler = function(interaction, Discord) {
     }
   } else if (interaction.options.first().name === 'duel') {
     if (interaction.options.first().options.first().name === 'create') {
-      const foundUser1 = userHasRole(interaction.user.id, options.role[interaction.options.first().options.first().options.get('role').value], false);
-      const foundUser2 = userHasRole(interaction.options.first().options.first().options.get('user').value, options.role[interaction.options.first().options.first().options.get('role').value], false);
+      const foundUser1 = userHasRole(interaction.user.id, process.env[interaction.options.first().options.first().options.get('role').value], false);
+      const foundUser2 = userHasRole(interaction.options.first().options.first().options.get('user').value, process.env[interaction.options.first().options.first().options.get('role').value], false);
       if (foundUser1.err) interaction.editReply(foundUser1.err);
       else if (foundUser2.err || interaction.user.id == interaction.options.first().options.first().options.get('user').value) interaction.editReply(`Cannot duel this user`);
       else {
@@ -195,7 +195,7 @@ exports.commandHandler = function(interaction, Discord) {
       if (horseDistance[i] === 10) horseRaceEnd = true;
     }
     if (horseRaceEnd) {
-      mutes.list = mutes.list.filter((m) => ((m.user != interaction.user.id) || (m.role != options.role[interaction.options.first().options.get('role').value])));
+      mutes.list = mutes.list.filter((m) => ((m.user != interaction.user.id) || (m.role != process.env[interaction.options.first().options.get('role').value])));
       if (horseDistance[interaction.options.first().options.get('horse').value-1] === 10) {
         interaction.editReply(`**You picked #${interaction.options.first().options.get('horse').value} in the horse race**\n${horseDistance.map((dist, index) => {
           return `🏁 ${('- '.repeat(10-dist)).trim()} 🏇 #${index+1}`;
@@ -205,7 +205,7 @@ exports.commandHandler = function(interaction, Discord) {
         mutes.list.push(foundUser.found);
         updateMutes();
       } else {
-        mutes.list = mutes.list.filter((m) => ((m.user != interaction.user.id) || (m.role != options.role[interaction.options.first().options.get('role').value])));
+        mutes.list = mutes.list.filter((m) => ((m.user != interaction.user.id) || (m.role != process.env[interaction.options.first().options.get('role').value])));
         interaction.editReply(`**You picked #${interaction.options.first().options.get('horse').value} in the horse race**\n${horseDistance.map((dist, index) => {
           return `🏁 ${('- '.repeat(10-dist)).trim()} 🏇 #${index+1}`;
         }).join('\n')}\n\n**Lost!** Adding 40% to your timeleft.\n${secondsToDhms(foundUser.time)}+ ${secondsToDhms(Math.round(foundUser.time*0.4))}= ${secondsToDhms(foundUser.time + Math.round(foundUser.time*0.4))}`);

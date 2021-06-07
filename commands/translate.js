@@ -25,11 +25,11 @@ exports.commandHandler = function(interaction) {
       if (!err) {
         if (res) {
           if (res.Message) {
-            client.users.fetch(options.user.mitch).then((mitch) => {
-              mitch.send(`**Translator:** ${res.Message}\n**Sent:** \`\`\`{"source": "auto", "target": "en", "text": ${escapeHtml(phrase, false)}}\`\`\``);
+            client.users.fetch(process.env.DEV_ID).then((devLog) => {
+              devLog.send(`**Translator:** ${res.Message}\n**Sent:** \`\`\`{"source": "auto", "target": "en", "text": ${escapeHtml(phrase, false)}}\`\`\``);
             });
-            client.users.fetch(options.user.andlin).then((andlin) => {
-              andlin.send(`**Translator:** ${res.Message}\n**Sent:** \`\`\`{"source": "auto", "target": "en", "text": ${escapeHtml(phrase, false)}}\`\`\``);
+            client.users.fetch(process.env.ANDLIN_ID).then((andlinLog) => {
+              andlinLog.send(`**Translator:** ${res.Message}\n**Sent:** \`\`\`{"source": "auto", "target": "en", "text": ${escapeHtml(phrase, false)}}\`\`\``);
             });
           } else if (res.length > 0) {
             if (res[0].translations) {

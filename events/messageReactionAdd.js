@@ -5,7 +5,7 @@ module.exports = function(client) {
         // TODO:
         //  Add possiblity for single vote only
         //    currently people can vote on more than one option.
-        
+
         // ?change to buttons
 
         if (!voteValidReactions.includes(reaction._emoji.name)) {

@@ -48,7 +48,7 @@ exports.slashes = [{
 }];
 exports.commandHandler = function(interaction) {
   interaction.defer();
-  
+
   const roleRaw = `ROLE_${interaction.commandName.toUpperCase()}`;
   const roleID = process.env[roleRaw];
   const timeRaw = interaction.options.get('duration').value;

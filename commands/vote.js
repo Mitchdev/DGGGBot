@@ -62,11 +62,11 @@ exports.slashes = [{
 }];
 exports.commandHandler = function(interaction) {
   interaction.defer();
-  
+
   const question = interaction.options.get('question').value;
   const time = timeToSeconds(interaction.options.get('duration').value);
-  const answers = interaction.options.filter(option => (option.name != 'duration' && option.name != 'question')).map(option => option.value);
-  
+  const answers = interaction.options.filter((option) => (option.name != 'duration' && option.name != 'question')).map((option) => option.value);
+
   if (time != null && time > 0) {
     interaction.editReply(`**Vote** started for ${interaction.options.get('duration').value}\n${question}\n`+answers.map((a, i) => {
       return `${options.voteReactions[i]} ${a}`;

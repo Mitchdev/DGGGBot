@@ -18,7 +18,7 @@ exports.slashes = [{
 }];
 exports.commandHandler = function(interaction) {
   interaction.defer({ephemeral: true});
-  
+
   if (emotesUse.emotes[interaction.options.get('old').value]) {
     if (emotesUse.emotes[interaction.options.get('new').value]) {
       emotesUse.emotes[interaction.options.get('new').value].uses += emotesUse.emotes[interaction.options.get('old').value].uses;

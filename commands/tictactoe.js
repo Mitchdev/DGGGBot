@@ -19,10 +19,17 @@ exports.commandHandler = function(interaction, Discord) {
   }
 
   const id = makeID();
-  tictactoeGames[id] = new tictactoe(id, {'user': interaction.user, 'member': interaction.member}, {'user': interaction.options.first().user, 'member': interaction.options.first().member}, interaction);
+  tictactoeGames[id] = new Tictactoe(id, {'user': interaction.user, 'member': interaction.member}, {'user': interaction.options.first().user, 'member': interaction.options.first().member}, interaction);
   tictactoeGames[id].update();
 
-  function tictactoe(id, p1, p2, i) {
+  /**
+   * Tictactoe constructor.
+   * @param {string} id of the game
+   * @param {object} p1 user memebr object
+   * @param {object} p2 user member object
+   * @param {interaction} i game message
+   */
+  function Tictactoe(id, p1, p2, i) {
     this.id = id;
     this.player1 = p1;
     this.player2 = p2;
@@ -32,10 +39,10 @@ exports.commandHandler = function(interaction, Discord) {
     this.win = false;
     this.filled = 0;
     this.buttons = [new Discord.MessageActionRow(), new Discord.MessageActionRow(), new Discord.MessageActionRow()];
-    
+
     for (let i = 0; i < 3; i++) {
       for (let j = 0; j < 3; j++) {
-        this.buttons[i].addComponents(new Discord.MessageButton({custom_id: `tictactoe|${id}|${i}.${j}`, label: " ", style: 'SECONDARY'}))
+        this.buttons[i].addComponents(new Discord.MessageButton({custom_id: `tictactoe|${id}|${i}.${j}`, label: ' ', style: 'SECONDARY'}));
       }
     }
 
@@ -61,15 +68,15 @@ exports.commandHandler = function(interaction, Discord) {
         }
         this.interaction.editReply(`**TIC TAC TOE**\n${this.player1.user} **[X]** vs **[O]** ${this.player2.user}\n\n**[${this.turnSymbol === '❌' ? 'X' : 'O'}]** ${this.turn.member.displayName}s turn`, {components: this.buttons});
       }
-    }
+    };
 
     this.makeMove = function(v, h) {
       this.filled++;
       this.buttons[v].components[h].setEmoji(this.turnSymbol);
-      this.buttons[v].components[h].label = "";
+      this.buttons[v].components[h].label = '';
       this.buttons[v].components[h].disabled = true;
       this.checkWin(v, h);
-    }
+    };
 
     this.checkWin = function(v, h) {
       if (this.buttons[0].components[h].emoji?.name === this.turnSymbol && this.buttons[1].components[h].emoji?.name === this.turnSymbol && this.buttons[2].components[h].emoji?.name === this.turnSymbol) {
@@ -89,16 +96,20 @@ exports.commandHandler = function(interaction, Discord) {
         }
       }
       this.update();
-    }
+    };
 
     this.setGreen = function(v1, h1, v2, h2, v3, h3) {
       this.buttons[v1].components[h1].style = 'SUCCESS';
       this.buttons[v2].components[h2].style = 'SUCCESS';
       this.buttons[v3].components[h3].style = 'SUCCESS';
       this.win = true;
-    }
+    };
   }
 
+  /**
+   * Creates a new id.
+   * @return {string} id
+   */
   function makeID() {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     let id = '';

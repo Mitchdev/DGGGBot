@@ -12,7 +12,7 @@ exports.slashes = [{
 }];
 exports.commandHandler = function(interaction) {
   interaction.defer();
-  
+
   const phrase = interaction.options.get('phrase').value;
   if (phrase.toLowerCase() === 'andlin') interaction.editReply(`**Svensk** - Language detection score: 777,777,777,777,777\n${phrase}\n**English**\n🥺 0mar 😂 please mute me <:rustgarage:800754270550360104>`);
   else {

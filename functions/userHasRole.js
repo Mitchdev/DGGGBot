@@ -6,10 +6,10 @@ module.exports = function(client) {
         const difference = (new Date().getTime() - new Date(found.startTime).getTime()) / 1000;
         const time = (parseInt(found.time) - parseInt(difference) <= 0) ? 0 : parseInt(found.time) - parseInt(difference);
         if (time > 0) {
-          return {"found": found, "time": time}
-        } 
-      } else return {"err": "You don't have any gambles left"}
+          return {'found': found, 'time': time};
+        }
+      } else return {'err': 'You don\'t have any gambles left'};
     }
-    return {"err": "You don't have this role as a temp role"}
-  }
+    return {'err': 'You don\'t have this role as a temp role'};
+  };
 };

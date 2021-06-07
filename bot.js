@@ -32,7 +32,7 @@ client.on('ready', () => {
   console.log(`[INIT] Bot online`);
   client.users.fetch(process.env.DEV_ID).then((devLog) => {
     devLog.send(`Bot restarted!`);
-    const errorLog = fs.readFileSync(dpath.join(__dirname, '../../.pm2/logs/bot-error.log'), {encoding:'utf8'});
+    const errorLog = fs.readFileSync(dpath.join(__dirname, '../../.pm2/logs/bot-error.log'), {encoding: 'utf8'});
     const errorLogArray = errorLog.split('\n');
     const timestamp = errorLogArray[errorLogArray.length-2].match(/(\d\d\d\d\-\d\d\-\d\d\T\d\d\:\d\d\:\d\d\:)/g);
     if (timestamp) {

@@ -12,7 +12,7 @@ exports.slashes = [{
 }];
 exports.commandHandler = function(interaction) {
   interaction.defer();
-  
+
   const phrase = interaction.options.get('phrase').value.toLowerCase();
   if (phrase == 'mitch') {
     const content = `**mitch**\nThe best moderator.`;

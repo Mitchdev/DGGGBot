@@ -121,6 +121,6 @@ exports.buttonHandler = function(interaction) {
         interaction.member.roles.add(role);
         interaction.editReply(`${foundRole.name} role added`, {ephemeral: true});
       }
-    }).catch(console.error)
+    }).catch(console.error);
   }
 };

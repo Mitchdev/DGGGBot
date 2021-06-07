@@ -13,7 +13,7 @@ exports.slashes = [{
 }];
 exports.commandHandler = function(interaction) {
   interaction.defer({ephemeral: true});
-  
+
   if (interaction.options.get('id')) {
     const clientCommand = client.application.commands.resolve(interaction.options.get('id').value);
     const guildCommand = client.guilds.resolve(process.env.GUILD_ID).commands.resolve(interaction.options.get('id').value);

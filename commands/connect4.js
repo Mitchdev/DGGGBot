@@ -11,26 +11,37 @@ exports.slashes = [{
   }],
 }];
 exports.commandHandler = function(interaction, Discord) {
-  //interaction.defer();
+  // interaction.defer();
 
   interaction.defer({ephemeral: true});
   interaction.editReply('Coming Soon', {ephemeral: true});
 
   // const id = makeID();
-  // connect4Games[id] = new connect4(id, {'user': interaction.user, 'member': interaction.member}, {'user': interaction.options.first().user, 'member': interaction.options.first().member}, interaction);
+  // connect4Games[id] = new Connect4(id, {'user': interaction.user, 'member': interaction.member}, {'user': interaction.options.first().user, 'member': interaction.options.first().member}, interaction);
   // connect4Games[id].startGame();
 
-  function connect4(id, p1, p2, i) {
+  /**
+   * Connect4 constructor.
+   * @param {string} id of the game
+   * @param {object} p1 user memebr object
+   * @param {object} p2 user member object
+   * @param {interaction} i game message
+   */
+  function Connect4(id, p1, p2, i) {
     this.id = id;
     this.player1 = p1;
     this.player2 = p2;
     this.interaction = i;
 
     this.startGame = function() {
-      this.interaction.editReply(`${this.player1.user.username} vs ${this.player2.user.username}`)
-    }
+      this.interaction.editReply(`${this.player1.user.username} vs ${this.player2.user.username}`);
+    };
   }
 
+  /**
+   * Creates a new id.
+   * @return {string} id
+   */
   function makeID() {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     let id = [];

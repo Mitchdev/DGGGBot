@@ -12,7 +12,7 @@ exports.slashes = [{
 }];
 exports.commandHandler = function(interaction) {
   interaction.defer();
-  
+
   request({
     method: 'POST',
     url: process.env.ANDLIN_ADDRESS_API,

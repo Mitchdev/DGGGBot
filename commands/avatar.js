@@ -12,7 +12,7 @@ exports.slashes = [{
 }];
 exports.commandHandler = function(interaction) {
   interaction.defer();
-  
+
   const user = interaction.options.get('user') ? interaction.options.get('user').user : interaction.user;
   interaction.editReply(`https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=256`);
 };

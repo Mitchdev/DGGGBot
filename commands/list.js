@@ -6,7 +6,7 @@ exports.slashes = [{
 }];
 exports.commandHandler = function(interaction) {
   interaction.defer();
-  
+
   const sorted = mutes.list.sort((a, b) => {
     const differenceA = (new Date().getTime() - new Date(a.startTime).getTime()) / 1000;
     const differenceB = (new Date().getTime() - new Date(b.startTime).getTime()) / 1000;

@@ -31,7 +31,7 @@ exports.slashes = [{
 }];
 exports.commandHandler = function(interaction) {
   interaction.defer();
-  
+
   if (interaction.commandName === 'convertlist') {
     if (!interaction.options.get('measurement')) {
       interaction.editReply(`**Conversion Measurement List**\n${measurements.map((measurement) => measurement.name).join('\n')}`);

@@ -3,15 +3,14 @@ module.exports = function(client) {
     const generalRoles = roles.list.filter((role) => role.type == 'General');
     const gamingRoles = roles.list.filter((role) => role.type == 'Gaming');
     client.channels.resolve(process.env.CHANNEL_ROLES).messages.fetch(process.env.MESSAGE_ROLES).then((msg) => {
-
       const buttons = [];
       const buttonsTemp = [[], []];
 
       for (let i = 0; i < roles.list.length; i++) {
-        const emoji = roles.list[i].reaction.type == 'custom' ? client.guilds.resolve(process.env.GUILD_ID).emojis.cache.get(roles.list[i].reaction.id) : roles.list[i].reaction.id
+        const emoji = roles.list[i].reaction.type == 'custom' ? client.guilds.resolve(process.env.GUILD_ID).emojis.cache.get(roles.list[i].reaction.id) : roles.list[i].reaction.id;
         buttonsTemp[roles.list[i].type === 'General' ? 0 : 1].push(new Discord.MessageButton({custom_id: `autoroles|${roles.list[i].name}`, label: roles.list[i].name, style: 'PRIMARY'}).setEmoji(emoji));
       }
-      
+
       for (let i = 0; i < 2; i++) {
         for (let j = 0; j < Math.ceil(buttonsTemp[i].length/5); j++) {
           buttons.push(new Discord.MessageActionRow());

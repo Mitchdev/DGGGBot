@@ -1,6 +1,6 @@
 exports.commands = {'roll': 'none'};
 exports.buttons = {};
-exports.slashes =  [];
+exports.slashes = [];
 exports.commandHandler = function(message) {
   // var diceMatch = /!(?:r )?(?:roll )?(\d+)(d)(\d+)/g.exec(message.content.toLowerCase());
   // if (diceMatch) {

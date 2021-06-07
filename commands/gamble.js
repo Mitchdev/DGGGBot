@@ -118,7 +118,7 @@ exports.slashes = [{
 }];
 exports.commandHandler = function(interaction, Discord) {
   interaction.defer();
-  
+
   if (interaction.options.first().name === 'odds') {
     const foundUser = userHasRole(interaction.user.id, process.env[interaction.options.first().options.get('role').value], true);
     if (foundUser.err) interaction.editReply(foundUser.err);
@@ -154,28 +154,26 @@ exports.commandHandler = function(interaction, Discord) {
       setTimeout(() => updateHorse(horseDistance, foundUser), 750);
     }
   } else if (interaction.options.first().name === 'duel') {
-    if (interaction.options.first().options.first().name === 'create') {
-      const foundUser1 = userHasRole(interaction.user.id, process.env[interaction.options.first().options.first().options.get('role').value], false);
-      const foundUser2 = userHasRole(interaction.options.first().options.first().options.get('user').value, process.env[interaction.options.first().options.first().options.get('role').value], false);
-      if (foundUser1.err) interaction.editReply(foundUser1.err);
-      else if (foundUser2.err || interaction.user.id == interaction.options.first().options.first().options.get('user').value) interaction.editReply(`Cannot duel this user`);
-      else {
-        if (gambleDuels[foundUser2.found.user]) {
-          interaction.editReply(`${interaction.options.first().options.first().options.get('user').member.username} already has a duel waiting to accept`);
-        } else {
-          foundUser1["username"] = interaction.member.displayName;
-          foundUser2["username"] = interaction.options.first().options.first().options.get('user').member.displayName;
-          gambleDuels[foundUser2.found.user] = {"user1": foundUser1, "user2": foundUser2}
-          const row = new Discord.MessageActionRow().addComponents(new Discord.MessageButton({custom_id: 'acceptduel', label: 'Accept', style: 'SUCCESS', disabled: false})).addComponents(new Discord.MessageButton({custom_id: 'denyduel', label: 'Deny', style: 'DANGER', disabled: false}));
-          interaction.editReply(`${interaction.options.first().options.first().options.get('user').user}, ${interaction.member.displayName} wants to duel. (You have 2m to accept)`, {components: [row]});
-          setTimeout(() => {
-            if (gambleDuels[foundUser2.found.user]) {
-              delete gambleDuels[foundUser2.found.user];
-              const row = new Discord.MessageActionRow().addComponents(new Discord.MessageButton({custom_id: 'null', label: `${foundUser2.username} failed to accept`, style: 'DANGER', disabled: true}));
-              interaction.editReply(`${interaction.options.first().options.first().options.get('user').user}, ${interaction.member.displayName} wants to duel. (You have 2m to accept)`, {components: [row]})
-            }
-          }, 120000);
-        }
+    const foundUser1 = userHasRole(interaction.user.id, process.env[interaction.options.first().options.get('role').value], false);
+    const foundUser2 = userHasRole(interaction.options.first().options.get('user').value, process.env[interaction.options.first().options.get('role').value], false);
+    if (foundUser1.err) interaction.editReply(foundUser1.err);
+    else if (foundUser2.err || interaction.user.id == interaction.options.first().options.get('user').value) interaction.editReply(`Cannot duel this user`);
+    else {
+      if (gambleDuels[foundUser2.found.user]) {
+        interaction.editReply(`${interaction.options.first().options.get('user').member.username} already has a duel waiting to accept`);
+      } else {
+        foundUser1['username'] = interaction.member.displayName;
+        foundUser2['username'] = interaction.options.first().options.get('user').member.displayName;
+        gambleDuels[foundUser2.found.user] = {'user1': foundUser1, 'user2': foundUser2};
+        const row = new Discord.MessageActionRow().addComponents(new Discord.MessageButton({custom_id: 'acceptduel', label: 'Accept', style: 'SUCCESS', disabled: false})).addComponents(new Discord.MessageButton({custom_id: 'denyduel', label: 'Deny', style: 'DANGER', disabled: false}));
+        interaction.editReply(`${interaction.options.first().options.get('user').user}, ${interaction.member.displayName} wants to duel. (You have 2m to accept)`, {components: [row]});
+        setTimeout(() => {
+          if (gambleDuels[foundUser2.found.user]) {
+            delete gambleDuels[foundUser2.found.user];
+            const row = new Discord.MessageActionRow().addComponents(new Discord.MessageButton({custom_id: 'null', label: `${foundUser2.username} failed to accept`, style: 'DANGER', disabled: true}));
+            interaction.editReply(`${interaction.options.first().options.get('user').user}, ${interaction.member.displayName} wants to duel. (You have 2m to accept)`, {components: [row]});
+          }
+        }, 120000);
       }
     }
   }
@@ -183,7 +181,7 @@ exports.commandHandler = function(interaction, Discord) {
   /**
    * Updates the horse race message.
    * @param {array} array of horse distances
-   * @param {number} time current temp role time
+   * @param {object} foundUser user role object
    */
   function updateHorse(array, foundUser) {
     let horseRaceEnd = false;
@@ -226,11 +224,10 @@ exports.buttonHandler = function(interaction, Discord) {
   if (interaction.customID === 'acceptduel') {
     const foundData = gambleDuels[interaction.user.id];
     if (foundData) {
-
       const row = new Discord.MessageActionRow().addComponents(new Discord.MessageButton({custom_id: 'null', label: `${interaction.user.username} accepted`, style: 'SUCCESS', disabled: true}));
-      interaction.update(interaction.message.content, {components: [row]})
+      interaction.update(interaction.message.content, {components: [row]});
 
-      const user1Win = (Math.floor(Math.random() * 2) === 1)
+      const user1Win = (Math.floor(Math.random() * 2) === 1);
       const winner = user1Win ? foundData.user1 : foundData.user2;
       const loser = user1Win ? foundData.user2 : foundData.user1;
       mutes.list = mutes.list.filter((m) => ((m.user != winner.found.user) || (m.role != winner.found.role)));
@@ -253,7 +250,7 @@ exports.buttonHandler = function(interaction, Discord) {
     const foundData = gambleDuels[interaction.user.id];
     if (foundData) {
       const row = new Discord.MessageActionRow().addComponents(new Discord.MessageButton({custom_id: 'null', label: `${interaction.user.username} denined`, style: 'DANGER', disabled: true}));
-      interaction.update(interaction.message.content, {components: [row]})
+      interaction.update(interaction.message.content, {components: [row]});
       delete gambleDuels[interaction.user.id];
     }
   }

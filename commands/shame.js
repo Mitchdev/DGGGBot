@@ -6,7 +6,7 @@ exports.slashes = [{
 }];
 exports.commandHandler = function(interaction) {
   interaction.defer();
-  
+
   client.guilds.fetch(process.env.GUILD_ID).then((guild) => {
     guild.roles.fetch(process.env.ROLE_WIZARD).then((wizardRole) => {
       const wizardUsers = [];

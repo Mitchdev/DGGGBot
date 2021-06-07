@@ -22,7 +22,7 @@ exports.slashes = [{
 }];
 exports.commandHandler = function(interaction) {
   interaction.defer();
-  
+
   request(process.env.CURRENCY_URL, function(err, req, res) {
     if (!err) {
       const rates = JSON.parse(res).rates;

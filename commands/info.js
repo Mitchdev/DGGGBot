@@ -6,7 +6,7 @@ exports.slashes = [{
 }];
 exports.commandHandler = function(interaction) {
   interaction.defer();
-  
+
   const pre = new Date();
   request({
     method: 'POST',

@@ -31,7 +31,7 @@ exports.slashes = [{
 }];
 exports.commandHandler = function(interaction) {
   interaction.defer();
-  
+
   client.guilds.fetch(process.env.GUILD_ID).then((guild) => {
     const e = [];
     const combined = [];

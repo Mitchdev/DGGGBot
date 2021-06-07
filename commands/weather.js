@@ -27,7 +27,7 @@ exports.slashes = [{
 }];
 exports.commandHandler = function(interaction) {
   interaction.defer();
-  
+
   const units = interaction.options.get('unit').value;
   const location = interaction.options.get('location').value;
   if (location != '') {

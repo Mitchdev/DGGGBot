@@ -26,7 +26,7 @@ exports.slashes = [{
       type: 'STRING',
       description: 'Direction from the first letter.',
       required: true,
-      choices: [{name:'Right',value:'right'}, {name:'Down',value:'down'}],
+      choices: [{name: 'Right', value: 'right'}, {name: 'Down', value: 'down'}],
     }, {
       name: 'word',
       type: 'STRING',
@@ -65,7 +65,7 @@ exports.commandHandler = function(interaction, Discord) {
     if (interaction.options.first().name === 'create') {
       const id = makeID();
       scrabbleGames[id] = new Scrabble(id, {'user': interaction.user, 'member': interaction.member}, interaction, cloneDeep(options.scrabbleLetters));
-      scrabbleGames[id].playerJoin({'user': interaction.user, 'member': interaction.member, 'letters': [], 'color': {}, points: 0}, 0);
+      scrabbleGames[id].playerJoin({'user': interaction.user, 'member': interaction.member, 'letters': [], 'color': {}, 'points': 0}, 0);
       scrabbleGames[id].loadGame();
     } else {
       interaction.editReply('You\'re not in a game');
@@ -112,40 +112,40 @@ exports.commandHandler = function(interaction, Discord) {
       }
       if (i === 2) this.joinBtns[1].addComponents(new Discord.MessageButton({custom_id: `scrabble|${id}|cancel`, label: `Cancel`, style: 'DANGER'}));
       if (i === 4) this.joinBtns[0].addComponents(new Discord.MessageButton({custom_id: `scrabble|${id}|leave`, label: 'Leave', style: 'DANGER'}));
-      else this.joinBtns[0].addComponents(new Discord.MessageButton({custom_id: `scrabble|${id}|join|${i}`, label: `${capitalize(this.colors[i].embed.toLowerCase())}`, style: this.colors[i].btn}))
+      else this.joinBtns[0].addComponents(new Discord.MessageButton({custom_id: `scrabble|${id}|join|${i}`, label: `${capitalize(this.colors[i].embed.toLowerCase())}`, style: this.colors[i].btn}));
     }
 
     this.loadGame = function() {
       const embed = new Discord.MessageEmbed()
-        .setTitle(`Owner: ${this.owner.user.username}`)
-        .setColor('WHITE')
-        .addFields(this.colors.map(c => {
-          if (c.available) return {name: capitalize(c.embed.toLowerCase()), value: 'available', inline: true}
-          const player = this.players.find((p) => p.color.embed === c.embed);
-          return {name: capitalize(c.embed.toLowerCase()), value: player.user.username, inline: true};
-        }))
+          .setTitle(`Owner: ${this.owner.user.username}`)
+          .setColor('WHITE')
+          .addFields(this.colors.map((c) => {
+            if (c.available) return {name: capitalize(c.embed.toLowerCase()), value: 'available', inline: true};
+            const player = this.players.find((p) => p.color.embed === c.embed);
+            return {name: capitalize(c.embed.toLowerCase()), value: player.user.username, inline: true};
+          }));
 
-        this.interaction.editReply({embeds: [embed], components: this.joinBtns});
-    }
+      this.interaction.editReply({embeds: [embed], components: this.joinBtns});
+    };
 
     this.startGame = function() {
       const embed = new Discord.MessageEmbed()
-        .setTitle(`Owner: ${this.owner.user.username}`)
-        .setColor('white')
-        .setDescription('Loading...')
-        .addFields(this.colors.map(c => {
-          if (c.available) return {name: capitalize(c.embed.toLowerCase()), value: 'available', inline: true}
-          const player = this.players.find((p) => p.color.embed === c.embed);
-          return {name: capitalize(c.embed.toLowerCase()), value: player.user.username, inline: true};
-        }))
+          .setTitle(`Owner: ${this.owner.user.username}`)
+          .setColor('white')
+          .setDescription('Loading...')
+          .addFields(this.colors.map((c) => {
+            if (c.available) return {name: capitalize(c.embed.toLowerCase()), value: 'available', inline: true};
+            const player = this.players.find((p) => p.color.embed === c.embed);
+            return {name: capitalize(c.embed.toLowerCase()), value: player.user.username, inline: true};
+          }));
 
       this.interaction.editReply({embeds: [embed], components: []});
       this.nextTurn(false);
-    }
+    };
 
     this.update = async function() {
       const fields = this.players.map((p) => {
-        return {name: `${p.user.username} points`, value: p.points.toString(), inline: true}
+        return {name: `${p.user.username} points`, value: p.points.toString(), inline: true};
       });
       fields.push({name: `${capitalize(this.players[this.turn].color.embed.toLowerCase())}s turn`, value: this.players[this.turn].user.username});
       fields.push({name: `${capitalize(this.players[this.turn].color.embed.toLowerCase())}s letters`, value: this.players[this.turn].letters.join(', ')});
@@ -156,19 +156,19 @@ exports.commandHandler = function(interaction, Discord) {
         json: this.board,
       }).pipe(fs.createWriteStream(dpath.join(__dirname, `../resources/scrabble/${this.id}.jpg`)));
       writeStream.on('close', () => {
-        const file = new Discord.MessageAttachment(fs.readFileSync(dpath.join(__dirname, `../resources/scrabble/${this.id}.jpg`)), `${this.id}.jpg`)
+        const file = new Discord.MessageAttachment(fs.readFileSync(dpath.join(__dirname, `../resources/scrabble/${this.id}.jpg`)), `${this.id}.jpg`);
         const embed = new Discord.MessageEmbed()
-          .attachFiles([file])
-          .setTitle('Do `/scrabble place` to place a word')
-          .setColor(this.players[this.turn].color.embed)
-          .addFields(fields)
-          .setImage(`attachment://${this.id}.jpg`)
-        
+            .attachFiles([file])
+            .setTitle('Do `/scrabble place` to place a word')
+            .setColor(this.players[this.turn].color.embed)
+            .addFields(fields)
+            .setImage(`attachment://${this.id}.jpg`);
+
         this.interaction.editReply({embeds: [embed], components: this.skipBtns});
 
         try {
           fs.unlinkSync(dpath.join(__dirname, `../resources/scrabble/${this.id}.jpg`));
-        } catch(err) {
+        } catch (err) {
           console.error(err);
         }
       });
@@ -179,9 +179,15 @@ exports.commandHandler = function(interaction, Discord) {
       const words = [];
       const wordsToDelete = [];
 
-      if (this.firstMove && (row != 7 || col != 7)) {callback({'message': 'The first move has to start from the middle (row:8 col:8)'}); return};
-      if (row < 0 || row > 14 || col < 0 || col > 14) {callback({'message': 'Row & col must be between 1 and 15'}); return};
-      if (((dir === 'down' ? row : col)+(word.length)) > 14) {callback({'message': 'Word must fit in the board'}); return};
+      if (this.firstMove && (row != 7 || col != 7)) {
+        callback({'message': 'The first move has to start from the middle (row:8 col:8)'}); return;
+      };
+      if (row < 0 || row > 14 || col < 0 || col > 14) {
+        callback({'message': 'Row & col must be between 1 and 15'}); return;
+      };
+      if (((dir === 'down' ? row : col)+(word.length)) > 14) {
+        callback({'message': 'Word must fit in the board'}); return;
+      };
 
       let wordInSameDir = false;
       let isConneting = false;
@@ -194,7 +200,9 @@ exports.commandHandler = function(interaction, Discord) {
         let preexisting = false;
 
         if (this.rawBoard[letterRow][letterCol] === letter) {
-          if (word.length === 1) {callback({'message': `You need to add original letters`}); return;}
+          if (word.length === 1) {
+            callback({'message': `You need to add original letters`}); return;
+          }
           playerLetters.push(letter);
           preexisting = true;
           isConneting = true;
@@ -373,16 +381,20 @@ exports.commandHandler = function(interaction, Discord) {
         }
       }
 
-      for(let i = wordsToDelete.length-1; i >= 0; i--) {
+      for (let i = wordsToDelete.length-1; i >= 0; i--) {
         words.splice(wordsToDelete[i], 1);
       }
 
-      if (!originalLetters) {callback({'message': `You need to add original letters`}); return;}
+      if (!originalLetters) {
+        callback({'message': `You need to add original letters`}); return;
+      }
 
       if (!wordInSameDir && word.length > 1) words.push(word);
 
       if (words.length === 1 && !isConneting && !this.firstMove) {
-        if (words[0] === word) {callback({'message': 'Your word must connect with another letter on the board'}); return;}
+        if (words[0] === word) {
+          callback({'message': 'Your word must connect with another letter on the board'}); return;
+        }
       }
 
       for (let i = 0; i < word.length; i++) {
@@ -394,7 +406,7 @@ exports.commandHandler = function(interaction, Discord) {
         }
       }
 
-      const wordsFinal = {'wildcardsIndex': [],'words': []};
+      const wordsFinal = {'wildcardsIndex': [], 'words': []};
       let wildcards = 0;
       for (let i = 0; i < word.length; i++) {
         if (!playerLetters.includes(word.charAt(i))) {
@@ -414,7 +426,7 @@ exports.commandHandler = function(interaction, Discord) {
       // Words has words I shouldn't get from preexisting letter.
       console.log(words);
 
-      for(let i = 0; i < words.length; i++) {
+      for (let i = 0; i < words.length; i++) {
         const wordLocation = words[i].indexOf(word);
         const wordWithoutWild = word.split('');
         for (let j = 0; j < wordsFinal.wildcardsIndex.length; j++) {
@@ -430,11 +442,11 @@ exports.commandHandler = function(interaction, Discord) {
       this.checkWords(0, wordsFinal, wildcards, (message) => {
         callback(message);
       });
-    }
+    };
 
     this.checkWords = function(i, wordsFinal, wildcards, callback) {
       fs.readFile(dpath.join(__dirname, '../resources/scrabble/scrabble.txt'), 'utf8', (err, data) => {
-        let scrabbleDict = data;
+        const scrabbleDict = data;
         const regex = new RegExp(`^(${wordsFinal.words[i].word})\r\n`, 'gim');
         if (scrabbleDict.match(regex)) {
           callback({'message': undefined, 'words': wordsFinal, 'wilds': wildcards});
@@ -461,19 +473,21 @@ exports.commandHandler = function(interaction, Discord) {
           });
         }
       });
-    }
+    };
 
     this.placeWord = function(word, row, col, dir, inter, wordsFinal, wilds) {
-      let originalLetters = this.players[this.turn].letters;
+      const originalLetters = this.players[this.turn].letters;
 
-      const fields = this.players.map((p) => {return {name: `${p.user.username} points`, value: p.points.toString(), inline: true}});
+      const fields = this.players.map((p) => {
+        return {name: `${p.user.username} points`, value: p.points.toString(), inline: true};
+      });
       fields.push({name: `${capitalize(this.players[this.turn].color.embed.toLowerCase())}s turn`, value: this.players[this.turn].user.username});
       fields.push({name: `${capitalize(this.players[this.turn].color.embed.toLowerCase())}s letters`, value: this.players[this.turn].letters.join(', ')});
       const embed = new Discord.MessageEmbed()
-        .setTitle('Do `/scrabble place` to place a word')
-        .setColor(this.players[this.turn].color.embed)
-        .addFields(fields)
-        .setImage(`attachment://${this.id}.jpg`);
+          .setTitle('Do `/scrabble place` to place a word')
+          .setColor(this.players[this.turn].color.embed)
+          .addFields(fields)
+          .setImage(`attachment://${this.id}.jpg`);
       this.interaction.editReply({embeds: [embed], components: []});
 
       this.firstMove = false;
@@ -496,19 +510,19 @@ exports.commandHandler = function(interaction, Discord) {
 
       this.interaction = inter;
       this.rawBoardtoBoard();
-    }
+    };
 
     this.rawBoardtoBoard = function() {
       this.board = [];
       for (let r = 0; r < 15; r++) {
         for (let c = 0; c < 15; c++) {
           if (this.rawBoard[r][c] != '') {
-            this.board.push({"Letter": this.rawBoard[r][c], "Row": r, "Column": c})
+            this.board.push({'Letter': this.rawBoard[r][c], 'Row': r, 'Column': c});
           }
         }
       }
       this.nextTurn();
-    }
+    };
 
     this.nextTurn = function(didSkip) {
       this.turn = this.turn+1 === this.players.length ? 0 : this.turn+1;
@@ -528,7 +542,7 @@ exports.commandHandler = function(interaction, Discord) {
           if (i === this.players.length-1 && j === 6) this.update();
         }
       }
-    }
+    };
 
     this.requestLetter = function() {
       const letters = Object.keys(this.gameLetters);
@@ -546,7 +560,7 @@ exports.commandHandler = function(interaction, Discord) {
       this.colors[colorIndex].available = true;
       this.players.splice(index, 1);
       this.loadGame();
-    }
+    };
 
     this.playerJoin = function(p, index) {
       const playerIndex = this.players.findIndex((player) => player.user.username === p.user.username);
@@ -559,17 +573,19 @@ exports.commandHandler = function(interaction, Discord) {
       this.colors[index].available = false;
       this.players[this.players.length-1].color = this.colors[index];
       this.loadGame();
-    }
+    };
 
     this.playerSkip = function(inter) {
-      const fields = this.players.map((p) => {return {name: `${p.user.username} points`, value: p.points.toString(), inline: true}});
+      const fields = this.players.map((p) => {
+        return {name: `${p.user.username} points`, value: p.points.toString(), inline: true};
+      });
       fields.push({name: `${capitalize(this.players[this.turn].color.embed.toLowerCase())}s turn`, value: this.players[this.turn].user.username});
       fields.push({name: `${capitalize(this.players[this.turn].color.embed.toLowerCase())}s letters`, value: this.players[this.turn].letters.join(', ')});
       const embed = new Discord.MessageEmbed()
-        .setTitle(`${this.players[this.turn].user.username} skipped`)
-        .setColor(this.players[this.turn].color.embed)
-        .addFields(fields)
-        .setImage(`attachment://${this.id}.jpg`);
+          .setTitle(`${this.players[this.turn].user.username} skipped`)
+          .setColor(this.players[this.turn].color.embed)
+          .addFields(fields)
+          .setImage(`attachment://${this.id}.jpg`);
       this.interaction.editReply({embeds: [embed], components: []});
 
       this.playersSkipped += 1;
@@ -579,15 +595,15 @@ exports.commandHandler = function(interaction, Discord) {
         if (inter) this.interaction = inter;
         this.nextTurn(true);
       }
-    }
+    };
 
     this.endGame = async function(didCancel, inter) {
       if (inter) this.interaction = inter;
       if (didCancel) {
         const embed = new Discord.MessageEmbed()
-          .setTitle(`Owner: ${this.owner.user.username}`)
-          .setColor('RED')
-          .setDescription('Game cancelled')
+            .setTitle(`Owner: ${this.owner.user.username}`)
+            .setColor('RED')
+            .setDescription('Game cancelled');
 
         this.interaction.editReply({embeds: [embed], components: []});
         delete scrabbleGames[this.id];
@@ -599,27 +615,27 @@ exports.commandHandler = function(interaction, Discord) {
           json: this.board,
         }).pipe(fs.createWriteStream(dpath.join(__dirname, `../resources/scrabble/${this.id}.jpg`)));
         writeStream.on('close', () => {
-          const file = new Discord.MessageAttachment(fs.readFileSync(dpath.join(__dirname, `../resources/scrabble/${this.id}.jpg`)), `${this.id}.jpg`)
+          const file = new Discord.MessageAttachment(fs.readFileSync(dpath.join(__dirname, `../resources/scrabble/${this.id}.jpg`)), `${this.id}.jpg`);
           const fields = this.players.map((p) => {
-            return {name: `${p.user.username} points`, value: p.points.toString(), inline: true}
+            return {name: `${p.user.username} points`, value: p.points.toString(), inline: true};
           });
           const embed = new Discord.MessageEmbed()
-            .attachFiles([file])
-            .setTitle('Game ended')
-            .setColor('WHITE')
-            .addFields(fields)
-            .setImage(`attachment://${this.id}.jpg`)
-          
+              .attachFiles([file])
+              .setTitle('Game ended')
+              .setColor('WHITE')
+              .addFields(fields)
+              .setImage(`attachment://${this.id}.jpg`);
+
           this.interaction.editReply({embeds: [embed], components: []});
-  
+
           try {
             fs.unlinkSync(dpath.join(__dirname, `../resources/scrabble/${this.id}.jpg`));
-          } catch(err) {
+          } catch (err) {
             console.error(err);
           }
         });
       }
-    }
+    };
   }
 };
 exports.buttonHandler = function(interaction, Discord) {
@@ -629,7 +645,7 @@ exports.buttonHandler = function(interaction, Discord) {
       interaction.deferUpdate();
       const index = parseInt(interaction.customID.split('|')[3]);
       if (scrabbleGames[id].colors[index].available) {
-        scrabbleGames[id].playerJoin({'user': interaction.user, 'member': interaction.member, 'letters': [], 'color': {}, points: 0}, index);
+        scrabbleGames[id].playerJoin({'user': interaction.user, 'member': interaction.member, 'letters': [], 'color': {}, 'points': 0}, index);
       }
     } else if (interaction.customID.split('|')[2] === 'start') {
       interaction.deferUpdate();
@@ -649,7 +665,7 @@ exports.buttonHandler = function(interaction, Discord) {
       }
     } else if (interaction.customID.split('|')[2] === 'skip') {
       if (scrabbleGames[id].players[scrabbleGames[id].turn].user.id === interaction.user.id) {
-	interaction.defer();
+        interaction.defer();
         scrabbleGames[id].playerSkip(interaction);
       } else interaction.deferUpdate();
     }

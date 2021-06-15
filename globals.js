@@ -21,7 +21,7 @@ module.exports = function(conf) {
 
   triviaGames = {};
   triviaToken = JSON.parse(fs.readFileSync(dpath.join(__dirname, './options/triviaToken.json'))).token;
-  
+
   client = conf.client;
   options = conf.config;
   commands = conf.commands;

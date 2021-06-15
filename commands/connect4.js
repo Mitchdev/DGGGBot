@@ -37,16 +37,5 @@ exports.commandHandler = function(interaction, Discord) {
       this.interaction.editReply({content: `${this.player1.user.username} vs ${this.player2.user.username}`});
     };
   }
-
-  /**
-   * Creates a new id.
-   * @return {string} id
-   */
-  function makeID() {
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let id = [];
-    for (let i = 0; i < 10; i++) id += chars.charAt(Math.floor(Math.random() * chars.length));
-    return id;
-  }
 };
 exports.buttonHandler = function(interaction, Discord) {};

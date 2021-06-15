@@ -13,13 +13,13 @@ exports.slashes = [{
     type: 'STRING',
     description: 'Target language',
     required: false,
-    choices: [{value:"af",name:"Afrikaans"},{value:"da",name:"Danish"},{value:"de",name:"German"},{value:"en",name:"English"},{value:"es",name:"Spanish"},{value:"he",name:"Hebrew"},{value:"mi",name:"Maori"},{value:"nb",name:"Norwegian"},{value:"nl",name:"Dutch"},{value:"sv",name:"Swedish"}],
+    choices: [{value: 'af', name: 'Afrikaans'}, {value: 'da', name: 'Danish'}, {value: 'de', name: 'German'}, {value: 'en', name: 'English'}, {value: 'es', name: 'Spanish'}, {value: 'he', name: 'Hebrew'}, {value: 'mi', name: 'Maori'}, {value: 'nb', name: 'Norwegian'}, {value: 'nl', name: 'Dutch'}, {value: 'sv', name: 'Swedish'}],
   }, {
     name: 'source',
     type: 'STRING',
     description: 'Source language',
     required: false,
-    choices: [{value:"auto",name:"Automatic"},{value:"af",name:"Afrikaans"},{value:"da",name:"Danish"},{value:"de",name:"German"},{value:"en",name:"English"},{value:"es",name:"Spanish"},{value:"he",name:"Hebrew"},{value:"mi",name:"Maori"},{value:"nb",name:"Norwegian"},{value:"nl",name:"Dutch"},{value:"sv",name:"Swedish"}],
+    choices: [{value: 'auto', name: 'Automatic'}, {value: 'af', name: 'Afrikaans'}, {value: 'da', name: 'Danish'}, {value: 'de', name: 'German'}, {value: 'en', name: 'English'}, {value: 'es', name: 'Spanish'}, {value: 'he', name: 'Hebrew'}, {value: 'mi', name: 'Maori'}, {value: 'nb', name: 'Norwegian'}, {value: 'nl', name: 'Dutch'}, {value: 'sv', name: 'Swedish'}],
   }],
 }];
 exports.commandHandler = function(interaction) {

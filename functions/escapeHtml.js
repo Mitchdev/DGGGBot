@@ -1,27 +1,41 @@
 module.exports = function(client) {
   escapeHtml = function(text, reverse) {
-    const map = {
-      '&': '&amp;',
-      '<': '&lt;',
-      '>': '&gt;',
-      '"': '&quot;',
-      '\'': '&#039;',
-
-      '&amp;': '&',
-      '&lt;': '<',
-      '&gt;': '>',
-      '&quot;': '"',
-      '&#039;': '\'',
-    };
+    // const SymboltoHTML = {
+    //   '&': '&amp;',
+    //   '<': '&lt;',
+    //   '>': '&gt;',
+    //   '"': '&quot;',
+    //   '\'': '&#039;',
+    //   '°': '&deg;',
+    //   'á': '&aacute;',
+    // };
+    // const HTMLtoSymbol = {
+    //   '&amp;': '&',
+    //   '&lt;': '<',
+    //   '&gt;': '>',
+    //   '&quot;': '"',
+    //   '&#039;': '\'',
+    //   '&deg;': '°',
+    //   '&aacute;': 'á',
+    // };
 
     if (reverse) {
-      return text.replace(/(&amp;)|(&lt;)|(&gt;)|(&quot;)|(&#039;)/g, function(m) {
-        return map[m];
-      });
+      return htmlEntities.decode(text);
     } else {
-      return text.replace(/[&<>"']/g, function(m) {
-        return map[m];
-      });
+      return htmlEntities.encode(text);
     }
+
+    // if (reverse) {
+    //   const regex = new RegExp(HTMLtoSymbol.map((m) => `|${m}|`).join('|'), 'g');
+    //   console.log(regex);
+    //   return text.replace(regex, (m) => {
+    //     return HTMLtoSymbol[m];
+    //   });
+    // } else {
+    //   const regex = new RegExp(SymboltoHTML.map((m) => `|${m}|`).join('|'), 'g');
+    //   return text.replace(regex, (m) => {
+    //     return SymboltoHTML[m];
+    //   });
+    // }
   };
 };

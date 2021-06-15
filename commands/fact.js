@@ -9,7 +9,7 @@ exports.commandHandler = function(interaction, Discord) {
 
   request(process.env.RANDOMFACT_API, function(err, req, res) {
     if (!err) {
-      interaction.editReply(JSON.parse(res).text);
+      interaction.editReply({content: JSON.parse(res).data});
     }
   });
 };

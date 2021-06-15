@@ -7,7 +7,7 @@ exports.slashes = [{
 exports.commandHandler = function(interaction) {
   interaction.defer({ephemeral: true});
 
-  interaction.editReply(`**Commands** https://github.com/Mitchdev/DGGGBot#readme`, {ephemeral: true}).then((msg) => {
+  interaction.editReply({content: `**Commands** https://github.com/Mitchdev/DGGGBot#readme`, ephemeral: true}).then((msg) => {
     if (msg.type != 20) msg.suppressEmbeds();
   });
 };

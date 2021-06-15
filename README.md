@@ -23,32 +23,36 @@ ___
 
 ## User Commands
 
-| Command      | Arguments                                               | Description                                         |
-|--------------|---------------------------------------------------------|-----------------------------------------------------|
-| 0mar         |                                                         | 0MAR LMAO                                           |
-| animal       | {sub cmd}                                               | Animal commands                                     |
-| &emsp;↳ pic  | {animal}                                                | Random picture of the animal                        |
-| &emsp;↳ fact | {animal}                                                | Random fact of the animal                           |
-| avatar       | (user)                                                  | Posts the user profile picture                      |
-| commands     |                                                         | Links to command list                               |
-| connect4     | {user}                                                  | Starts a game of connect4 with another user         |
-| convert      | {amount} {source} {target}                              | Converts amount from one unit to another            |
-| convertlist  | (measurement)                                           | List all measurement or units of measurement        |
-| currency     | {amount} {source} {target}                              | Converts amount from one currency to another        |
-| define       | {phrase}                                                | Gets definition of a phrase via urban dictionary    |
-| emotes       | {timeframe} {size}                                      | Shows emote useage                                  |
-| fact         |                                                         | Gets a random fact                                  |
-| feeds        |                                                         | Lists all the feeds                                 |
-| info         |                                                         | Shows uptime and ping                               |
-| list         |                                                         | Shows list of temporarily roled users               |
-| raw          | {input}                                                 | Shows raw input of message (what bot sees)          |
-| shame        |                                                         | Shows list of indefinitely roled users              |
-| tictactoe    | {user}                                                  | Starts a game of tic tac toe with another user      |
-| time         | {location}                                              | Gets the local time of a location                   |
-| translate    | {phrase}                                                | Translates a phrase into english                    |
-| trinomial    | {difficulty}                                            | Gives a factorisation trinomial question and answer |
-| vote         | {duration} {question} {answer1} {answer2} (answer3...9) | Starts a vote for specified duration                |
-| weather      | {unit} {location}                                       | Gets current weather from a location                |
+| Command        | Arguments                                               | Description                                         |
+|----------------|---------------------------------------------------------|-----------------------------------------------------|
+| 0mar           |                                                         | 0MAR LMAO                                           |
+| animal         | {sub cmd}                                               | Animal commands                                     |
+| &emsp;↳ pic    | {animal}                                                | Random picture of the animal                        |
+| &emsp;↳ fact   | {animal}                                                | Random fact of the animal                           |
+| avatar         | (user)                                                  | Posts the user profile picture                      |
+| commands       |                                                         | Links to command list                               |
+| connect4       | {user}                                                  | Starts a game of connect4 with another user         |
+| convert        | {amount} {source} {target}                              | Converts amount from one unit to another            |
+| convertlist    | (measurement)                                           | List all measurement or units of measurement        |
+| currency       | {amount} {source} {target}                              | Converts amount from one currency to another        |
+| define         | {phrase}                                                | Gets definition of a phrase via urban dictionary    |
+| emotes         | {timeframe} {size}                                      | Shows emote useage                                  |
+| fact           |                                                         | Gets a random fact                                  |
+| feeds          |                                                         | Lists all the feeds                                 |
+| info           |                                                         | Shows uptime and ping                               |
+| list           |                                                         | Shows list of temporarily roled users               |
+| raw            | {input}                                                 | Shows raw input of message (what bot sees)          |
+| scrabble       | {sub cmd}                                               | Scrabble commands                                   |
+| &emsp;↳ create |                                                         | Creates a game of scrabble                          |
+| &emsp;↳ place  | {row} {column} {direction} {word}                       | Place a word in a current scrabble word             |
+| shame          |                                                         | Shows list of indefinitely roled users              |
+| tictactoe      | {user}                                                  | Starts a game of tic tac toe with another user      |
+| time           | {location}                                              | Gets the local time of a location                   |
+| translate      | {phrase}                                                | Translates a phrase into english                    |
+| trinomial      | {difficulty}                                            | Gives a factorisation trinomial question and answer |
+| trivia         | {category} {difficulty}                                 | Gets a trivia question you can answer               |
+| vote           | {duration} {question} {answer1} {answer2} (answer3...9) | Starts a vote for specified duration                |
+| weather        | {unit} {location}                                       | Gets current weather from a location                |
 
 ___
 

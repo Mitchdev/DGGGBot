@@ -13,8 +13,8 @@ module.exports = function(client) {
             value: newMessage.content,
           }]);
 
-      const hook = new Discord.WebhookClient('849106698878582795', 'kdi2mflSZKN0me43rZe2gDg76K13OR8MFNOgbd3f97-x6vMolgum2GB2JVOcyihijPTq');
-      hook.send(embed);
+      const hook = new Discord.WebhookClient(process.env.WEBHOOK_LOG_ID, process.env.WEBHOOK_LOG_AUTH);
+      hook.send({embeds: [embed]});
     }
   });
 };

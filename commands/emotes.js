@@ -90,7 +90,7 @@ exports.commandHandler = function(interaction) {
     } else {
       const top5 = [combined[0], combined[1], combined[2], combined[3], combined[4]];
       const bottom5 = [combined[combined.length-1], combined[combined.length-2], combined[combined.length-3], combined[combined.length-4], combined[combined.length-5]];
-      interaction.editReply('Emote usage since '+secondsToDhms(parseInt(difference))+'ago ('+new Date((interaction.options.get('timeframe').value === 'true') ? emotesUse.started : emotesUse.newStarted).toUTCString()+')\n**Most used**\n'+top5.map((l) => {
+      interaction.editReply({content: 'Emote usage since '+secondsToDhms(parseInt(difference))+'ago ('+new Date((interaction.options.get('timeframe').value === 'true') ? emotesUse.started : emotesUse.newStarted).toUTCString()+')\n**Most used**\n'+top5.map((l) => {
         if (l) {
           if (l[0].emotes) {
             return l[0].count + ' - ' + l[0].emotes + ' emotes';
@@ -114,7 +114,7 @@ exports.commandHandler = function(interaction) {
         } else {
           return;
         }
-      }).join('\n'));
+      }).join('\n')});
     }
   });
 };

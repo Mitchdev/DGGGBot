@@ -14,7 +14,7 @@ exports.commandHandler = function(interaction, Discord) {
   // interaction.defer();
 
   interaction.defer({ephemeral: true});
-  interaction.editReply('Coming Soon', {ephemeral: true});
+  interaction.editReply({content: 'Coming Soon', ephemeral: true});
 
   // const id = makeID();
   // connect4Games[id] = new Connect4(id, {'user': interaction.user, 'member': interaction.member}, {'user': interaction.options.first().user, 'member': interaction.options.first().member}, interaction);
@@ -34,7 +34,7 @@ exports.commandHandler = function(interaction, Discord) {
     this.interaction = i;
 
     this.startGame = function() {
-      this.interaction.editReply(`${this.player1.user.username} vs ${this.player2.user.username}`);
+      this.interaction.editReply({content: `${this.player1.user.username} vs ${this.player2.user.username}`});
     };
   }
 

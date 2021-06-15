@@ -24,6 +24,8 @@
     "discord.js": "github:discordjs/discord.js",
     "dotenv": "^10.0.0",
     "fs": "0.0.1-security",
+    "html-entities": "^2.3.2",
+    "lodash.clonedeep": "^4.5.0",
     "os": "^0.1.1",
     "path": "^0.12.7",
     "request": "^2.88.2",

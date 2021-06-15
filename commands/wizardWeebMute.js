@@ -78,14 +78,14 @@ exports.commandHandler = function(interaction) {
               });
               updateMutes();
             } else if (Math.round(Math.random() * 20) == 14) {
-              interaction.editReply(`Looks like the gun jammed.`);
+              interaction.editReply({content: `Looks like the gun jammed.`});
               gunCooldown = true;
               setTimeout(function() {
                 gunCooldown = false;
               }, 600000);
             } else {
               if (!interaction.options.get('user').member._roles.includes(roleID)) interaction.options.get('user').member.roles.add(role);
-              interaction.editReply(`${options.emote.ok.string} ${interaction.options.get('user').user.username} is a ${roleRaw} for ${timeRaw}`);
+              interaction.editReply({content: `${options.emote.ok.string} ${interaction.options.get('user').user.username} is a ${roleRaw} for ${timeRaw}`});
               mutes.list.push({
                 'user': interaction.options.get('user').user.id,
                 'username': interaction.options.get('user').user.username,
@@ -99,11 +99,11 @@ exports.commandHandler = function(interaction) {
               updateMutes();
             }
           } else {
-            interaction.editReply(`Fixing the gun...`);
+            interaction.editReply({content: `Fixing the gun...`});
           }
         } else if (interaction.user.id != interaction.options.get('user').user.id) {
           if (!interaction.options.get('user').member._roles.includes(roleID)) interaction.options.get('user').member.roles.add(role);
-          interaction.editReply(`${options.emote.ok.string} Updated ${interaction.options.get('user').user.username}\'s ${roleRaw} time from ${inc[0].timeRaw} to ${timeRaw}`);
+          interaction.editReply({content: `${options.emote.ok.string} Updated ${interaction.options.get('user').user.username}\'s ${roleRaw} time from ${inc[0].timeRaw} to ${timeRaw}`});
           mutes.list = mutes.list.filter((m) => {
             return (m.user != interaction.options.get('user').user.id) || (m.role != roleID);
           });
@@ -119,11 +119,11 @@ exports.commandHandler = function(interaction) {
           });
           updateMutes();
         } else {
-          interaction.editReply(options.emote.pogo.string);
+          interaction.editReply({content: options.emote.pogo.string});
         }
       }).catch(console.error);
     } else {
-      interaction.editReply('Max of 30d');
+      interaction.editReply({content: 'Max of 30d'});
     }
   }
 };

@@ -62,11 +62,11 @@ exports.commandHandler = function(interaction, Discord) {
 
   console.log(interaction);
   if (interaction.options.first().name === 'reload') {
-    interaction.editReply(`Reloaded`, {ephemeral: true});
+    interaction.editReply({content: `Reloaded`, ephemeral: true});
     reloadRolesMessage(Discord);
   } else if (interaction.options.first().name === 'remove') {
     roles.list = roles.list.filter((role) => role.name.toLowerCase() != interaction.options.first().options.get('name').value.toLowerCase());
-    interaction.editReply(`Removed ${interaction.options.first().options.get('name').value}`, {ephemeral: true});
+    interaction.editReply({content: `Removed ${interaction.options.first().options.get('name').value}`, ephemeral: true});
     reloadRolesMessage(Discord);
     updateRoles();
   } else if (interaction.options.first().name === 'add') {
@@ -86,7 +86,7 @@ exports.commandHandler = function(interaction, Discord) {
         role.reaction.name = emoji.name;
         role.reaction.id = emoji.id;
       } else {
-        interaction.editReply('Invalid emoji, guild or unicode emoji only', {ephemeral: true});
+        interaction.editReply({content: 'Invalid emoji, guild or unicode emoji only', ephemeral: true});
         return;
       }
     } else if (unicodeEmojiMatch != undefined) {
@@ -94,14 +94,14 @@ exports.commandHandler = function(interaction, Discord) {
       role.reaction.name = unicodeEmojiMatch[0];
       role.reaction.id = unicodeEmojiMatch[0];
     } else {
-      interaction.editReply('Invalid emoji, guild or unicode emoji only', {ephemeral: true});
+      interaction.editReply({content: 'Invalid emoji, guild or unicode emoji only', ephemeral: true});
       return;
     }
 
     const alreadyUsed = roles.list.filter((r) => (r.reaction.id == role.reaction.id || r.name.toLowerCase() == role.name.toLowerCase()));
     if (alreadyUsed.length > 0) {
-      if (alreadyUsed.reaction.id == role.reaction.id) interaction.editReply('Role reaction already exists', {ephemeral: true});
-      else interaction.editReply('Role name already exists', {ephemeral: true});
+      if (alreadyUsed.reaction.id == role.reaction.id) interaction.editReply({content: 'Role reaction already exists', ephemeral: true});
+      else interaction.editReply({content: 'Role name already exists', ephemeral: true});
       return;
     }
 
@@ -116,10 +116,10 @@ exports.buttonHandler = function(interaction) {
     interaction.member.guild.roles.fetch(foundRole.role).then((role) => {
       if (interaction.member._roles.includes(foundRole.role)) {
         interaction.member.roles.remove(role);
-        interaction.editReply(`${foundRole.name} role removed`, {ephemeral: true});
+        interaction.editReply({content: `${foundRole.name} role removed`, ephemeral: true});
       } else {
         interaction.member.roles.add(role);
-        interaction.editReply(`${foundRole.name} role added`, {ephemeral: true});
+        interaction.editReply({content: `${foundRole.name} role added`, ephemeral: true});
       }
     }).catch(console.error);
   }

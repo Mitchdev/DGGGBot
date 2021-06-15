@@ -3,7 +3,6 @@ exports.buttons = {};
 exports.slashes = [{
   name: 'deleteslash',
   description: 'Deletes one or all slash commands',
-  defaultPermission: false,
   options: [{
     name: 'id',
     type: 'STRING',
@@ -19,16 +18,16 @@ exports.commandHandler = function(interaction) {
     const guildCommand = client.guilds.resolve(process.env.GUILD_ID).commands.resolve(interaction.options.get('id').value);
     if (guildCommand) {
       guildCommand.delete().catch((err) => interaction.editReply(`Could not delete ${guildCommand.name}`, {ephemeral: true}));
-      interaction.editReply(`Deleted ${guildCommand.name}`, {ephemeral: true});
+      interaction.editReply({content: `Deleted ${guildCommand.name}`, ephemeral: true});
     } else if (clientCommand) {
       clientCommand.delete().catch((err) => interaction.editReply(`Could not delete ${clientCommand.name}`, {ephemeral: true}));
-      interaction.editReply(`Deleted ${clientCommand.name}`, {ephemeral: true});
+      interaction.editReply({content: `Deleted ${clientCommand.name}`, ephemeral: true});
     } else {
-      interaction.editReply(`Could not find command ${interaction.options.get('id')}`, {ephemeral: true});
+      interaction.editReply({content: `Could not find command ${interaction.options.get('id')}`, ephemeral: true});
     }
   } else {
     client.guilds.resolve(process.env.GUILD_ID).commands.set([]);
     client.application.commands.set([]);
-    interaction.editReply('Deleted all commands', {ephemeral: true});
+    interaction.editReply({content: 'Deleted all commands', ephemeral: true});
   }
 };

@@ -6,7 +6,7 @@ exports.slashes = [{
 }];
 exports.commandHandler = function(interaction, Discord) {
   interaction.defer();
-  interaction.editReply(`0m${generateNumber()}r`);
+  interaction.editReply({content: `0m${generateNumber()}r`});
 
   /**
    * Recursive function that returns a string of numbers.

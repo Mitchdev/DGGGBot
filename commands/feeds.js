@@ -7,7 +7,7 @@ exports.slashes = [{
 exports.commandHandler = function(interaction) {
   interaction.defer();
 
-  interaction.editReply(`**Feeds**\n${feeds.list.map((item) => {
+  interaction.editReply({content: `**Feeds**\n${feeds.list.map((item) => {
     return `${client.channels.cache.find((c) => c.id === item.channel)} every ${item.interval} seconds`;
-  }).join('\n')}`);
+  }).join('\n')}`});
 };

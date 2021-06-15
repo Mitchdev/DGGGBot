@@ -38,7 +38,7 @@ client.on('ready', () => {
     if (timestamp) {
       const lastestError = errorLogArray.filter((line) => line.startsWith(timestamp[0])).join('\n');
       devLog.send(`Latest Error:`);
-      devLog.send(lastestError, {code: 'xl', split: true});
+      devLog.send({content: lastestError, code: 'xl', split: true});
     }
   });
 });

@@ -110,17 +110,17 @@ exports.commandHandler = function(interaction) {
     if (animal === 'random') animal = animalPics[Math.floor(Math.random() * animalPics.length)];
     if (animal === 'ferret') {
       request(process.env.ANIMAL_PIC_FERRET_API, (err, req, res) => {
-        if (!err) interaction.editReply(`**Ferret**\n${JSON.parse(res).url}`);
+        if (!err) interaction.editReply({content: `**Ferret**\n${JSON.parse(res).url}`});
       });
     } else {
       request(process.env.ANIMAL_PIC_OTHER_API.replace('|animal|', animal), (err, req, res) => {
-        if (!err) interaction.editReply(`**${animalCode[animal]}**\n${JSON.parse(res).link}`);
+        if (!err) interaction.editReply({content: `**${animalCode[animal]}**\n${JSON.parse(res).link}`});
       });
     }
   } else {
     if (animal === 'random') animal = animalFacts[Math.floor(Math.random() * animalFacts.length)];
     request(process.env.ANIMAL_FACT_OTHER_API.replace('|animal|', animal), (err, req, res) => {
-      if (!err) interaction.editReply(`**${animalCode[animal]}**\n${JSON.parse(res).fact}`);
+      if (!err) interaction.editReply({content: `**${animalCode[animal]}**\n${JSON.parse(res).fact}`});
     });
   }
 };

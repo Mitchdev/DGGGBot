@@ -68,9 +68,9 @@ exports.commandHandler = function(interaction) {
   const answers = interaction.options.filter((option) => (option.name != 'duration' && option.name != 'question')).map((option) => option.value);
 
   if (time != null && time > 0) {
-    interaction.editReply(`**Vote** started for ${interaction.options.get('duration').value}\n${question}\n`+answers.map((a, i) => {
+    interaction.editReply({content: `**Vote** started for ${interaction.options.get('duration').value}\n${question}\n`+answers.map((a, i) => {
       return `${options.voteReactions[i]} ${a}`;
-    }).join('\n')).then((vote) => {
+    }).join('\n')}).then((vote) => {
       currentVoteID = vote.id;
       for (let i = 0; i < answers.length; i++) {
         vote.react(options.voteReactions[i]);
@@ -91,9 +91,9 @@ exports.commandHandler = function(interaction) {
         results.sort((a, b) => b[1]-a[1]);
         currentVoteID = null;
         voteValidReactions = [];
-        vote.reply('**Vote Results**\n'+question+'\n'+results.map((a, i) => {
+        vote.reply({content: '**Vote Results**\n'+question+'\n'+results.map((a, i) => {
           return a[0]+' - **'+a[1]+'**';
-        }).join('\n'));
+        }).join('\n')});
       }, (time+answers.length) * 1000);
     });
   }

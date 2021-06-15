@@ -34,7 +34,7 @@ exports.commandHandler = function(interaction) {
 
   if (interaction.commandName === 'convertlist') {
     if (!interaction.options.get('measurement')) {
-      interaction.editReply(`**Conversion Measurement List**\n${measurements.map((measurement) => measurement.name).join('\n')}`);
+      interaction.editReply({content: `**Conversion Measurement List**\n${measurements.map((measurement) => measurement.name).join('\n')}`});
     } else {
       const measurement = measurements.find((m) => m.name.toLowerCase() === interaction.options.get('measurement').value.toLowerCase());
       let content = `Could not find measurement`;
@@ -43,7 +43,7 @@ exports.commandHandler = function(interaction) {
           return `${unit.full} (${unit.short})`;
         }).join('\n')}`;
       }
-      interaction.editReply(content);
+      interaction.editReply({content: content});
     }
   } else {
     let complete = false;
@@ -60,7 +60,7 @@ exports.commandHandler = function(interaction) {
           if (target) {
             if (!source.base) value = convertValue(source.conversion.source, source.conversion.value, value);
             if (!target.base) value = convertValue(target.conversion.target, target.conversion.value, value);
-            interaction.editReply(`**Converting ${measurements[i].name}**\n${parseFloat(interaction.options.get('amount').value)} ${(value > 1 || value < -1) ? source.multi : source.full} (${source.short}) = **${(Math.round(value * 1000) / 1000)}** ${(value > 1 || value < -1) ? target.multi : target.full} (${target.short})`);
+            interaction.editReply({content: `**Converting ${measurements[i].name}**\n${parseFloat(interaction.options.get('amount').value)} ${(value > 1 || value < -1) ? source.multi : source.full} (${source.short}) = **${(Math.round(value * 1000) / 1000)}** ${(value > 1 || value < -1) ? target.multi : target.full} (${target.short})`});
             complete = true;
             break;
           }
@@ -68,7 +68,7 @@ exports.commandHandler = function(interaction) {
       }
     }
 
-    if (!complete) interaction.editReply(`Could not convert`);
+    if (!complete) interaction.editReply({content: 'Could not convert'});
   }
   /**
    * Converts value by type and conversionValue

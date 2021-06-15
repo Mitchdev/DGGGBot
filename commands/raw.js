@@ -12,5 +12,5 @@ exports.slashes = [{
 }];
 exports.commandHandler = function(interaction) {
   interaction.defer({ephemeral: true});
-  interaction.editReply(`\`${interaction.options.get('input').value}\``, {ephemeral: true});
+  interaction.editReply({content: `\`${interaction.options.get('input').value}\``, ephemeral: true});
 };

@@ -4,6 +4,9 @@ module.exports = function(conf) {
   reload = require('require-reload')(require);
   request = require('request');
   os = require('os');
+  cloneDeep = require('lodash.clonedeep');
+  htmlEntities = require('html-entities');
+
 
   currentVoteID = null;
   voteValidReactions = [];
@@ -15,6 +18,9 @@ module.exports = function(conf) {
   connect4Games = {};
   tictactoeGames = {};
   scrabbleGames = {};
+
+  triviaGames = {};
+  triviaToken = JSON.parse(fs.readFileSync(dpath.join(__dirname, './options/triviaToken.json'))).token;
   
   client = conf.client;
   options = conf.config;

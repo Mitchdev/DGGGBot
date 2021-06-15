@@ -14,7 +14,7 @@ exports.commandHandler = function(interaction, Discord) {
   interaction.defer();
 
   if (interaction.user.id === interaction.options.first().user.id || interaction.options.first().user.bot) {
-    interaction.editReply(`You can't play with ${interaction.options.first().user.bot ? 'a bot' : 'yourself'} ${options.emote.pogo.string}`);
+    interaction.editReply({content: `You can't play with ${interaction.options.first().user.bot ? 'a bot' : 'yourself'} ${options.emote.pogo.string}`});
     return;
   }
 
@@ -53,10 +53,10 @@ exports.commandHandler = function(interaction, Discord) {
             this.buttons[i].components[j].disabled = true;
           }
         }
-        this.interaction.editReply(`**TIC TAC TOE**\n${this.player1.user} **[X]** vs **[O]** ${this.player2.user}\n\n**[${this.turnSymbol === '❌' ? 'X' : 'O'}] ${this.turn.member.displayName} won!**`, {components: this.buttons});
+        this.interaction.editReply({content: `**TIC TAC TOE**\n${this.player1.user} **[X]** vs **[O]** ${this.player2.user}\n\n**[${this.turnSymbol === '❌' ? 'X' : 'O'}] ${this.turn.member.displayName} won!**`, components: this.buttons});
         delete tictactoeGames[this.id];
       } else if (this.filled === 9) {
-        this.interaction.editReply(`**TIC TAC TOE**\n${this.player1.user} **[X]** vs **[O]** ${this.player2.user}\n\n**Draw!**`, {components: this.buttons});
+        this.interaction.editReply({content: `**TIC TAC TOE**\n${this.player1.user} **[X]** vs **[O]** ${this.player2.user}\n\n**Draw!**`, components: this.buttons});
         delete tictactoeGames[this.id];
       } else {
         if (this.turnSymbol === '❌') {
@@ -66,7 +66,7 @@ exports.commandHandler = function(interaction, Discord) {
           this.turnSymbol = '❌';
           this.turn = this.player1;
         }
-        this.interaction.editReply(`**TIC TAC TOE**\n${this.player1.user} **[X]** vs **[O]** ${this.player2.user}\n\n**[${this.turnSymbol === '❌' ? 'X' : 'O'}]** ${this.turn.member.displayName}s turn`, {components: this.buttons});
+        this.interaction.editReply({content: `**TIC TAC TOE**\n${this.player1.user} **[X]** vs **[O]** ${this.player2.user}\n\n**[${this.turnSymbol === '❌' ? 'X' : 'O'}]** ${this.turn.member.displayName}s turn`, components: this.buttons});
       }
     };
 
@@ -104,17 +104,6 @@ exports.commandHandler = function(interaction, Discord) {
       this.buttons[v3].components[h3].style = 'SUCCESS';
       this.win = true;
     };
-  }
-
-  /**
-   * Creates a new id.
-   * @return {string} id
-   */
-  function makeID() {
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let id = '';
-    for (let i = 0; i < 10; i++) id += chars.charAt(Math.floor(Math.random() * chars.length));
-    return id;
   }
 };
 exports.buttonHandler = function(interaction, Discord) {

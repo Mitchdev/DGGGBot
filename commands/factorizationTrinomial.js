@@ -153,5 +153,5 @@ exports.commandHandler = function(interaction) {
     return ans;
   }
 
-  interaction.editReply(`Question: ${qToString()}\nAnswer: ||${ansToString(diff)}||`);
+  interaction.editReply({content: `Question: ${qToString()}\nAnswer: ||${ansToString(diff)}||`});
 };

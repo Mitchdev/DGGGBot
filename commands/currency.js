@@ -23,7 +23,7 @@ exports.slashes = [{
 exports.commandHandler = function(interaction) {
   interaction.defer();
 
-  request(process.env.CURRENCY_URL, function(err, req, res) {
+  request(process.env.CURRENCY_API, function(err, req, res) {
     if (!err) {
       const rates = JSON.parse(res).rates;
       const source = interaction.options.get('source').value.toUpperCase();
@@ -31,13 +31,13 @@ exports.commandHandler = function(interaction) {
       if (rates[source] && rates[target]) {
         const USD = parseFloat(interaction.options.get('amount').value) / rates[source];
         const REQ = USD * rates[target];
-        interaction.editReply(`${interaction.options.get('amount').value} ${source} = ${REQ.toFixed(2)} ${target}`);
+        interaction.editReply({content: `${interaction.options.get('amount').value} ${source} = ${REQ.toFixed(2)} ${target}`});
       } else {
         let content = ``;
         if (!rates[source] && !rates[target]) content = `Could not find ${interaction.options.get('source').value} or ${interaction.options.get('target').value}`;
         else if (!rates[source]) content = `Could not find ${interaction.options.get('source').value}`;
         else content = `Could not find ${interaction.options.get('target').value}`;
-        interaction.editReply(content);
+        interaction.editReply({content: content});
       }
     }
   });

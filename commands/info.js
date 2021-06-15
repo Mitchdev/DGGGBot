@@ -14,6 +14,6 @@ exports.commandHandler = function(interaction) {
     headers: {'Authorization': process.env.ANDLIN_TOKEN},
   }, () => {
     const post = new Date();
-    interaction.editReply(`**Client Uptime** ${secondsToDhms(client.uptime/1000)}\n**System Uptime** ${secondsToDhms(os.uptime())}\n\n**Discord API Ping** ${Math.round(client.ws.ping)}ms\n**Andlin API Ping** ${(post - pre)}ms`);
+    interaction.editReply({content: `**Client Uptime** ${secondsToDhms(client.uptime/1000)}\n**System Uptime** ${secondsToDhms(os.uptime())}\n\n**Discord API Ping** ${Math.round(client.ws.ping)}ms\n**Andlin API Ping** ${(post - pre)}ms`});
   });
 };

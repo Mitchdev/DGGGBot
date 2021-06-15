@@ -42,10 +42,10 @@ exports.commandHandler = function(interaction) {
           if (coordinatesRes.Message.startsWith('404 Not Found:')) interaction.editReply(`Could not find ${location}`);
           else {
             client.users.fetch(process.env.DEV_ID).then((devLog) => {
-              devLog.send(`**Coordinates:** ${coordinatesRes.Message}\n**Sent:** \`\`\`{"Address": ${location}}\`\`\``);
+              devLog.send({content: `**Coordinates:** ${coordinatesRes.Message}\n**Sent:** \`\`\`{"Address": ${location}}\`\`\``});
             });
             client.users.fetch(process.env.ANDLIN_ID).then((andlinLog) => {
-              andlinLog.send(`**Coordinates:** ${coordinatesRes.Message}\n**Sent:** \`\`\`{"Address": ${location}}\`\`\``);
+              andlinLog.send({content: `**Coordinates:** ${coordinatesRes.Message}\n**Sent:** \`\`\`{"Address": ${location}}\`\`\``});
             });
           }
         } else {
@@ -124,7 +124,7 @@ exports.commandHandler = function(interaction) {
                               `**UV** ${data.hourly[0].uvi}\n`+
                               `**Visibility** ${units === 'imperial' ? (data.hourly[0].visibility/1609).toFixed(2)+'mi' : (units === 'standard') ? data.hourly[0].visibility+'m' : (data.hourly[0].visibility/1000).toFixed(2)+'km'}\n`;
 
-              interaction.editReply(content);
+              interaction.editReply({content: content});
             }
           });
         }

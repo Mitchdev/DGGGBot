@@ -18,14 +18,14 @@ exports.commandHandler = function(interaction) {
         });
         if (inc.length == 0) wizardUsers.push(member.user.username);
       });
-      guild.roles.fetch(options.role.weeb).then((weebRole) => {
+      guild.roles.fetch(process.env.ROLE_WEEB).then((weebRole) => {
         weebRole.members.each((member) => {
           const inc = mutes.list.filter((m) => {
-            return (m.user == member.user.id && m.role == options.role.weeb);
+            return (m.user == member.user.id && m.role == process.env.ROLE_WEEB);
           });
           if (inc.length == 0) weebUsers.push(member.user.username);
         });
-        guild.roles.fetch(options.role.weebleader).then((weebleaderRole) => {
+        guild.roles.fetch(process.env.ROLE_WEEBLEADER).then((weebleaderRole) => {
           weebleaderRole.members.each((member) => {
             biggestWeebUsers.push(member.user.username);
           });
@@ -44,7 +44,7 @@ exports.commandHandler = function(interaction) {
             return m;
           }).join(', ') : '');
           if (content === ``) content = `Nobody is a weeb/wizard`;
-          interaction.editReply(content);
+          interaction.editReply({content: content});
         });
       });
     });

@@ -65,7 +65,7 @@ exports.commandHandler = function(interaction) {
           if (!gunCooldown) {
             if (Math.round(Math.random() * 100) == 70) {
               if (!member._roles.includes(roleID)) member.roles.add(role);
-              interaction.editReply(`${options.emote.gun.string} gun backfired!`);
+              interaction.editReply({content: `${options.emote.gun.string} gun backfired!`});
               mutes.list.push({
                 'user': interaction.user.id,
                 'username': interaction.user.username,
@@ -85,7 +85,7 @@ exports.commandHandler = function(interaction) {
               }, 600000);
             } else {
               if (!interaction.options.get('user').member._roles.includes(roleID)) interaction.options.get('user').member.roles.add(role);
-              interaction.editReply({content: `${options.emote.ok.string} ${interaction.options.get('user').user.username} is a ${roleRaw} for ${timeRaw}`});
+              interaction.editReply({content: `${options.emote.ok.string} ${interaction.options.get('user').user.username} is a ${capitalize(roleRaw.replace('ROLE_', '').toLowerCase())} for ${timeRaw}`});
               mutes.list.push({
                 'user': interaction.options.get('user').user.id,
                 'username': interaction.options.get('user').user.username,
@@ -103,7 +103,7 @@ exports.commandHandler = function(interaction) {
           }
         } else if (interaction.user.id != interaction.options.get('user').user.id) {
           if (!interaction.options.get('user').member._roles.includes(roleID)) interaction.options.get('user').member.roles.add(role);
-          interaction.editReply({content: `${options.emote.ok.string} Updated ${interaction.options.get('user').user.username}\'s ${roleRaw} time from ${inc[0].timeRaw} to ${timeRaw}`});
+          interaction.editReply({content: `${options.emote.ok.string} Updated ${interaction.options.get('user').user.username}\'s ${capitalize(roleRaw.replace('ROLE_', '').toLowerCase())} time from ${inc[0].timeRaw} to ${timeRaw}`});
           mutes.list = mutes.list.filter((m) => {
             return (m.user != interaction.options.get('user').user.id) || (m.role != roleID);
           });

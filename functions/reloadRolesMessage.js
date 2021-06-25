@@ -22,18 +22,18 @@ module.exports = function(client) {
         }
       }
 
-      msg.edit('**Instructions**\n'+
-        'Press a button to get the role and access to the channels.\n'+
-        'Ask a mod to give you a regional role\n\n**General Roles**\n'+
-        generalRoles.map((role) => {
-          const emoji = role.reaction.type == 'custom' ? client.guilds.resolve(process.env.GUILD_ID).emojis.cache.get(role.reaction.id) : role.reaction.id;
-          return `${emoji}    ${role.name}`;
-        }).join('\n')+
-        '\n\n**Gaming Roles**\n'+
-        gamingRoles.map((role) => {
-          const emoji = role.reaction.type == 'custom' ? client.guilds.resolve(process.env.GUILD_ID).emojis.cache.get(role.reaction.id) : role.reaction.id;
-          return `${emoji}    ${role.name}`;
-        }).join('\n'), {components: buttons});
+      msg.edit({content: '**Instructions**\n'+
+      'Press a button to get the role and access to the channels.\n'+
+      'Ask a mod to give you a regional role\n\n**General Roles**\n'+
+      generalRoles.map((role) => {
+        const emoji = role.reaction.type == 'custom' ? client.guilds.resolve(process.env.GUILD_ID).emojis.cache.get(role.reaction.id) : role.reaction.id;
+        return `${emoji}    ${role.name}`;
+      }).join('\n')+
+      '\n\n**Gaming Roles**\n'+
+      gamingRoles.map((role) => {
+        const emoji = role.reaction.type == 'custom' ? client.guilds.resolve(process.env.GUILD_ID).emojis.cache.get(role.reaction.id) : role.reaction.id;
+        return `${emoji}    ${role.name}`;
+      }).join('\n'), components: buttons});
     }).catch(console.error);
   };
 };

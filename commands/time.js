@@ -39,7 +39,7 @@ exports.commandHandler = function(interaction) {
             const minutes = (new Date(time.datetime).getMinutes() < 10) ? '0' + new Date(time.datetime).getMinutes() : new Date(time.datetime).getMinutes();
             if (isNaN(hours) || isNaN(minutes)) interaction.editReply({content: `Could not find ${interaction.options.get('location').value}`});
             else {
-              const content = `${coordinatesRes.manicipality}, ${coordinatesRes.countryCode} (Location confidence: ${(coordinatesRes.score < 0) ? '0' : coordinatesRes.score}%)\n`+
+              const content = `${coordinatesRes.manicipality != null ? coordinatesRes.manicipality : interaction.options.get('location').value}, ${coordinatesRes.countryCode} (Location confidence: ${(coordinatesRes.score < 0) ? '0' : coordinatesRes.score}%)\n`+
                               `**${time.timezone_name} | ${time.timezone_location} | (${time.timezone_abbreviation}) | (GMT${time.gmt_offset >= 0 ? `+`: ``}${time.gmt_offset})**\n`+
                               `${hours}:${minutes}`;
               interaction.editReply({content: content});

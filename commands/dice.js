@@ -30,18 +30,18 @@ exports.commandHandler = function(message) {
   //          var removed = sorted.slice(0, parseInt(remov[1]));
   //          var newRolled = sorted.slice(parseInt(remov[1]));
   //          for (var i = 0; i < removed.length; i++) sum = sum-removed[i];
-  //          message.channel.send(`**Rolling ${diceMatch[1]} dice of ${diceMatch[3]} sides${(plus[1]) ? ' then adding '+plus[1] : ''}${(minus[1]) ? ' then subtracting '+minus[1] : ''}${(remov[1]) ? ' then removing the '+((parseInt(remov[1]) > 1) ? parseInt(remov[1])+' ' : '')+'lowest dice' : ''}**\nDice: ${shuffle(newRolled).join(', ')}\nRemoved dice: ${shuffle(removed).join(', ')}\nResult: **${sum}**`);
+  //          message.channel.send({content: `**Rolling ${diceMatch[1]} dice of ${diceMatch[3]} sides${(plus[1]) ? ' then adding '+plus[1] : ''}${(minus[1]) ? ' then subtracting '+minus[1] : ''}${(remov[1]) ? ' then removing the '+((parseInt(remov[1]) > 1) ? parseInt(remov[1])+' ' : '')+'lowest dice' : ''}**\nDice: ${shuffle(newRolled).join(', ')}\nRemoved dice: ${shuffle(removed).join(', ')}\nResult: **${sum}**`});
   //        } else {
-  //          message.channel.send('Can\'t remove more than rolled');
+  //          message.channel.send({content: 'Can\'t remove more than rolled'});
   //        }
   //      } else {
-  //        message.channel.send(`**Rolling ${diceMatch[1]} dice of ${diceMatch[3]} sides${(plus[1]) ? ' then adding '+plus[1] : ''}${(minus[1]) ? ' then subtracting '+minus[1] : ''}**\nDice: ${rolled.join(', ')}\nResult: **${sum}**`);
+  //        message.channel.send({content: `**Rolling ${diceMatch[1]} dice of ${diceMatch[3]} sides${(plus[1]) ? ' then adding '+plus[1] : ''}${(minus[1]) ? ' then subtracting '+minus[1] : ''}**\nDice: ${rolled.join(', ')}\nResult: **${sum}**`});
   //      }
   //    } else {
-  //      message.channel.send('Maximum of 1000 sides, Minimum of 1 sides');
+  //      message.channel.send({content: 'Maximum of 1000 sides, Minimum of 1 sides'});
   //    }
   //  } else {
-  //    message.channel.send('Maximum of 100 dice, Minimum of 1 dice');
+  //    message.channel.send({content: 'Maximum of 100 dice, Minimum of 1 dice'});
   //  }
   // }
 };

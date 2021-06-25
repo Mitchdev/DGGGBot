@@ -9,9 +9,11 @@ client.on('ready', () => {
   require('./globals')({client: client, config: config, commands: commands});
   require('./init')(commands);
 
-  loadCommands(client);
   loadEvents(client);
   loadFunctions(client);
+  loadCommands(client, () => {
+    // reloadSlashCommands();
+  });
 
   client.guilds.fetch(process.env.GUILD_ID).then((guild) => {
     guild.fetchInvites().then((invites) => {
@@ -31,13 +33,13 @@ client.on('ready', () => {
 
   console.log(`[INIT] Bot online`);
   client.users.fetch(process.env.DEV_ID).then((devLog) => {
-    devLog.send(`Bot restarted!`);
+    devLog.send({content: 'Bot restarted!'});
     const errorLog = fs.readFileSync(dpath.join(__dirname, '../../.pm2/logs/bot-error.log'), {encoding: 'utf8'});
     const errorLogArray = errorLog.split('\n');
     const timestamp = errorLogArray[errorLogArray.length-2].match(/(\d\d\d\d\-\d\d\-\d\d\T\d\d\:\d\d\:\d\d\:)/g);
     if (timestamp) {
       const lastestError = errorLogArray.filter((line) => line.startsWith(timestamp[0])).join('\n');
-      devLog.send(`Latest Error:`);
+      devLog.send({content: 'Latest Error:'});
       devLog.send({content: lastestError, code: 'xl', split: true});
     }
   });

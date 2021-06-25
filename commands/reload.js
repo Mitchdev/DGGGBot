@@ -6,6 +6,7 @@ exports.slashes = [{
 }];
 exports.commandHandler = function(interaction, Discord, client) {
   interaction.defer({ephemeral: true});
-  reloadCommands(client);
-  interaction.editReply({content: `Reloading`, ephemeral: true});
+  loadCommands(client, () => {
+    interaction.editReply({content: 'Reloaded', ephemeral: true});
+  });
 };

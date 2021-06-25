@@ -29,10 +29,9 @@ exports.slashes = [{
     required: false,
   }],
 }];
-exports.commandHandler = function(interaction) {
-  interaction.defer();
-
+exports.commandHandler = function(interaction, Discord) {
   if (interaction.commandName === 'convertlist') {
+    interaction.defer({ephemeral: true});
     if (!interaction.options.get('measurement')) {
       interaction.editReply({content: `**Conversion Measurement List**\n${measurements.map((measurement) => measurement.name).join('\n')}`});
     } else {
@@ -46,6 +45,8 @@ exports.commandHandler = function(interaction) {
       interaction.editReply({content: content});
     }
   } else {
+    interaction.defer();
+    const embed = new Discord.MessageEmbed();
     let complete = false;
     for (let i = 0; i < measurements.length; i++) {
       const source = measurements[i].data.find((unit) => {
@@ -60,7 +61,17 @@ exports.commandHandler = function(interaction) {
           if (target) {
             if (!source.base) value = convertValue(source.conversion.source, source.conversion.value, value);
             if (!target.base) value = convertValue(target.conversion.target, target.conversion.value, value);
-            interaction.editReply({content: `**Converting ${measurements[i].name}**\n${parseFloat(interaction.options.get('amount').value)} ${(value > 1 || value < -1) ? source.multi : source.full} (${source.short}) = **${(Math.round(value * 1000) / 1000)}** ${(value > 1 || value < -1) ? target.multi : target.full} (${target.short})`});
+            embed.setTitle(`${measurements[i].name} Conversion`);
+            embed.addFields([{
+              name: `${(value > 1 || value < -1) ? source.multi : source.full} (${source.short})`,
+              value: interaction.options.get('amount').value,
+              inline: true,
+            }, {name: '\u200B', value: '**=**', inline: true}, {
+              name: `${(value > 1 || value < -1) ? target.multi : target.full} (${target.short})`,
+              value: (Math.round(value * 1000) / 1000).toString(),
+              inline: true,
+            }]);
+            interaction.editReply({embeds: [embed]});
             complete = true;
             break;
           }

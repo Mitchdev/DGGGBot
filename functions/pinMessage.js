@@ -25,7 +25,7 @@ module.exports = function(client) {
 
       hook.edit({'name': message.author.username, 'avatar': `https://cdn.discordapp.com/avatars/${message.author.id}/${message.author.avatar}.webp`}).then((webhook) => {
         webhook.send(embed);
-        // message.channel.send(`Pinned a message in <#819782211406397500> (https://discord.com/channels/${message.channel.guild.id}/${message.channel.id}/${message.id})`).then(msg => {
+        // message.channel.send({content: `Pinned a message in <#819782211406397500> (https://discord.com/channels/${message.channel.guild.id}/${message.channel.id}/${message.id})`}).then(msg => {
         //  msg.suppressEmbeds();
         // })
         pins.list.push(message.id);

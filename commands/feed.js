@@ -76,9 +76,9 @@ exports.commandHandler = function(interaction) {
         feeds.list[feedIndex].subs = feeds.list[feedIndex].subs.filter((item) => {
           return item !== command.options.get('subreddit').value;
         });
-        interaction.editReply(`Removed ${command.options.get('subreddit').value} from the feed.`);
+        interaction.editReply({content: `Removed ${command.options.get('subreddit').value} from the feed.`});
         updateFeed();
-      } else interaction.editReply(`Subreddit not in feed.`);
+      } else interaction.editReply({content: 'Subreddit not in feed.'});
     } else if (command.name === 'interval') {
       if (command.options.length > 0) {
         if (command.options.get('interval').value > 10) {

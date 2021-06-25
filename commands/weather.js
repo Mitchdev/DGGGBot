@@ -25,11 +25,16 @@ exports.slashes = [{
     required: true,
   }],
 }];
-exports.commandHandler = function(interaction) {
+exports.commandHandler = function(interaction, Discord) {
   interaction.defer();
+
+  const weather = new Discord.MessageEmbed();
+  const alerts = new Discord.MessageEmbed().setTitle('Alerts').setColor('RED');
+  const embeds = [];
 
   const units = interaction.options.get('unit').value;
   const location = interaction.options.get('location').value;
+
   if (location != '') {
     request({
       method: 'POST',
@@ -39,7 +44,7 @@ exports.commandHandler = function(interaction) {
     }, (coordinatesErr, coordinatesReq, coordinatesRes) => {
       if (!coordinatesErr) {
         if (coordinatesRes.Message) {
-          if (coordinatesRes.Message.startsWith('404 Not Found:')) interaction.editReply(`Could not find ${location}`);
+          if (coordinatesRes.Message.startsWith('404 Not Found:')) interaction.editReply({content: `Could not find ${location}`});
           else {
             client.users.fetch(process.env.DEV_ID).then((devLog) => {
               devLog.send({content: `**Coordinates:** ${coordinatesRes.Message}\n**Sent:** \`\`\`{"Address": ${location}}\`\`\``});
@@ -52,85 +57,205 @@ exports.commandHandler = function(interaction) {
           request(process.env.WEATHER_API.replace('|lat|', coordinatesRes.lat).replace('|lon|', coordinatesRes.lon).replace('|units|', units), (err, req, res) => {
             if (!err) {
               const data = JSON.parse(res);
+              const localTime = new Date((data.current.dt+data.timezone_offset)*1000);
+
+              let setRiseMargin = 900; // seconds
               let sunText = '';
               let moonText = '';
               let rainText = '';
               let snowText = '';
               let windText = '';
-              let alertsText = '';
+              let gustText = '';
 
               const sunrise = data.daily[0].sunrise - data.current.dt;
               const sunset = data.daily[0].sunset - data.current.dt;
-              if (sunrise <= 5 && sunrise >= -5) sunText = `\n☀️ Sun is rising now`;
-              else if (sunset <= 5 && sunset >= -5) sunText = `\n☀️ Sun is setting now`;
-              else if (sunrise >= 0) sunText = `\n☀️ Sun is rising in ${secondsToDhms(sunrise)}`;
-              else if (sunset >= 0) sunText = `\n☀️ Sun is setting in ${secondsToDhms(sunset)}`;
-              else sunText = `\n☀️ Sunset ${secondsToDhms(Math.abs(sunset))}ago`;
-
-              if (data.daily[0].moon_phase > 0 && data.daily[0].moon_phase < 0.25) moonText = `\n🌒 Waxing crescent moon`;
-              if (data.daily[0].moon_phase > 0.25 && data.daily[0].moon_phase < 0.5) moonText = `\n🌔 Waxing gibous moon`;
-              if (data.daily[0].moon_phase > 0.5 && data.daily[0].moon_phase < 0.75) moonText = `\n🌖 Waning gibous moon`;
-              if (data.daily[0].moon_phase > 0.75 && data.daily[0].moon_phase < 1) moonText = `\n🌘 Waning crescent moon`;
-              if (data.daily[0].moon_phase == 0 || data.daily[0].moon_phase == 1) moonText = `\n🌑 New moon`;
-              if (data.daily[0].moon_phase == 0.25) moonText = `\n🌓 First quarter moon`;
-              if (data.daily[0].moon_phase == 0.5) moonText = `\n🌕 Full moon`;
-              if (data.daily[0].moon_phase == 0.75) moonText = `\n🌗 Last quarter moon`;
+              if (sunrise <= setRiseMargin && sunrise >= -setRiseMargin) sunText = `Sun **rising now**`;
+              else if (sunset <= setRiseMargin && sunset >= -setRiseMargin) sunText = `Sun position **setting now**`;
+              else if (sunrise >= 0) sunText = `Sun position **rising in ${secondsToDhms(sunrise)}**`;
+              else if (sunset >= 0) sunText = `Sun position **setting in ${secondsToDhms(sunset)}**`;
+              else sunText = `Sun position **set ${secondsToDhms(Math.abs(sunset))}ago**`;
 
               const moonrise = data.daily[0].moonrise - data.current.dt;
               const moonset = data.daily[0].moonset - data.current.dt;
-              if (moonrise <= 5 && moonrise >= -5) moonText += ` is rising now`;
-              else if (moonset <= 5 && moonset >= -5) moonText += ` is setting now`;
-              else if (moonrise >= 0) moonText += ` is rising in ${secondsToDhms(moonrise)}`;
-              else if (moonset >= 0) moonText += ` is setting in ${secondsToDhms(moonset)}`;
-              else moonText += ` set ${secondsToDhms(Math.abs(moonset))}ago`;
 
-              if (data.hourly[0].rain) rainText = `\n🌧️ ${data.hourly[0].rain['1h']}mm of rain`;
-              if (data.hourly[0].snow) snowText = `\n🌨️ ${data.hourly[0].snow['1h']}mm of snow`;
+              if (moonrise <= setRiseMargin && moonrise >= -setRiseMargin) moonText += `Moon position **rising now**`;
+              else if (moonset <= setRiseMargin && moonset >= -setRiseMargin) moonText += `Moon position **setting now**`;
+              else if (moonrise >= 0) moonText += `Moon position **rising in ${secondsToDhms(moonrise)}**`;
+              else if (moonset >= 0) moonText += `Moon position **setting in ${secondsToDhms(moonset)}**`;
+              else moonText += `Moon position **set ${secondsToDhms(Math.abs(moonset))}ago**`;
 
-              windText = `\n💨 ${(units === 'imperial') ? data.hourly[0].wind_speed+'mi/h' : (units === 'standard') ? data.hourly[0].wind_speed+'m/s' : (data.hourly[0].wind_speed*3.6).toFixed(2)+'km/h'} ${(units === 'standard') ? data.hourly[0].wind_deg+'°' : getCardinalDirection(data.hourly[0].wind_deg)}`;
-              if (data.hourly[0].wind_gust) windText += ` and ${(units === 'imperial') ? data.hourly[0].wind_gust+'mi/h' : (units === 'standard') ? data.hourly[0].wind_speed+'m/s' : (data.hourly[0].wind_gust*3.6).toFixed(2)+'km/h'} gusts`;
+              if (data.daily[0].moon_phase > 0 && data.daily[0].moon_phase < 0.25) moonText += `\nMoon phase **Waxing crescent moon** 🌒`;
+              if (data.daily[0].moon_phase > 0.25 && data.daily[0].moon_phase < 0.5) moonText += `\nMoon phase **Waxing gibous moon** 🌔`;
+              if (data.daily[0].moon_phase > 0.5 && data.daily[0].moon_phase < 0.75) moonText += `\nMoon phase **Waning gibous moon** 🌖`;
+              if (data.daily[0].moon_phase > 0.75 && data.daily[0].moon_phase < 1) moonText += `\nMoon phase **Waning crescent moon**🌘`;
+              if (data.daily[0].moon_phase == 0 || data.daily[0].moon_phase == 1) moonText += `\nMoon phase **New moon**🌑`;
+              if (data.daily[0].moon_phase == 0.25) moonText += `\nMoon phase **First quarter moon**🌓`;
+              if (data.daily[0].moon_phase == 0.5) moonText += `\nMoon phase **Full moon**🌕`;
+              if (data.daily[0].moon_phase == 0.75) moonText += `\nMoon phase **Last quarter moon**🌗`;
 
-              if (data.alerts) {
-                if (data.alerts.length > 0) {
-                  alertsText = `${data.alerts.map((alert) => {
-                    let alertTime = '';
-                    const alertStart = alert.start - data.current.dt;
-                    const alertEnd = alert.end - data.current.dt;
-                    const alertDuration = alert.end - alert.start;
+              let notSunSet = ((sunset > setRiseMargin || sunset < -setRiseMargin) && (sunrise > setRiseMargin || sunrise < -setRiseMargin));
+              let sunBothPos = ((sunrise > setRiseMargin && sunset > setRiseMargin) && sunrise < sunset);
+              let sunBothNeg = ((sunrise < -setRiseMargin && sunset < -setRiseMargin) && sunset < sunrise);
+              let sunRisePosSetNeg = ((sunrise > setRiseMargin && sunset < -setRiseMargin));
+              let sunRiseNegSetPos = !((sunrise < -setRiseMargin && sunset > setRiseMargin));
 
-                    if (alertStart > 5) alertTime = `starts in ${secondsToDhms(alertStart)}and lasts for ${secondsToDhms(alertDuration)}`;
-                    else if (alertEnd > 5) alertTime = `started ${secondsToDhms(Math.abs(alertStart))}ago and ends in ${secondsToDhms(alertEnd)}`;
-                    else alertTime = `ended ${secondsToDhms(Math.abs(alertEnd))}ago and lasted ${secondsToDhms(alertDuration)}`;
+              let moonBothPos = ((moonrise > setRiseMargin && moonset > setRiseMargin) && moonrise < moonset);
+              let moonBothNeg = ((moonrise < -setRiseMargin && moonset < -setRiseMargin) && moonset < moonrise);
+              let moonRisePosSetNeg = ((moonrise > setRiseMargin && moonset < -setRiseMargin));
+              let moonRiseNegSetPos = !((moonrise < -setRiseMargin && moonset > setRiseMargin));
 
-                    return `**⚠️ ${capitalize(alert.event)}** ${alertTime}\n${alert.description}`;
-                  }).join('\n')}\n\n`;
+              let hour = localTime.getHours();
+              if (hour > 12) hour = 12 - (hour - 12);
+              const daylightTime = Math.abs(data.daily[0].sunset - data.daily[0].sunrise);
+              const nightlightTime = Math.abs(86400 - daylightTime);
+              const hourOffset = ((daylightTime/3600)/12)*hour;
+
+              // console.log(sunrise, sunset, sunBothPos, sunBothNeg, sunRisePosSetNeg, sunRiseNegSetPos);
+              // console.log(moonrise, moonset, moonBothPos, moonBothNeg, moonRisePosSetNeg, moonRiseNegSetPos);
+
+              if (notSunSet && (sunBothPos || sunBothNeg || sunRisePosSetNeg || sunRiseNegSetPos)) {
+                if (moonBothPos || moonBothNeg || moonRisePosSetNeg || moonRiseNegSetPos) {
+                  let colorCloud = parseInt(((80/100)*data.hourly[0].clouds));
+                  // console.log('Night no moon', [colorCloud, colorCloud, colorCloud]);
+                  weather.setColor([colorCloud, colorCloud, colorCloud]);
+                } else {
+                  // ADD MOON PHASE
+                  // HIGHER = MORE LIGHT
+                  let colorMoonCloud = parseInt(((85/100)*data.hourly[0].clouds)+80);
+                  // console.log('Night with moon', [colorMoonCloud, colorMoonCloud, colorMoonCloud]);
+                  weather.setColor([colorMoonCloud, colorMoonCloud, colorMoonCloud]);
+                }
+              } else {
+                if ((sunrise <= setRiseMargin && sunrise >= -setRiseMargin) || (sunset <= setRiseMargin && sunset >= -setRiseMargin)) {
+                  // ADD RAIN
+                  // MORE RAIN = MORE PINK/PURPLE
+                  let colorCloud = parseInt(80-((80/100)*data.hourly[0].clouds)); // 80-0
+                  let color = parseInt((((110/12)*hourOffset)+50)+(colorCloud/1.5)); // 110-160
+                  // console.log('Sun set/rise', [255, color, colorCloud], hourOffset);
+                  weather.setColor([255, color, colorCloud]);
+                } else {
+                  let colorCloud = parseInt((255/100)*data.hourly[0].clouds); // 0-255
+                  let color = parseInt(((185/12)*hourOffset)+70+(colorCloud/3.3)); // 131-285(255)
+                  // console.log('Sun', [colorCloud, color > 255 ? 255 : color, 255], hourOffset);
+                  weather.setColor([colorCloud, color > 255 ? 255 : color, 255]);
                 }
               }
 
-              const content = `${coordinatesRes.manicipality}, ${coordinatesRes.countryCode} has ${data.hourly[0].weather[0].description} (Location confidence: ${(coordinatesRes.score < 0) ? '0' : coordinatesRes.score}%)\n\n`+
-                              `${alertsText}`+
-                              `**---- This Hour ----**\n`+
-                              `**Currently** ${data.hourly[0].temp}${units === 'imperial' ? '°F' : (units === 'standard') ? 'K' : '°C'}\n`+
-                              `**Feels like** ${data.hourly[0].feels_like}${units === 'imperial' ? '°F' : (units === 'standard') ? 'K' : '°C'}\n`+
-                              `**Rain probability** ${data.hourly[0].pop*100}%\n`+
-                              `${rainText}${snowText}`+
-                              `\n☁️ ${data.hourly[0].clouds}% cloud cover`+
-                              `${windText}${sunText}${moonText}\n\n`+
-                              `**High** ${data.daily[0].temp.max}${units === 'imperial' ? '°F' : (units === 'standard') ? 'K' : '°C'}\n`+
-                              `**Low** ${data.daily[0].temp.min}${units === 'imperial' ? '°F' : (units === 'standard') ? 'K' : '°C'}\n`+
-                              `**Dew point** ${data.hourly[0].dew_point}${units === 'imperial' ? '°F' : (units === 'standard') ? 'K' : '°C'}\n`+
-                              `**Humidity** ${data.hourly[0].humidity}%\n`+
-                              `**Pressure** ${data.hourly[0].pressure}hPa\n`+
-                              `**UV** ${data.hourly[0].uvi}\n`+
-                              `**Visibility** ${units === 'imperial' ? (data.hourly[0].visibility/1609).toFixed(2)+'mi' : (units === 'standard') ? data.hourly[0].visibility+'m' : (data.hourly[0].visibility/1000).toFixed(2)+'km'}\n`;
+              if (data.hourly[0].rain) rainText = `\nRain this hour **${data.hourly[0].rain['1h']}mm**`;
+              if (data.hourly[0].snow) snowText = `\nSnow this hour **${data.hourly[0].snow['1h']}mm**`;
 
-              interaction.editReply({content: content});
+              windText = `Wind **${(units === 'imperial') ? data.hourly[0].wind_speed+'mi/h' : (units === 'standard') ? data.hourly[0].wind_speed+'m/s' : (data.hourly[0].wind_speed*3.6).toFixed(2)+'km/h'} ${(units === 'standard') ? data.hourly[0].wind_deg+'°' : getCardinalDirection(data.hourly[0].wind_deg)}**`;
+              if (data.hourly[0].wind_gust) gustText += `\nGusts **${(units === 'imperial') ? data.hourly[0].wind_gust+'mi/h' : (units === 'standard') ? data.hourly[0].wind_speed+'m/s' : (data.hourly[0].wind_gust*3.6).toFixed(2)+'km/h'}**`;
+
+              weather.setThumbnail(`http://openweathermap.org/img/wn/${data.current.weather[0].icon}@2x.png`);
+              weather.setTitle(`${coordinatesRes.manicipality != null ? coordinatesRes.manicipality : location}, ${coordinatesRes.countryCode} (Location confidence: ${(coordinatesRes.score < 0) ? '0' : coordinatesRes.score}%)`);
+              weather.setDescription(`Current condition **${data.hourly[0].weather[0].description}** at **${localTime.getHours()}:${localTime.getMinutes()}**`);
+              weather.addFields([{
+                name: 'Temperature',
+                value: `Current **${data.hourly[0].temp}${units === 'imperial' ? '°F' : (units === 'standard') ? 'K' : '°C'}**`+
+                `\nFeels like **${data.hourly[0].feels_like}${units === 'imperial' ? '°F' : (units === 'standard') ? 'K' : '°C'}**`+
+                `\nHigh **${data.daily[0].temp.max}${units === 'imperial' ? '°F' : (units === 'standard') ? 'K' : '°C'}**`+
+                `\nLow **${data.daily[0].temp.min}${units === 'imperial' ? '°F' : (units === 'standard') ? 'K' : '°C'}**`+
+                `\nDew point **${data.hourly[0].dew_point}${units === 'imperial' ? '°F' : (units === 'standard') ? 'K' : '°C'}**`+
+                `\nHumidity **${data.hourly[0].humidity}%**`,
+                inline: true,
+              }, {name: '\u200B', value: '\u200B', inline: true}, {
+                name: 'Wind & Clouds',
+                value: `Cloud cover **${data.hourly[0].clouds}%**\n${windText}${gustText}`,
+                inline: true,
+              }, {
+                name: 'Extra',
+                value: `Pressure **${data.hourly[0].pressure}hPa**`+
+                `\nVisibility **${units === 'imperial' ? (data.hourly[0].visibility/1609).toFixed(2)+'mi' : (units === 'standard') ? data.hourly[0].visibility+'m' : (data.hourly[0].visibility/1000).toFixed(2)+'km'}**`+
+                `\nUV **${data.hourly[0].uvi}**`,
+                inline: true,
+              }, {name: '\u200B', value: '\u200B', inline: true}, {
+                name: 'Rain & Snow',
+                value: `Rain probability **${Math.round(data.hourly[0].pop*100)}%**${rainText}${snowText}`,
+                inline: true,
+              }, {
+                name: 'Sun & Moon',
+                value: `Daylight **${secondsToDhms(daylightTime)}**`+
+                `\n${sunText}`+
+                `\nNightlight **${secondsToDhms(nightlightTime)}**`+
+                `\n${moonText}`,
+              }]);
+              embeds.push(weather);
+
+              if (data.alerts?.length > 0) {
+                alerts.addFields(data.alerts.map((alert) => {
+                  let alertTime = '';
+                  const alertStart = alert.start - data.current.dt;
+                  const alertEnd = alert.end - data.current.dt;
+                  const alertDuration = alert.end - alert.start;
+
+                  if (alertStart > 5) alertTime = `Starts in ${secondsToDhms(alertStart)}and lasts for ${secondsToDhms(alertDuration)}\n`;
+                  else if (alertEnd > 5) alertTime = `Started ${secondsToDhms(Math.abs(alertStart))}ago and ends in ${secondsToDhms(alertEnd)}\n`;
+                  else alertTime = `Ended ${secondsToDhms(Math.abs(alertEnd))}ago and lasted ${secondsToDhms(alertDuration)}\n`;
+
+                  let description = `${alertTime}\n${alert.description}`;
+                  let more = `...\n\nmore via ${alert.sender_name}`;
+                  if (description.length > 500) description = description.slice(0, 500-more.length) + more;
+
+                  return {name: `${alert.event}`, value: description};
+                }));
+                embeds.push(alerts);
+              }
+
+              interaction.editReply({embeds: embeds});
+
+              animate(data.current.weather[0].main, weather.color, 0, interaction);
             }
           });
         }
       }
     });
   }
+
+  function animate(type, originalColor, step, interaction) {
+    if (type === 'Thunderstorm') {
+      setTimeout(() => {
+        embeds[0].setColor('YELLOW');
+        interaction.editReply({embeds: embeds});
+        setTimeout(() => {
+          embeds[0].setColor(originalColor);
+          interaction.editReply({ embeds: embeds });
+          setTimeout(() => {
+            embeds[0].setColor('YELLOW');
+            interaction.editReply({ embeds: embeds });
+            setTimeout(() => {
+              embeds[0].setColor(originalColor);
+              interaction.editReply({ embeds: embeds });
+            }, 250);
+          }, 100);
+        }, 250);
+      }, 1500);
+    } else if (type === 'Rain') {
+      if (step < 10) {
+        embeds[0].setColor((step % 2 === 0) ? 'BLUE' : originalColor);
+        interaction.editReply({embeds: embeds});
+        setTimeout(() => {
+          animate(type, originalColor, step+1, interaction);
+        }, 250);
+      }
+    } else if (type === 'Snow') {
+      if (step < 10) {
+        embeds[0].setColor((step % 2 === 0) ? 'WHITE' : originalColor);
+        interaction.editReply({embeds: embeds});
+        setTimeout(() => {
+          animate(type, originalColor, step+1, interaction);
+        }, 250);
+      }
+    } else if (type === 'Sand') {
+      if (step < 10) {
+        embeds[0].setColor((step % 2 === 0) ? 'GOLD' : originalColor);
+        interaction.editReply({embeds: embeds});
+        setTimeout(() => {
+          animate(type, originalColor, step+1, interaction);
+        }, 250);
+      }
+    }
+  };
 
   /**
    * Takes coordinate degree and converts it to a direction

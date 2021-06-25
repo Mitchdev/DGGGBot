@@ -10,9 +10,13 @@ exports.slashes = [{
     required: false,
   }],
 }];
-exports.commandHandler = function(interaction) {
+exports.commandHandler = async function(interaction, Discord) {
   interaction.defer();
 
-  const user = interaction.options.get('user') ? interaction.options.get('user').user : interaction.user;
-  interaction.editReply({content: `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=256`});
+  const user = interaction.options.get('user') ? interaction.options.get('user') : interaction;
+  const username = user.member?.displayName ? `${user.member.displayName}${user.member.displayName != user.user.username ? ` (${user.user.username})` : ``}` : user.user.username;
+  const image = `https://cdn.discordapp.com/avatars/${user.user.id}/${user.user.avatar}.png?size=256`;
+  const color = await colorThief.getColorFromURL(image);
+  const embed = new Discord.MessageEmbed().setTitle(username).setImage(image).setColor(color);
+  interaction.editReply({embeds: [embed]})
 };

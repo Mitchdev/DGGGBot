@@ -21,6 +21,7 @@
     "eslint-config-google": "^0.14.0"
   },
   "dependencies": {
+    "color-thief-node": "^1.0.4",
     "discord.js": "github:discordjs/discord.js",
     "dotenv": "^10.0.0",
     "fs": "0.0.1-security",

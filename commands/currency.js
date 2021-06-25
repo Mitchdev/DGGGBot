@@ -20,8 +20,9 @@ exports.slashes = [{
     required: true,
   }],
 }];
-exports.commandHandler = function(interaction) {
+exports.commandHandler = function(interaction, Discord) {
   interaction.defer();
+  const embed = new Discord.MessageEmbed().setTitle('Currency Conversion');
 
   request(process.env.CURRENCY_API, function(err, req, res) {
     if (!err) {
@@ -31,7 +32,18 @@ exports.commandHandler = function(interaction) {
       if (rates[source] && rates[target]) {
         const USD = parseFloat(interaction.options.get('amount').value) / rates[source];
         const REQ = USD * rates[target];
-        interaction.editReply({content: `${interaction.options.get('amount').value} ${source} = ${REQ.toFixed(2)} ${target}`});
+
+        embed.addFields([{
+          name: source,
+          value: interaction.options.get('amount').value,
+          inline: true,
+        }, {name: '\u200B', value: '**=**', inline: true}, {
+          name: target,
+          value: REQ.toFixed(2),
+          inline: true,
+        }]);
+
+        interaction.editReply({embeds: [embed]});
       } else {
         let content = ``;
         if (!rates[source] && !rates[target]) content = `Could not find ${interaction.options.get('source').value} or ${interaction.options.get('target').value}`;

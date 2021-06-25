@@ -1,6 +1,5 @@
 module.exports = function(client) {
   client.on('messageDelete', (message) => {
-    console.log(message);
     if (message.author.id != process.env.BOT_ID && message.author.id != process.env.WEBHOOK_LOG_ID) {
       const Discord = require('discord.js');
       const embed = new Discord.MessageEmbed()

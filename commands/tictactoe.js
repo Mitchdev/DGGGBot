@@ -11,17 +11,21 @@ exports.slashes = [{
   }],
 }];
 exports.commandHandler = function(interaction, Discord) {
-  interaction.defer();
+  if (interaction.channel.id === process.env.GENERAL_CHAT_ID) {
+    interaction.defer({ephemeral: true});
+    interaction.editReply({content: `Please use ${client.channels.resolve(process.env.BOT_GAMES_CHAT_ID)}`});
+  } else {
+    interaction.defer();
 
-  if (interaction.user.id === interaction.options.first().user.id || interaction.options.first().user.bot) {
-    interaction.editReply({content: `You can't play with ${interaction.options.first().user.bot ? 'a bot' : 'yourself'} ${options.emote.pogo.string}`});
-    return;
+    if (interaction.user.id === interaction.options.first().user.id || interaction.options.first().user.bot) {
+      interaction.editReply({content: `You can't play with ${interaction.options.first().user.bot ? 'a bot' : 'yourself'} ${options.emote.pogo.string}`});
+      return;
+    }
+
+    const id = makeID();
+    tictactoeGames[id] = new Tictactoe(id, {'user': interaction.user, 'member': interaction.member}, {'user': interaction.options.first().user, 'member': interaction.options.first().member}, interaction);
+    tictactoeGames[id].update();
   }
-
-  const id = makeID();
-  tictactoeGames[id] = new Tictactoe(id, {'user': interaction.user, 'member': interaction.member}, {'user': interaction.options.first().user, 'member': interaction.options.first().member}, interaction);
-  tictactoeGames[id].update();
-
   /**
    * Tictactoe constructor.
    * @param {string} id of the game
@@ -34,10 +38,12 @@ exports.commandHandler = function(interaction, Discord) {
     this.player1 = p1;
     this.player2 = p2;
     this.interaction = i;
+    this.startTime = new Date();
     this.turn = p2;
     this.turnSymbol = '⭕';
     this.win = false;
     this.filled = 0;
+    this.moves = [];
     this.buttons = [new Discord.MessageActionRow(), new Discord.MessageActionRow(), new Discord.MessageActionRow()];
 
     for (let i = 0; i < 3; i++) {
@@ -47,16 +53,22 @@ exports.commandHandler = function(interaction, Discord) {
     }
 
     this.update = function() {
-      if (this.win) {
-        for (let i = 0; i < 3; i++) {
-          for (let j = 0; j < 3; j++) {
-            this.buttons[i].components[j].disabled = true;
+      if (this.win || this.filled === 9) {
+        const tictactoeData = {
+          'players': [{'id': this.player1.user.id, 'username': this.player1.user.username}, {'id': this.player2.user.id, 'username': this.player2.user.username}],
+          'type': (this.win ? 'win' : 'draw'),
+          'winner': (this.win ? this.turn.user.id : 'draw'),
+          'moves': this.moves,
+          'startTime': this.startTime,
+        };
+        if (this.win) {
+          for (let i = 0; i < 3; i++) {
+            for (let j = 0; j < 3; j++) {
+              this.buttons[i].components[j].disabled = true;
+            }
           }
         }
-        this.interaction.editReply({content: `**TIC TAC TOE**\n${this.player1.user} **[X]** vs **[O]** ${this.player2.user}\n\n**[${this.turnSymbol === '❌' ? 'X' : 'O'}] ${this.turn.member.displayName} won!**`, components: this.buttons});
-        delete tictactoeGames[this.id];
-      } else if (this.filled === 9) {
-        this.interaction.editReply({content: `**TIC TAC TOE**\n${this.player1.user} **[X]** vs **[O]** ${this.player2.user}\n\n**Draw!**`, components: this.buttons});
+        this.interaction.editReply({content: `**TIC TAC TOE**\n${this.player1.user} **[X]** vs **[O]** ${this.player2.user}\n\n**${this.win ? `[${this.turnSymbol === '❌' ? 'X' : 'O'}] ${this.turn.member.displayName} won` : `Draw`}!**`, components: this.buttons});
         delete tictactoeGames[this.id];
       } else {
         if (this.turnSymbol === '❌') {
@@ -70,7 +82,8 @@ exports.commandHandler = function(interaction, Discord) {
       }
     };
 
-    this.makeMove = function(v, h) {
+    this.makeMove = function(v, h, time) {
+      this.moves.push({pos: [parseInt(v), parseInt(h)], turn: this.turnSymbol, time: (time - this.startTime)});
       this.filled++;
       this.buttons[v].components[h].setEmoji(this.turnSymbol);
       this.buttons[v].components[h].label = '';
@@ -108,12 +121,13 @@ exports.commandHandler = function(interaction, Discord) {
 };
 exports.buttonHandler = function(interaction, Discord) {
   interaction.deferUpdate();
+  const time = new Date();
   const id = interaction.customID.split('|')[1];
   const move = interaction.customID.split('|')[2].split('.');
   if (tictactoeGames[id]) {
     if (interaction.user.id === tictactoeGames[id].turn.user.id) {
       if (tictactoeGames[id].buttons[move[0]].components[move[1]].emoji == undefined) {
-        tictactoeGames[id].makeMove(move[0], move[1]);
+        tictactoeGames[id].makeMove(move[0], move[1], time);
       }
     }
   }

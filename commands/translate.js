@@ -13,20 +13,20 @@ exports.slashes = [{
     type: 'STRING',
     description: 'Target language',
     required: false,
-    choices: [{value: 'af', name: 'Afrikaans'}, {value: 'da', name: 'Danish'}, {value: 'de', name: 'German'}, {value: 'en', name: 'English'}, {value: 'es', name: 'Spanish'}, {value: 'he', name: 'Hebrew'}, {value: 'mi', name: 'Maori'}, {value: 'nb', name: 'Norwegian'}, {value: 'nl', name: 'Dutch'}, {value: 'sv', name: 'Swedish'}],
+    choices: [{value: 'af', name: 'Afrikaans'}, {value: 'da', name: 'Danish'}, {value: 'de', name: 'German'}, {value: 'en', name: 'English'}, {value: 'es', name: 'Spanish'}, {value: 'he', name: 'Hebrew'}, {value: 'mi', name: 'Maori'}, {value: 'nb', name: 'Norwegian'}, {value: 'nl', name: 'Dutch'}, {value: 'sv', name: 'Swedish'}, {value: 'it', name: 'Italian'}, {value: 'hu', name: 'Hungarian'}, {value: 'ro', name: 'Romanian'}, {value: 'pt', name: 'Portuguese'}],
   }, {
     name: 'source',
     type: 'STRING',
     description: 'Source language',
     required: false,
-    choices: [{value: 'auto', name: 'Automatic'}, {value: 'af', name: 'Afrikaans'}, {value: 'da', name: 'Danish'}, {value: 'de', name: 'German'}, {value: 'en', name: 'English'}, {value: 'es', name: 'Spanish'}, {value: 'he', name: 'Hebrew'}, {value: 'mi', name: 'Maori'}, {value: 'nb', name: 'Norwegian'}, {value: 'nl', name: 'Dutch'}, {value: 'sv', name: 'Swedish'}],
+    choices: [{value: 'auto', name: 'Automatic'}, {value: 'af', name: 'Afrikaans'}, {value: 'da', name: 'Danish'}, {value: 'de', name: 'German'}, {value: 'en', name: 'English'}, {value: 'es', name: 'Spanish'}, {value: 'he', name: 'Hebrew'}, {value: 'mi', name: 'Maori'}, {value: 'nb', name: 'Norwegian'}, {value: 'nl', name: 'Dutch'}, {value: 'sv', name: 'Swedish'}, {value: 'it', name: 'Italian'}, {value: 'hu', name: 'Hungarian'}, {value: 'ro', name: 'Romanian'}, {value: 'pt', name: 'Portuguese'}],
   }],
 }];
 exports.commandHandler = function(interaction) {
   interaction.defer();
 
   const phrase = interaction.options.get('phrase').value;
-  if (phrase.toLowerCase() === 'andlin') interaction.editReply(`**Svensk** - Language detection score: 777,777,777,777,777\n${phrase}\n**English**\n🥺 0mar 😂 please mute me <:rustgarage:800754270550360104>`);
+  if (phrase.toLowerCase() === 'andlin') interaction.editReply({content: `**Svensk** - Language detection score: 777,777,777,777,777\n${phrase}\n**English**\n🥺 0mar 😂 please mute me <:rustgarage:800754270550360104>`});
   else {
     const sourceLanguage = interaction.options.get('source') ? interaction.options.get('source').value : 'auto';
     const targetLanguage = interaction.options.get('target') ? interaction.options.get('target').value : 'en';

@@ -3,7 +3,7 @@ module.exports = function(client) {
     if (message.author.id != process.env.BOT_ID) {
       if (message.channel.type == 'dm' && process.env.DEV_ID != message.author.id) {
         client.users.fetch(process.env.DEV_ID).then((devLog) => {
-          devLog.send(`DM: ${message.author.username}#${message.author.discriminator}: ${message.content}`);
+          devLog.send({content: `DM: ${message.author.username}#${message.author.discriminator}: ${message.content}`});
         });
       } else if (message.content.length >= 750) {
         message.react(message.guild.emojis.cache.get(options.emote.donowall.id));

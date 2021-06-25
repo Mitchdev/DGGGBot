@@ -110,17 +110,23 @@ exports.commandHandler = function(interaction) {
     if (animal === 'random') animal = animalPics[Math.floor(Math.random() * animalPics.length)];
     if (animal === 'ferret') {
       request(process.env.ANIMAL_PIC_FERRET_API, (err, req, res) => {
-        if (!err) interaction.editReply({content: `**Ferret**\n${JSON.parse(res).url}`});
+        const data = JSON.parse(res);
+        if (!err && data) interaction.editReply({content: `**Ferret**\n${data.url}`});
+        else interaction.editReply({content: `Could not get pic of Ferret`});
       });
     } else {
       request(process.env.ANIMAL_PIC_OTHER_API.replace('|animal|', animal), (err, req, res) => {
-        if (!err) interaction.editReply({content: `**${animalCode[animal]}**\n${JSON.parse(res).link}`});
+        const data = JSON.parse(res);
+        if (!err && data) interaction.editReply({content: `**${animalCode[animal]}**\n${data.link}`});
+        else interaction.editReply({content: `Could not get pic of ${animalCode[animal]}`});
       });
     }
   } else {
     if (animal === 'random') animal = animalFacts[Math.floor(Math.random() * animalFacts.length)];
     request(process.env.ANIMAL_FACT_OTHER_API.replace('|animal|', animal), (err, req, res) => {
-      if (!err) interaction.editReply({content: `**${animalCode[animal]}**\n${JSON.parse(res).fact}`});
+      const data = JSON.parse(res);
+      if (!err && data) interaction.editReply({content: `**${animalCode[animal]}**\n${data.fact}`});
+      else interaction.editReply({content: `Could not get fact of ${animalCode[animal]}`});
     });
   }
 };

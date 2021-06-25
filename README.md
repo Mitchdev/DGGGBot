@@ -3,6 +3,7 @@
 A Discord bot for the dgg gaming discord community.
 
 ## Installation
+
 **[Node.js](https://nodejs.org) 14.0.0 or newer is required.**  
 This bot uses Discord.js master version see docs [here](https://discord.js.org/#/docs/main/master/general/welcome)
 
@@ -30,17 +31,20 @@ ___
 | &emsp;↳ pic    | {animal}                                                | Random picture of the animal                        |
 | &emsp;↳ fact   | {animal}                                                | Random fact of the animal                           |
 | avatar         | (user)                                                  | Posts the user profile picture                      |
+| bug            | {text}                                                  | Report a bug                                        |
+| color          | {link}                                                  | Gets the color for an image                         |
 | commands       |                                                         | Links to command list                               |
-| connect4       | {user}                                                  | Starts a game of connect4 with another user         |
 | convert        | {amount} {source} {target}                              | Converts amount from one unit to another            |
 | convertlist    | (measurement)                                           | List all measurement or units of measurement        |
 | currency       | {amount} {source} {target}                              | Converts amount from one currency to another        |
 | define         | {phrase}                                                | Gets definition of a phrase via urban dictionary    |
 | emotes         | {timeframe} {size}                                      | Shows emote useage                                  |
 | fact           |                                                         | Gets a random fact                                  |
+| feature        | {text}                                                  | Request a feature                                   |
 | feeds          |                                                         | Lists all the feeds                                 |
 | info           |                                                         | Shows uptime and ping                               |
 | list           |                                                         | Shows list of temporarily roled users               |
+| minesweeper    |                                                         | Starts a game of minesweeper                        |
 | raw            | {input}                                                 | Shows raw input of message (what bot sees)          |
 | scrabble       | {sub cmd}                                               | Scrabble commands                                   |
 | &emsp;↳ create |                                                         | Creates a game of scrabble                          |
@@ -90,7 +94,9 @@ ___
 
 ## Bot Manager Commands
 
-| Command     | Arguments         | Description                       |
-|-------------|-------------------|-----------------------------------|
-| deleteslash | (id)              | Deletes one or all slash commands |
-| emotesync   | {old id} {new id} | Syncs emotes in emote useage      |
+| Command        | Arguments         | Description                       |
+|----------------|-------------------|-----------------------------------|
+| slash          |                   | Slash Commands                    |
+| &emsp;↳ delete | (id)              | Deletes one or all slash commands |
+| &emsp;↳ reload |                   | Reloads all slash commands        |
+| emotesync      | {old id} {new id} | Syncs emotes in emote useage      |

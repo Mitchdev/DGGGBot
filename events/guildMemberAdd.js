@@ -9,7 +9,7 @@ module.exports = function(client) {
           if (inviteItem) {
             if (inviteItem.uses > inviteList[i].uses) {
               inviteList[i].uses = inviteItem.uses;
-              client.channels.resolve(process.env.CHANNEL_LOGS).send(`${member.displayName} joined via ${inviteList[i].inviter.username}'s invite link (${inviteList[i].code}).`);
+              client.channels.resolve(process.env.CHANNEL_LOGS).send({content: `${member.displayName} joined via ${inviteList[i].inviter.username}'s invite link (${inviteList[i].code}).`});
             }
           }
         }

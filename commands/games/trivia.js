@@ -181,7 +181,7 @@ exports.commandHandler = async function(interaction, Discord) {
           if (!err) {
             triviaOptions.token = JSON.parse(res).token;
             callback(triviaOptions.token);
-            fs.writeFileSync(dpath.join(__dirname, '../options/trivia.json'), JSON.stringify(triviaOptions));
+            fs.writeFileSync(dpath.join(__srcdir, './options/trivia.json'), JSON.stringify(triviaOptions));
           }
         });
       }

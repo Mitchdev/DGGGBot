@@ -159,9 +159,9 @@ exports.commandHandler = async function(interaction, Discord) {
         url: process.env.ANDLIN_SCRABBLE_API,
         headers: {'Authorization': process.env.ANDLIN_TOKEN},
         json: this.board,
-      }).pipe(fs.createWriteStream(dpath.join(__dirname, `../resources/scrabble/${this.id}.jpg`)));
+      }).pipe(fs.createWriteStream(dpath.join(__srcdir, `./resources/scrabble/${this.id}.jpg`)));
       writeStream.on('close', () => {
-        const file = new Discord.MessageAttachment(fs.readFileSync(dpath.join(__dirname, `../resources/scrabble/${this.id}.jpg`)), `${this.id}.jpg`);
+        const file = new Discord.MessageAttachment(fs.readFileSync(dpath.join(__srcdir, `./resources/scrabble/${this.id}.jpg`)), `${this.id}.jpg`);
         const embed = new Discord.MessageEmbed()
             .attachFiles([file])
             .setTitle('Do `/scrabble place` to place a word')
@@ -172,7 +172,7 @@ exports.commandHandler = async function(interaction, Discord) {
         this.interaction.editReply({embeds: [embed], components: this.skipBtns});
 
         try {
-          fs.unlinkSync(dpath.join(__dirname, `../resources/scrabble/${this.id}.jpg`));
+          fs.unlinkSync(dpath.join(__srcdir, `./resources/scrabble/${this.id}.jpg`));
         } catch (err) {
           console.error(err);
         }
@@ -450,7 +450,7 @@ exports.commandHandler = async function(interaction, Discord) {
     };
 
     this.checkWords = function(i, wordsFinal, wildcards, callback) {
-      fs.readFile(dpath.join(__dirname, '../resources/scrabble/scrabble.txt'), 'utf8', (err, data) => {
+      fs.readFile(dpath.join(__srcdir, './resources/scrabble/scrabble.txt'), 'utf8', (err, data) => {
         const scrabbleDict = data;
         const regex = new RegExp(`^(${wordsFinal.words[i].word})\r\n`, 'gim');
         if (scrabbleDict.match(regex)) {
@@ -618,9 +618,9 @@ exports.commandHandler = async function(interaction, Discord) {
           url: process.env.ANDLIN_SCRABBLE_API,
           headers: {'Authorization': process.env.ANDLIN_TOKEN},
           json: this.board,
-        }).pipe(fs.createWriteStream(dpath.join(__dirname, `../resources/scrabble/${this.id}.jpg`)));
+        }).pipe(fs.createWriteStream(dpath.join(__srcdir, `./resources/scrabble/${this.id}.jpg`)));
         writeStream.on('close', () => {
-          const file = new Discord.MessageAttachment(fs.readFileSync(dpath.join(__dirname, `../resources/scrabble/${this.id}.jpg`)), `${this.id}.jpg`);
+          const file = new Discord.MessageAttachment(fs.readFileSync(dpath.join(__srcdir, `./resources/scrabble/${this.id}.jpg`)), `${this.id}.jpg`);
           const fields = this.players.map((p) => {
             return {name: `${p.user.username} points`, value: p.points.toString(), inline: true};
           });
@@ -634,7 +634,7 @@ exports.commandHandler = async function(interaction, Discord) {
           this.interaction.editReply({embeds: [embed], components: []});
 
           try {
-            fs.unlinkSync(dpath.join(__dirname, `../resources/scrabble/${this.id}.jpg`));
+            fs.unlinkSync(dpath.join(__srcdir, `./resources/scrabble/${this.id}.jpg`));
           } catch (err) {
             console.error(err);
           }

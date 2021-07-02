@@ -1,6 +1,11 @@
 exports.commands = {'weather': 'none'};
 exports.buttons = {};
 exports.slashes = [{
+  name: 'location',
+  type: 'STRING',
+  description: 'Location to get weather from',
+  required: true,
+}, {
   name: 'weather',
   description: 'Gets current weather from a location',
   options: [{
@@ -18,11 +23,6 @@ exports.slashes = [{
       name: 'Imperial',
       value: 'imperial',
     }],
-  }, {
-    name: 'location',
-    type: 'STRING',
-    description: 'Location to get weather from',
-    required: true,
   }],
 }];
 exports.commandHandler = async function(interaction, Discord) {

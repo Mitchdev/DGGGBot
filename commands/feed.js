@@ -48,8 +48,8 @@ exports.slashes = [{
     }],
   }],
 }];
-exports.commandHandler = function(interaction) {
-  interaction.defer();
+exports.commandHandler = async function(interaction) {
+  await interaction.defer();
 
   const command = interaction.options.first();
   const feedIndex = feeds.list.findIndex((feed) => feed.channel == interaction.channelID);

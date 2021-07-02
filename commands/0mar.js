@@ -4,8 +4,8 @@ exports.slashes = [{
   name: '0mar',
   description: '0MAR LMAO',
 }];
-exports.commandHandler = function(interaction, Discord) {
-  interaction.defer();
+exports.commandHandler = async function(interaction, Discord) {
+  await interaction.defer();
   interaction.editReply({content: `0m${generateNumber()}r`});
 
   /**

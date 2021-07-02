@@ -10,12 +10,12 @@ exports.slashes = [{
     required: true,
   }],
 }];
-exports.commandHandler = function(interaction, Discord) {
-  if (interaction.channel.id === process.env.GENERAL_CHAT_ID) {
-    interaction.defer({ephemeral: true});
-    interaction.editReply({content: `Please use ${client.channels.resolve(process.env.BOT_GAMES_CHAT_ID)}`});
+exports.commandHandler = async function(interaction, Discord) {
+  if (interaction.channel.id === process.env.CHANNEL_GENERAL) {
+    await interaction.defer({ephemeral: true});
+    interaction.editReply({content: `Please use ${client.channels.resolve(process.env.CHANNEL_BOT_GAMES)}`});
   } else {
-    interaction.defer();
+    await interaction.defer();
 
     if (interaction.user.id === interaction.options.first().user.id || interaction.options.first().user.bot) {
       interaction.editReply({content: `You can't play with ${interaction.options.first().user.bot ? 'a bot' : 'yourself'} ${options.emote.pogo.string}`});
@@ -119,8 +119,8 @@ exports.commandHandler = function(interaction, Discord) {
     };
   }
 };
-exports.buttonHandler = function(interaction, Discord) {
-  interaction.deferUpdate();
+exports.buttonHandler = async function(interaction, Discord) {
+  await interaction.deferUpdate();
   const time = new Date();
   const id = interaction.customID.split('|')[1];
   const move = interaction.customID.split('|')[2].split('.');

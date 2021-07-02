@@ -20,23 +20,23 @@ exports.slashes = [{
   }],
 }];
 exports.commandHandler = async function(interaction, Discord) {
-  interaction.defer({ephemeral: true});
+  await interaction.defer({ephemeral: true});
 
-  const channel = await client.channels.resolve(process.env.BOT_TESTING_CHANNEL_ID);
+  const channel = await client.channels.resolve(process.env.CHANNEL_BOT_TESTING);
   const embed = new Discord.MessageEmbed()
-    .setTitle(capitalize(interaction.commandName))
-    .setColor((interaction.commandName === 'bug' ? 'RED' : 'GREEN'))
-    .setDescription(interaction.options.get('text').value)
-    .addFeilds([{
-      name: 'User Username',
-      value: interaction.user.username,
-      inline: true,
-    }, {
-      name: 'User ID',
-      value: interaction.user.id,
-      inline: true,
-    }])
-    .setTimestamp();
+      .setTitle(capitalize(interaction.commandName))
+      .setColor((interaction.commandName === 'bug' ? 'RED' : 'GREEN'))
+      .setDescription(interaction.options.get('text').value)
+      .addFeilds([{
+        name: 'User Username',
+        value: interaction.user.username,
+        inline: true,
+      }, {
+        name: 'User ID',
+        value: interaction.user.id,
+        inline: true,
+      }])
+      .setTimestamp();
 
   channel.send({embeds: [embed]}).then(() => interaction.editReply({content: options.emote.ok.string}));
 };

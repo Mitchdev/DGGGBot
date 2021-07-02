@@ -10,22 +10,25 @@ exports.slashes = [{
     required: true,
   }],
 }];
-exports.commandHandler = function(interaction) {
-  interaction.defer();
+exports.commandHandler = async function(interaction, Discord) {
+  await interaction.defer();
 
   const phrase = interaction.options.get('phrase').value.toLowerCase();
-  if (phrase == 'mitch') {
-    const content = `**mitch**\nThe best moderator.`;
-    interaction.editReply({content: content});
-  } else {
-    request(process.env.URBAN_API.replace('|phrase|', phrase), function(err, res) {
-      if (!err && res) {
-        const data = JSON.parse(res.body).list;
-        if (data.length > 0) {
-          if (data[0].example) splitMessage(interaction, `**${phrase}**\n${data[0].definition}\n\n${data[0].example}`);
-          else splitMessage(interaction, `**${phrase}**\n${data[0].definition}`);
-        } else interaction.editReply({content: `Couldn\'t find anything for **${phrase}**.`});
-      }
-    });
-  }
+  request(process.env.URBAN_API.replace('|phrase|', phrase), function(err, res) {
+    if (!err && res) {
+      const data = JSON.parse(res.body).list;
+      const embed = new Discord.MessageEmbed();
+      if (data.length > 0) {
+        embed.setTitle(data[0].word).setURL(data[0].permalink).addField('Definition', data[0].definition.replace(/\[(.+?)\]/gmi, (i) => {
+          return `${i}(http://${i.replace(/\[|\]|\'|\"/gmi, '').replace(/\s/gmi, '-')}.urbanup.com)`;
+        }));
+        if (data[0].example) {
+          embed.addField('Example', data[0].example.replace(/\[(.+?)\]/gmi, (i) => {
+            return `${i}(http://${i.replace(/\[|\]|\'|\"/gmi, '').replace(/\s/gmi, '-')}.urbanup.com)`;
+          }));
+        }
+        interaction.editReply({embeds: [embed]});
+      } else interaction.editReply({content: `Couldn\'t find anything for **${phrase}**.`});
+    }
+  });
 };

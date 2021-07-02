@@ -20,8 +20,8 @@ exports.slashes = [{
     }],
   }],
 }];
-exports.commandHandler = function(interaction) {
-  interaction.defer();
+exports.commandHandler = async function(interaction) {
+  await interaction.defer();
 
   let a; let b; let c; let r11; let r12; let r21; let r22;
   let r1; let r2;

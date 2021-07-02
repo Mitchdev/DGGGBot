@@ -20,8 +20,8 @@ exports.slashes = [{
     required: true,
   }],
 }];
-exports.commandHandler = function(interaction, Discord) {
-  interaction.defer();
+exports.commandHandler = async function(interaction, Discord) {
+  await interaction.defer();
   const embed = new Discord.MessageEmbed().setTitle('Currency Conversion');
 
   request(process.env.CURRENCY_API, function(err, req, res) {

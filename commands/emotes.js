@@ -29,8 +29,17 @@ exports.slashes = [{
     }],
   }],
 }];
-exports.commandHandler = function(interaction) {
-  interaction.defer();
+exports.commandHandler = async function(interaction) {
+  await interaction.defer({ephemeral: (interaction.options.get('size').value === 'true')});
+
+  if (interaction.options.get('size').value === 'true') {
+    interaction.editReply({content: 'Fixing'});
+    return;
+  }
+
+  //
+  // EMBED WITH THREE ROWS
+  //
 
   client.guilds.fetch(process.env.GUILD_ID).then((guild) => {
     const e = [];

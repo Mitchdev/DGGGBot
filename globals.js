@@ -8,7 +8,6 @@ module.exports = function(conf) {
   htmlEntities = require('html-entities');
   colorThief = require('color-thief-node');
 
-
   currentVoteID = null;
   voteValidReactions = [];
   inviteList = [];
@@ -26,40 +25,15 @@ module.exports = function(conf) {
   triviaQueue = [];
   triviaGame = null;
   triviaLeaderboard = [];
-  triviaToken = JSON.parse(fs.readFileSync(dpath.join(__dirname, './options/triviaToken.json'))).token;
-  triviaCategory = {
-    '9': 'General Knowledge',
-    '10': 'Books',
-    '11': 'Film',
-    '12': 'Music',
-    '13': 'Musicals & Theatres',
-    '14': 'Television',
-    '15': 'Video Games',
-    '16': 'Board Games',
-    '17': 'Science & Nature',
-    '18': 'Computers',
-    '19': 'Mathematics',
-    '20': 'Mythology',
-    '21': 'Sports',
-    '23': 'History',
-    '22': 'Geography',
-    '24': 'Politics',
-    '25': 'Art',
-    '26': 'Celebrities',
-    '27': 'Animals',
-    '28': 'Vehicles',
-    '29': 'Comics',
-    '30': 'Gadgets',
-    '31': 'Japanese Anime & Manga',
-    '32': 'Cartoon & Animations',
-  };
+  triviaOptions = JSON.parse(fs.readFileSync(dpath.join(__dirname, './options/trivia.json')));
+  triviaGPT2 = JSON.parse(fs.readFileSync(dpath.join(__dirname, './options/gpt2Trivia.json')));
 
   client = conf.client;
   options = conf.config;
   commands = conf.commands;
 
   colorNames = JSON.parse(fs.readFileSync(dpath.join(__dirname, './options/colorNames.json')));
-
+  customCommands = JSON.parse(fs.readFileSync(dpath.join(__dirname, './options/customCommands.json')));
   roles = JSON.parse(fs.readFileSync(dpath.join(__dirname, './options/roles.json')));
   pins = JSON.parse(fs.readFileSync(dpath.join(__dirname, './options/pins.json')));
   feeds = JSON.parse(fs.readFileSync(dpath.join(__dirname, './options/feeds.json')));

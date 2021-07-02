@@ -1,7 +1,7 @@
 exports.commands = {'roll': 'none'};
 exports.buttons = {};
 exports.slashes = [];
-exports.commandHandler = function(message) {
+exports.commandHandler = async function(message) {
   // var diceMatch = /!(?:r )?(?:roll )?(\d+)(d)(\d+)/g.exec(message.content.toLowerCase());
   // if (diceMatch) {
   //  var args = message.content.toLowerCase().replace(diceMatch[0], '');

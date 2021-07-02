@@ -19,8 +19,8 @@ exports.slashes = [{
     required: false,
   }],
 }];
-exports.commandHandler = function(interaction, Discord) {
-  interaction.defer();
+exports.commandHandler = async function(interaction, Discord) {
+  await interaction.defer();
 
   request({
     method: 'GET',
@@ -45,7 +45,7 @@ exports.commandHandler = function(interaction, Discord) {
             inline: true,
           }, {
             name: 'Best Category',
-            value: (userData.BestCategory != null) ? triviaCategory[userData.BestCategory.toString()] : 'None',
+            value: (userData.BestCategory != null) ? triviaOptions.categories[userData.BestCategory.toString()] : 'None',
             inline: true,
           }, {
             name: 'Total Score',
@@ -57,7 +57,7 @@ exports.commandHandler = function(interaction, Discord) {
             inline: true,
           }, {
             name: 'Worst Category',
-            value: (userData.WorstCategory != null) ? triviaCategory[userData.WorstCategory.toString()] : 'None',
+            value: (userData.WorstCategory != null) ? triviaOptions.categories[userData.WorstCategory.toString()] : 'None',
             inline: true,
           }]);
           interaction.editReply({embeds: [embed]});
@@ -65,7 +65,7 @@ exports.commandHandler = function(interaction, Discord) {
           interaction.editReply(`Could not find ${interaction.options.get('user').user.username} in the ${interaction.options.get('game').value} leaderboard.`);
         }
       } else {
-        const buttons = new Discord.MessageActionRow()
+        const buttons = new Discord.MessageActionRow();
         buttons.addComponents(new Discord.MessageButton({custom_id: `leaderboard|prev|-1`, label: 'prev', style: 'SECONDARY', disabled: true}));
         buttons.addComponents(new Discord.MessageButton({custom_id: `leaderboard|current|0`, label: '1', style: 'SECONDARY', disabled: true}));
         buttons.addComponents(new Discord.MessageButton({custom_id: `leaderboard|next|1`, label: 'next', style: 'SECONDARY', disabled: false}));
@@ -83,7 +83,7 @@ exports.commandHandler = function(interaction, Discord) {
           value: data.slice(0, 10).map((p, i) => `${(i % 2 === 1) ? '**' : ''}${p.AverageTime.toString()}${(i % 2 === 1) ? '**' : ''}`).join('\n'),
           inline: true,
         }]);
-        embed.setFooter(`Page (1/${Math.ceil(data.length/10)})`)
+        embed.setFooter(`Page (1/${Math.ceil(data.length/10)})`);
         interaction.editReply({embeds: [embed], components: [buttons]});
       }
     } else {
@@ -94,7 +94,7 @@ exports.commandHandler = function(interaction, Discord) {
 exports.buttonHandler = function(interaction, Discord) {
   if (triviaLeaderboard.length > 0) {
     const page = parseInt(interaction.customID.split('|')[2]);
-    const buttons = new Discord.MessageActionRow()
+    const buttons = new Discord.MessageActionRow();
     buttons.addComponents(new Discord.MessageButton({custom_id: `leaderboard|prev|${page-1}`, label: 'prev', style: 'SECONDARY', disabled: (page-1 < 0)}));
     buttons.addComponents(new Discord.MessageButton({custom_id: `leaderboard|current|${page}`, label: page+1, style: 'SECONDARY', disabled: true}));
     buttons.addComponents(new Discord.MessageButton({custom_id: `leaderboard|next|${page+1}`, label: 'next', style: 'SECONDARY', disabled: (page+1 >= Math.ceil(triviaLeaderboard.length/10))}));

@@ -1,5 +1,5 @@
 module.exports = function(commands) {
-  loadCommands = function(client, callback) {
+  loadCommands = function(client, callback = () => {}) {
     commands = [];
     try {
       client.guilds.fetch(process.env.GUILD_ID).then((guild) => {

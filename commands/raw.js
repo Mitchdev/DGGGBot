@@ -10,7 +10,7 @@ exports.slashes = [{
     required: true,
   }],
 }];
-exports.commandHandler = function(interaction) {
-  interaction.defer({ephemeral: true});
+exports.commandHandler = async function(interaction) {
+  await interaction.defer({ephemeral: true});
   interaction.editReply({content: `\`${interaction.options.get('input').value}\``, ephemeral: true});
 };

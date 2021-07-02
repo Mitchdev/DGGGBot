@@ -4,8 +4,8 @@ exports.slashes = [{
   name: 'shame',
   description: 'Shows list of indefinitely roled users',
 }];
-exports.commandHandler = function(interaction) {
-  interaction.defer();
+exports.commandHandler = async function(interaction) {
+  await interaction.defer();
 
   client.guilds.fetch(process.env.GUILD_ID).then((guild) => {
     guild.roles.fetch(process.env.ROLE_WIZARD).then((wizardRole) => {

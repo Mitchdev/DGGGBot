@@ -7,7 +7,9 @@ module.exports = function(client) {
         if (command.commands[interaction.commandName] === 'mod') {
           if (interaction.member._roles.includes(process.env.ROLE_MOD)) command.commandHandler(interaction, Discord, client);
         } else if (command.commands[interaction.commandName] === 'dev') {
-          if (interaction.user.id === '399186129288560651') command.commandHandler(interaction, Discord, client);
+          if (interaction.user.id === process.env.DEV_ID) command.commandHandler(interaction, Discord, client);
+        } else if (command.commands[interaction.commandName] === 'trusted') {
+          if (interaction.member._roles.includes(process.env.ROLE_MOD) || interaction.member._roles.includes(process.env.ROLE_TRUSTED)) command.commandHandler(interaction, Discord, client);
         } else if (command.commands[interaction.commandName] === 'weeb/wizard') {
           if (interaction.member._roles.includes(process.env.ROLE_WEEB) || interaction.member._roles.includes(process.env.ROLE_WIZARD)) command.commandHandler(interaction, Discord);
         } else {
@@ -25,6 +27,8 @@ module.exports = function(client) {
           if (interaction.member._roles.includes(process.env.ROLE_MOD)) command.buttonHandler(interaction, Discord, client);
         } else if (command.buttons[interaction.customID.split('|')[0]] === 'dev') {
           if (interaction.user.id === process.env.DEV_ID) command.buttonHandler(interaction, Discord, client);
+        } else if (command.buttons[interaction.customID.split('|')[0]] === 'trusted') {
+          if (interaction.member._roles.includes(process.env.ROLE_MOD) || interaction.member._roles.includes(process.env.ROLE_TRUSTED)) command.buttonHandler(interaction, Discord);
         } else if (command.buttons[interaction.customID.split('|')[0]] === 'weeb/wizard') {
           if (interaction.member._roles.includes(process.env.ROLE_WEEB) || interaction.member._roles.includes(process.env.ROLE_WIZARD)) command.buttonHandler(interaction, Discord);
         } else {

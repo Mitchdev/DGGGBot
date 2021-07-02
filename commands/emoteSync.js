@@ -15,8 +15,8 @@ exports.slashes = [{
     required: true,
   }],
 }];
-exports.commandHandler = function(interaction) {
-  interaction.defer({ephemeral: true});
+exports.commandHandler = async function(interaction) {
+  await interaction.defer({ephemeral: true});
 
   if (emotesUse.emotes[interaction.options.get('old').value]) {
     if (emotesUse.emotes[interaction.options.get('new').value]) {

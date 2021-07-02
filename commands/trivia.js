@@ -8,7 +8,12 @@ exports.slashes = [{
     type: 'STRING',
     description: 'Category of trivia question',
     required: true,
-    choices: [{name: 'Random (Affects Leaderboard)', value: '0'}, {name: 'General Knowledge', value: '9'}, {name: 'History', value: '23'}, {name: 'Animals', value: '27'}, {name: 'Geography', value: '22'}, {name: 'Politics', value: '24'}, {name: 'Mythology', value: '20'}, {name: 'Science & Nature', value: '17'}, {name: 'Computers', value: '18'}, {name: 'Mathematics', value: '19'}, {name: 'Books', value: '10'}, {name: 'Film', value: '11'}, {name: 'Music', value: '12'}, {name: 'Musicals & Theatres', value: '13'}, {name: 'Television', value: '14'}, {name: 'Video Games', value: '15'}, {name: 'Board Games', value: '16'}, {name: 'Sports', value: '21'}, {name: 'Art', value: '25'}, {name: 'Celebrities', value: '26'}, {name: 'Vehicles', value: '28'}, {name: 'Comics', value: '29'}, {name: 'Gadgets', value: '30'}, {name: 'Japanese Anime & Manga', value: '31'}, {name: 'Cartoon & Animations', value: '32'}],
+    choices: [
+      {name: 'Random (Affects Leaderboard)', value: '0'}, {name: 'General Knowledge', value: '9'}, {name: 'History', value: '23'}, {name: 'Animals', value: '27'}, {name: 'Geography', value: '22'}, {name: 'Politics', value: '24'},
+      {name: 'Mythology', value: '20'}, {name: 'Science & Nature', value: '17'}, {name: 'Computers', value: '18'}, {name: 'Mathematics', value: '19'}, {name: 'Books', value: '10'}, {name: 'Film', value: '11'}, {name: 'Music', value: '12'},
+      {name: 'Musicals & Theatres', value: '13'}, {name: 'Television', value: '14'}, {name: 'Video Games', value: '15'}, {name: 'Board Games', value: '16'}, {name: 'Sports', value: '21'}, {name: 'Art', value: '25'}, {name: 'Celebrities', value: '26'},
+      {name: 'Vehicles', value: '28'}, {name: 'Comics', value: '29'}, {name: 'Gadgets', value: '30'}, {name: 'Japanese Anime & Manga', value: '31'}, {name: 'Cartoon & Animations', value: '32'},
+    ],
   }, {
     name: 'difficulty',
     type: 'STRING',
@@ -23,18 +28,18 @@ exports.slashes = [{
     }, {
       name: 'Easy',
       value: 'easy',
-    }]
+    }],
   }],
 }];
-exports.commandHandler = function(interaction, Discord) {
-  interaction.defer({ephemeral: true});
-  if (interaction.channel.id === process.env.GENERAL_CHAT_ID) {
-    interaction.editReply({content: `Please use ${client.channels.resolve(process.env.BOT_GAMES_CHAT_ID)}`});
+exports.commandHandler = async function(interaction, Discord) {
+  await interaction.defer({ephemeral: true});
+  if (interaction.channel.id === process.env.CHANNEL_GENERAL) {
+    interaction.editReply({content: `Please use ${client.channels.resolve(process.env.CHANNEL_BOT_GAMES)}`});
   } else {
     const id = makeID();
     const category = interaction.options.get('category').value;
     const isRandom = (category === '0');
-    const keys = Object.keys(triviaCategory);
+    const keys = Object.keys(triviaOptions.categories);
     const game = new Trivia(id, interaction.user, interaction, (isRandom ? keys[Math.floor(Math.random()*keys.length)] : category), interaction.options.get('difficulty').value, isRandom);
     game.loadQuestion((success) => {
       if (!success) return;
@@ -56,10 +61,11 @@ exports.commandHandler = function(interaction, Discord) {
   /**
    * Trivia constructor.
    * @param {string} id of the game
+   * @param {object} u object
    * @param {interaction} i game message
-   * @param {object} user object
    * @param {string} category of the question
    * @param {string} difficulty of the question
+   * @param {boolean} isR of the question
    */
   function Trivia(id, u, i, category, difficulty, isR) {
     this.id = id;
@@ -69,6 +75,7 @@ exports.commandHandler = function(interaction, Discord) {
     this.category = category;
     this.difficulty = difficulty;
     this.isRandom = isR;
+    this.isGPT2 = false;
     this.hasEnded = false;
     this.data = {};
     this.embed = new Discord.MessageEmbed();
@@ -79,64 +86,69 @@ exports.commandHandler = function(interaction, Discord) {
     this.interval;
 
     this.loadQuestion = function(callback) {
-      this.getTriviaToken((token) => {
-        request(process.env.TRIVIA_API.replace('|category|', this.category).replace('|difficulty|', this.difficulty).replace('|token|', token), (err, req, res) => {
-          if (!err) {
-            const data = JSON.parse(res);
-            if (data.response_code === 0) {
-              this.data = data.results[0];
-
-              const answersButtons = [];
-
-              for (let i = 0; i < this.data.incorrect_answers.length+1; i++) {
-                const answer = (i < this.data.incorrect_answers.length) ? this.data.incorrect_answers[i] : this.data.correct_answer;
-                answersButtons.push(new Discord.MessageButton({custom_id: `trivia|${this.id}|${escapeHtml(answer, true)}`, label: escapeHtml(answer, true), style: 'SECONDARY'}));
-              }
-
-              if (this.data.type === 'boolean') {
-                this.answers.addComponents(answersButtons.sort((a, b) => a.label.length - b.label.length));
+      if (this.isRandom && Math.floor(Math.random() * 15) === 1) {
+        this.isGPT2 = true;
+        this.data = triviaGPT2[Math.floor(Math.random()*triviaGPT2.length)];
+        this.load(callback);
+      } else {
+        this.getTriviaToken((token) => {
+          request(process.env.TRIVIA_API.replace('|category|', this.category).replace('|difficulty|', this.difficulty).replace('|token|', token), (err, req, res) => {
+            if (!err) {
+              const data = JSON.parse(res);
+              if (data.response_code === 0) {
+                this.data = data.results[0];
+                this.load(callback);
+              } else if (data.response_code === 3 || data.response_code === 4) {
+                request(process.env.TRIVIA_TOKENRESET_API.replace('|token|', token));
+                triviaOptions.token = '';
+                this.loadQuestion((success) => callback(success));
               } else {
-                this.answers.addComponents(shuffle(answersButtons));
+                this.interaction.editReply({content: 'Could not create a trivia question.', ephemeral: true});
+                callback(false);
               }
-
-              this.embed.setTitle(`Trivia started by ${this.user.username}${this.isRandom ? ' (This question affects the leaderboard)' : ''}`).setColor('DARK_GREEN').addFields({
-                name: 'Timeleft',
-                value: this.timeleft.toString(),
-                inline: true,
-              }, {name: '\u200B', value: '\u200B', inline: true}, {
-                name: 'Questions in Queue',
-                value: triviaQueue.length.toString(),
-                inline: true,
-              }, {
-                name: 'Category',
-                value: triviaCategory[this.category],
-                inline: true,
-              }, {name: '\u200B', value: '\u200B', inline: true}, {
-                name: 'Difficulty',
-                value: capitalize(this.data.difficulty),
-                inline: true,
-              }, {
-                name: 'Question',
-                value: escapeHtml(this.data.question, true),
-                inline: false,
-              });
-
-              callback(true);
-            } else if (data.response_code === 3 || data.response_code === 4) {
-              request(process.env.TRIVIA_TOKENRESET_API.replace('|token|', token));
-              triviaToken = '';
-              this.loadQuestion((success) => callback(success));
-            } else {
-              this.interaction.editReply({content: 'Could not create a trivia question.', ephemeral: true});
-              callback(false);
             }
-          }
+          });
         });
+      }
+    };
+
+    this.load = function(callback) {
+      const answersButtons = [];
+      for (let i = 0; i < this.data.incorrect_answers.length+1; i++) {
+        const answer = (i < this.data.incorrect_answers.length) ? this.data.incorrect_answers[i] : this.data.correct_answer;
+        answersButtons.push(new Discord.MessageButton({custom_id: `trivia|${this.id}|${escapeHtml(answer, true)}`, label: escapeHtml(answer, true), style: 'SECONDARY'}));
+      }
+
+      if (this.data.incorrect_answers.length === 1) this.answers.addComponents(answersButtons.sort((a, b) => a.label.length - b.label.length));
+      else this.answers.addComponents(shuffle(answersButtons));
+
+      this.embed.setTitle(`Trivia started by ${this.user.username}${this.isRandom ? ' (This question affects the leaderboard)' : ''}`).setColor('DARK_GREEN').addFields({
+        name: 'Timeleft',
+        value: this.timeleft.toString(),
+        inline: true,
+      }, {name: '\u200B', value: '\u200B', inline: true}, {
+        name: 'Questions in Queue',
+        value: triviaQueue.length.toString(),
+        inline: true,
+      }, {
+        name: 'Category',
+        value: this.isGPT2 ? 'General Knowledge' : triviaOptions.categories[this.category],
+        inline: true,
+      }, {name: '\u200B', value: '\u200B', inline: true}, {
+        name: 'Difficulty',
+        value: capitalize(this.difficulty),
+        inline: true,
+      }, {
+        name: 'Question',
+        value: escapeHtml(this.data.question, true),
+        inline: false,
       });
+
+      callback(true);
     };
 
     this.start = function() {
-      this.update(() => {
+      this.update(false, () => {
         this.startTime = new Date();
         this.interval = setInterval(() => {
           if (this.timeleft >= 0) {
@@ -152,32 +164,38 @@ exports.commandHandler = function(interaction, Discord) {
             this.embed.fields[2].value = triviaQueue.length.toString();
 
             if (this.timeleft === 15 || this.timeleft === 10 || this.timeleft === 5 || this.timeleft === 3 || this.timeleft === 2 || this.timeleft === 1) this.update();
-            if (this.timeleft === 0) setTimeout(() => {this.end()}, 150);
+            if (this.timeleft === 0) {
+              setTimeout(() => {
+                this.end();
+              }, 150);
+            }
           }
         }, 1000);
       });
     };
 
     this.getTriviaToken = function(callback) {
-      if (triviaToken != '') callback(triviaToken);
+      if (triviaOptions.token != '') callback(triviaOptions.token);
       else {
         request(process.env.TRIVIA_TOKEN_API, (err, req, res) => {
           if (!err) {
-            triviaToken = JSON.parse(res).token;
-            callback(triviaToken);
-            fs.writeFileSync(dpath.join(__dirname, '../options/triviaToken.json'), JSON.stringify({'token': triviaToken}));
+            triviaOptions.token = JSON.parse(res).token;
+            callback(triviaOptions.token);
+            fs.writeFileSync(dpath.join(__dirname, '../options/trivia.json'), JSON.stringify(triviaOptions));
           }
         });
       }
     };
 
-    this.update = function(callback) {
-      this.message.edit({embeds: [this.embed], components: [this.answers]}).then(callback);
+    this.update = function(isEnd = false, callback = () => {}) {
+      if (isEnd) {
+        this.message.edit({embeds: [this.embed], components: [this.answers, new Discord.MessageActionRow().addComponents(new Discord.MessageButton({custom_id: `trivia|p|${this.isGPT2}|${this.message.channel.guild.id}|${this.message.channel.id}|${this.message.id}`, label: 'Problem with question?', style: 'DANGER'}))]}).then(callback);
+      } else this.message.edit({embeds: [this.embed], components: [this.answers]}).then(callback);
     };
 
     this.end = function() {
       this.hasEnded = true;
-      
+
       clearInterval(this.interval);
       if (this.guessed.length > 0) this.embed.spliceFields(this.embed.fields.length-1, 1);
 
@@ -195,16 +213,16 @@ exports.commandHandler = function(interaction, Discord) {
 
       let correct = 0;
       let incorrect = 0;
-      let guesses = [];
+      const guesses = [];
       if (this.guessed.length > 0) {
         for (let i = -1; i < this.data.incorrect_answers.length; i++) {
           let answer = '';
-          let filtered = this.guessed.filter((g) => {
+          const filtered = this.guessed.filter((g) => {
             answer = (i === -1) ? escapeHtml(this.data.correct_answer, true) : escapeHtml(this.data.incorrect_answers[i], true);
-            //console.log(answer);
-	          return g.answer === answer;
+            // console.log(answer);
+            return g.answer === answer;
           });
-          //console.log(filtered);
+          // console.log(filtered);
           if (filtered.length > 0) {
             guesses.push(filtered);
             if (i != -1) {
@@ -217,9 +235,9 @@ exports.commandHandler = function(interaction, Discord) {
             this.embed.addFields([{
               name: answer,
               value: filtered.map((g) => {
-                let placement = this.guessed.findIndex((gu) => gu.id === g.id)+1;
-                let diff = (this.difficulty === 'hard' ? 10 : this.difficulty === 'medium' ? 5 : 1);
-                let multiBi = (this.data.incorrect_answers.length === 1 ? 1 : 2);
+                const placement = this.guessed.findIndex((gu) => gu.id === g.id)+1;
+                const diff = (this.difficulty === 'hard' ? 10 : this.difficulty === 'medium' ? 5 : 1);
+                const multiBi = (this.data.incorrect_answers.length === 1 ? 1 : 2);
                 let score = (diff * multiBi) + 5 + ((this.guessed.length - placement)*2);
                 if (i != -1) score = 0;
                 return `${g.username} in ${g.time}s${score > 0 ? ` (+${score})` : ``}`;
@@ -269,10 +287,9 @@ exports.commandHandler = function(interaction, Discord) {
         this.answers.components[i].setDisabled(true);
       }
 
-      this.update(() => {
-
-        if (this.isRandom) {
-          let answers = this.data.incorrect_answers;
+      this.update(true, () => {
+        if (this.isRandom && !this.isGPT2) {
+          const answers = this.data.incorrect_answers;
           answers.push(this.data.correct_answer);
           const triviaData = {
             'question': this.data.question,
@@ -285,8 +302,8 @@ exports.commandHandler = function(interaction, Discord) {
             'numCorrect': correct,
             'numIncorrect': incorrect,
             'guessed': guesses,
-          }
-  
+          };
+
           request({
             method: 'POST',
             url: process.env.ANDLIN_TRIVIA_LEADERBOARD_ADD_API,
@@ -296,7 +313,7 @@ exports.commandHandler = function(interaction, Discord) {
             if (!err) {
               if (res) console.log(res);
             } else {
-              console.log(triviaData)
+              console.log(triviaData);
               console.log(err);
             }
           });
@@ -333,17 +350,28 @@ exports.commandHandler = function(interaction, Discord) {
     };
   };
 };
-exports.buttonHandler = function(interaction, Discord) {
+exports.buttonHandler = async function(interaction, Discord) {
   const time = new Date();
   const id = interaction.customID.split('|')[1];
   const answer = interaction.customID.split('|')[2];
-  if (triviaGame?.id === id) {
+  if (id === 'p') {
+    await interaction.defer({ephemeral: true});
+    if (answer == 'true') interaction.editReply({content: options.emote.troll.string});
+    else {
+      // let btns = interaction.message.components;
+      // btns[1].components[0].disabled = true;
+      // interaction.message.edit({embeds: interaction.message.embeds, components: btns});
+      interaction.editReply({content: options.emote.ok.string});
+      // const logProblem = await client.channels.resolve(process.env.CHANNEL_BOT_TESTING)
+      // logProblem.send({content: `Problem reported, https://discord.com/channels/${interaction.customID.split('|')[3]}/${interaction.customID.split('|')[4]}/${interaction.customID.split('|')[5]}`});
+    }
+  } else if (triviaGame?.id === id) {
     const found = triviaGame.guessed.find((g) => g.id === interaction.user.id);
     if (!found) {
-      interaction.deferUpdate();
+      await interaction.deferUpdate();
       triviaGame.guess(answer, interaction.user, time);
     } else {
-      interaction.defer({ephemeral: true});
+      await interaction.defer({ephemeral: true});
       interaction.editReply({content: `Already guessed`, ephemeral: true});
     }
   }

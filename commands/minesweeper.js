@@ -4,12 +4,12 @@ exports.slashes = [{
   name: 'minesweeper',
   description: 'Starts a game of minesweeper',
 }];
-exports.commandHandler = function(interaction, Discord) {
-  if (interaction.channel.id === process.env.GENERAL_CHAT_ID) {
-    interaction.defer({ephemeral: true});
-    interaction.editReply({content: `Please use ${client.channels.resolve(process.env.BOT_GAMES_CHAT_ID)}`});
+exports.commandHandler = async function(interaction, Discord) {
+  if (interaction.channel.id === process.env.CHANNEL_GENERAL) {
+    await interaction.defer({ephemeral: true});
+    interaction.editReply({content: `Please use ${client.channels.resolve(process.env.CHANNEL_BOT_GAMES)}`});
   } else {
-    interaction.defer();
+    await interaction.defer();
 
     const id = makeID();
     minesweeperGames[id] = new Minesweeper(id, interaction.user, interaction);
@@ -44,14 +44,14 @@ exports.commandHandler = function(interaction, Discord) {
 
     this.placeMines = function(callback) {
       if (this.mines.length < this.minesOnBoard+1) {
-        let row = Math.floor(Math.random()*this.rows);
-        let col = Math.floor(Math.random()*this.columns);
+        const row = Math.floor(Math.random()*this.rows);
+        const col = Math.floor(Math.random()*this.columns);
         if (this.mines.indexOf(`${row}.${col}`) < 0) this.mines.push(`${row}.${col}`);
         this.placeMines(callback);
       } else {
         callback();
       }
-    }
+    };
 
     this.mineCount = function(pos) {
       let count = 0;
@@ -124,7 +124,7 @@ exports.commandHandler = function(interaction, Discord) {
         }
       }
       this.update(end, true);
-    }
+    };
 
     this.hitZero = function(pos, time) {
       if (this.board[pos[0]].components[pos[1]].emoji?.name != '🚩') {
@@ -134,7 +134,7 @@ exports.commandHandler = function(interaction, Discord) {
           for (let j = -1; j < 2; j++) {
             if (pos[0]+i < this.rows && pos[0]+i >= 0 && pos[1]+j < this.columns && pos[1]+j >= 0 && !(i === 0 && j === 0)) {
               if (this.board[pos[0]+i].components[pos[1]+j].emoji?.name === 'BLANK') {
-                let label = this.board[pos[0]+i].components[pos[1]+j].customID.split('|')[2];
+                const label = this.board[pos[0]+i].components[pos[1]+j].customID.split('|')[2];
                 this.board[pos[0]+i].components[pos[1]+j].setStyle('SECONDARY').setLabel(`${label}`).setEmoji('').setDisabled(true);
                 if (label === '0') {
                   this.hitZero([pos[0]+i, pos[1]+j]);
@@ -176,7 +176,7 @@ exports.commandHandler = function(interaction, Discord) {
     };
   };
 };
-exports.buttonHandler = function(interaction, Discord) {
+exports.buttonHandler = async function(interaction, Discord) {
   const time = new Date();
   const id = interaction.customID.split('|')[1];
   const move = interaction.customID.split('|')[2];
@@ -184,11 +184,11 @@ exports.buttonHandler = function(interaction, Discord) {
   if (minesweeperGames[id]) {
     if (interaction.user.id === minesweeperGames[id].player.id) {
       if (move === 'first') {
-        interaction.defer({ephemeral: true});
+        await ({ephemeral: true});
         interaction.editReply({components: [new Discord.MessageActionRow().addComponents(new Discord.MessageButton({custom_id: `minesweeper|${id}|flag|0.0`, label: 'Flag (off)', style: 'DANGER'}))], ephemeral: true});
         minesweeperGames[id].first(pos, time);
       } else {
-        interaction.deferUpdate();
+        await interaction.deferUpdate();
         if (move === 'flag') {
           interaction.editReply({components: [new Discord.MessageActionRow().addComponents(new Discord.MessageButton({custom_id: `minesweeper|${id}|flag|0.0`, label: `Flag (${!minesweeperGames[id].flagging ? 'on' : 'off'})`, style: `${!minesweeperGames[id].flagging ? 'SUCCESS' : 'DANGER'}`}))], ephemeral: true});
           minesweeperGames[id].flagging = !minesweeperGames[id].flagging;
@@ -209,7 +209,7 @@ exports.buttonHandler = function(interaction, Discord) {
     }
   } else {
     if (move === 'flag') {
-      interaction.editReply({components: [new Discord.MessageActionRow().addComponents(new Discord.MessageButton({custom_id: `null`, label: `Flag (off)`, style: 'DANGER', disabled: true}))], ephemeral: true})
+      interaction.editReply({components: [new Discord.MessageActionRow().addComponents(new Discord.MessageButton({custom_id: `null`, label: `Flag (off)`, style: 'DANGER', disabled: true}))], ephemeral: true});
     }
   }
 };

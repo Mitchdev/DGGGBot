@@ -35,12 +35,12 @@ exports.slashes = [{
     }],
   }],
 }];
-exports.commandHandler = function(interaction, Discord) {
-  if (interaction.channel.id === process.env.GENERAL_CHAT_ID) {
-    interaction.defer({ephemeral: true});
-    interaction.editReply({content: `Please use ${client.channels.resolve(process.env.BOT_GAMES_CHAT_ID)}`});
+exports.commandHandler = async function(interaction, Discord) {
+  if (interaction.channel.id === process.env.CHANNEL_GENERAL) {
+    await interaction.defer({ephemeral: true});
+    interaction.editReply({content: `Please use ${client.channels.resolve(process.env.CHANNEL_BOT_GAMES)}`});
   } else {
-    interaction.defer();
+    await interaction.defer();
     const gameIDs = Object.keys(scrabbleGames);
     const gameID = gameIDs.filter((id) => scrabbleGames[id].players.find((p) => p.user.id === interaction.user.id));
 
@@ -643,36 +643,36 @@ exports.commandHandler = function(interaction, Discord) {
     };
   }
 };
-exports.buttonHandler = function(interaction, Discord) {
+exports.buttonHandler = async function(interaction, Discord) {
   const id = interaction.customID.split('|')[1];
   if (scrabbleGames[id]) {
     if (interaction.customID.split('|')[2] === 'join') {
-      interaction.deferUpdate();
+      await interaction.deferUpdate();
       const index = parseInt(interaction.customID.split('|')[3]);
       if (scrabbleGames[id].colors[index].available) {
         scrabbleGames[id].playerJoin({'user': interaction.user, 'member': interaction.member, 'letters': [], 'color': {}, 'points': 0}, index);
       }
     } else if (interaction.customID.split('|')[2] === 'start') {
-      interaction.deferUpdate();
+      await interaction.deferUpdate();
       if (scrabbleGames[id].owner.user.id === interaction.user.id) {
         scrabbleGames[id].startGame();
       }
     } else if (interaction.customID.split('|')[2] === 'leave') {
-      interaction.deferUpdate();
+      await interaction.deferUpdate();
       const index = scrabbleGames[id].players.findIndex((p) => p.user.id === interaction.user.id);
       if (index >= 0) {
         scrabbleGames[id].playerLeave(index);
       }
     } else if (interaction.customID.split('|')[2] === 'cancel') {
-      interaction.deferUpdate();
+      await interaction.deferUpdate();
       if (scrabbleGames[id].owner.user.id === interaction.user.id) {
         scrabbleGames[id].endGame(true);
       }
     } else if (interaction.customID.split('|')[2] === 'skip') {
       if (scrabbleGames[id].players[scrabbleGames[id].turn].user.id === interaction.user.id) {
-        interaction.defer();
+        await interaction.defer();
         scrabbleGames[id].playerSkip(interaction);
-      } else interaction.deferUpdate();
+      } else await interaction.deferUpdate();
     }
   }
 };

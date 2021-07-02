@@ -25,8 +25,8 @@ exports.slashes = [{
     required: true,
   }],
 }];
-exports.commandHandler = function(interaction, Discord) {
-  interaction.defer();
+exports.commandHandler = async function(interaction, Discord) {
+  await interaction.defer();
 
   const weather = new Discord.MessageEmbed();
   const alerts = new Discord.MessageEmbed().setTitle('Alerts').setColor('RED');
@@ -59,7 +59,7 @@ exports.commandHandler = function(interaction, Discord) {
               const data = JSON.parse(res);
               const localTime = new Date((data.current.dt+data.timezone_offset)*1000);
 
-              let setRiseMargin = 900; // seconds
+              const setRiseMargin = 900; // seconds
               let sunText = '';
               let moonText = '';
               let rainText = '';
@@ -93,16 +93,16 @@ exports.commandHandler = function(interaction, Discord) {
               if (data.daily[0].moon_phase == 0.5) moonText += `\nMoon phase **Full moon**🌕`;
               if (data.daily[0].moon_phase == 0.75) moonText += `\nMoon phase **Last quarter moon**🌗`;
 
-              let notSunSet = ((sunset > setRiseMargin || sunset < -setRiseMargin) && (sunrise > setRiseMargin || sunrise < -setRiseMargin));
-              let sunBothPos = ((sunrise > setRiseMargin && sunset > setRiseMargin) && sunrise < sunset);
-              let sunBothNeg = ((sunrise < -setRiseMargin && sunset < -setRiseMargin) && sunset < sunrise);
-              let sunRisePosSetNeg = ((sunrise > setRiseMargin && sunset < -setRiseMargin));
-              let sunRiseNegSetPos = !((sunrise < -setRiseMargin && sunset > setRiseMargin));
+              const notSunSet = ((sunset > setRiseMargin || sunset < -setRiseMargin) && (sunrise > setRiseMargin || sunrise < -setRiseMargin));
+              const sunBothPos = ((sunrise > setRiseMargin && sunset > setRiseMargin) && sunrise < sunset);
+              const sunBothNeg = ((sunrise < -setRiseMargin && sunset < -setRiseMargin) && sunset < sunrise);
+              const sunRisePosSetNeg = ((sunrise > setRiseMargin && sunset < -setRiseMargin));
+              const sunRiseNegSetPos = !((sunrise < -setRiseMargin && sunset > setRiseMargin));
 
-              let moonBothPos = ((moonrise > setRiseMargin && moonset > setRiseMargin) && moonrise < moonset);
-              let moonBothNeg = ((moonrise < -setRiseMargin && moonset < -setRiseMargin) && moonset < moonrise);
-              let moonRisePosSetNeg = ((moonrise > setRiseMargin && moonset < -setRiseMargin));
-              let moonRiseNegSetPos = !((moonrise < -setRiseMargin && moonset > setRiseMargin));
+              const moonBothPos = ((moonrise > setRiseMargin && moonset > setRiseMargin) && moonrise < moonset);
+              const moonBothNeg = ((moonrise < -setRiseMargin && moonset < -setRiseMargin) && moonset < moonrise);
+              const moonRisePosSetNeg = ((moonrise > setRiseMargin && moonset < -setRiseMargin));
+              const moonRiseNegSetPos = !((moonrise < -setRiseMargin && moonset > setRiseMargin));
 
               let hour = localTime.getHours();
               if (hour > 12) hour = 12 - (hour - 12);
@@ -115,13 +115,13 @@ exports.commandHandler = function(interaction, Discord) {
 
               if (notSunSet && (sunBothPos || sunBothNeg || sunRisePosSetNeg || sunRiseNegSetPos)) {
                 if (moonBothPos || moonBothNeg || moonRisePosSetNeg || moonRiseNegSetPos) {
-                  let colorCloud = parseInt(((80/100)*data.hourly[0].clouds));
+                  const colorCloud = parseInt(((80/100)*data.hourly[0].clouds));
                   // console.log('Night no moon', [colorCloud, colorCloud, colorCloud]);
                   weather.setColor([colorCloud, colorCloud, colorCloud]);
                 } else {
                   // ADD MOON PHASE
                   // HIGHER = MORE LIGHT
-                  let colorMoonCloud = parseInt(((85/100)*data.hourly[0].clouds)+80);
+                  const colorMoonCloud = parseInt(((85/100)*data.hourly[0].clouds)+80);
                   // console.log('Night with moon', [colorMoonCloud, colorMoonCloud, colorMoonCloud]);
                   weather.setColor([colorMoonCloud, colorMoonCloud, colorMoonCloud]);
                 }
@@ -129,13 +129,13 @@ exports.commandHandler = function(interaction, Discord) {
                 if ((sunrise <= setRiseMargin && sunrise >= -setRiseMargin) || (sunset <= setRiseMargin && sunset >= -setRiseMargin)) {
                   // ADD RAIN
                   // MORE RAIN = MORE PINK/PURPLE
-                  let colorCloud = parseInt(80-((80/100)*data.hourly[0].clouds)); // 80-0
-                  let color = parseInt((((110/12)*hourOffset)+50)+(colorCloud/1.5)); // 110-160
+                  const colorCloud = parseInt(80-((80/100)*data.hourly[0].clouds)); // 80-0
+                  const color = parseInt((((110/12)*hourOffset)+50)+(colorCloud/1.5)); // 110-160
                   // console.log('Sun set/rise', [255, color, colorCloud], hourOffset);
                   weather.setColor([255, color, colorCloud]);
                 } else {
-                  let colorCloud = parseInt((255/100)*data.hourly[0].clouds); // 0-255
-                  let color = parseInt(((185/12)*hourOffset)+70+(colorCloud/3.3)); // 131-285(255)
+                  const colorCloud = parseInt((255/100)*data.hourly[0].clouds); // 0-255
+                  const color = parseInt(((185/12)*hourOffset)+70+(colorCloud/3.3)); // 131-285(255)
                   // console.log('Sun', [colorCloud, color > 255 ? 255 : color, 255], hourOffset);
                   weather.setColor([colorCloud, color > 255 ? 255 : color, 255]);
                 }
@@ -194,7 +194,7 @@ exports.commandHandler = function(interaction, Discord) {
                   else alertTime = `Ended ${secondsToDhms(Math.abs(alertEnd))}ago and lasted ${secondsToDhms(alertDuration)}\n`;
 
                   let description = `${alertTime}\n${alert.description}`;
-                  let more = `...\n\nmore via ${alert.sender_name}`;
+                  const more = `...\n\nmore via ${alert.sender_name}`;
                   if (description.length > 500) description = description.slice(0, 500-more.length) + more;
 
                   return {name: `${alert.event}`, value: description};
@@ -212,6 +212,13 @@ exports.commandHandler = function(interaction, Discord) {
     });
   }
 
+  /**
+   * Animates color of embed.
+   * @param {string} type type of animation.
+   * @param {ColorResolvable} originalColor original color of the embed.
+   * @param {int} step animation stepper.
+   * @param {interaction} interaction interaction.
+   */
   function animate(type, originalColor, step, interaction) {
     if (type === 'Thunderstorm') {
       setTimeout(() => {
@@ -219,13 +226,13 @@ exports.commandHandler = function(interaction, Discord) {
         interaction.editReply({embeds: embeds});
         setTimeout(() => {
           embeds[0].setColor(originalColor);
-          interaction.editReply({ embeds: embeds });
+          interaction.editReply({embeds: embeds});
           setTimeout(() => {
             embeds[0].setColor('YELLOW');
-            interaction.editReply({ embeds: embeds });
+            interaction.editReply({embeds: embeds});
             setTimeout(() => {
               embeds[0].setColor(originalColor);
-              interaction.editReply({ embeds: embeds });
+              interaction.editReply({embeds: embeds});
             }, 250);
           }, 100);
         }, 250);

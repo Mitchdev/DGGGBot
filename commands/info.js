@@ -4,8 +4,8 @@ exports.slashes = [{
   name: 'info',
   description: 'Shows uptime and ping',
 }];
-exports.commandHandler = function(interaction) {
-  interaction.defer();
+exports.commandHandler = async function(interaction) {
+  await interaction.defer();
 
   const pre = new Date();
   request({

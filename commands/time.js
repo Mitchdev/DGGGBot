@@ -10,8 +10,8 @@ exports.slashes = [{
     required: true,
   }],
 }];
-exports.commandHandler = function(interaction) {
-  interaction.defer();
+exports.commandHandler = async function(interaction) {
+  await interaction.defer();
 
   request({
     method: 'POST',

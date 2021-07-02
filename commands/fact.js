@@ -4,8 +4,8 @@ exports.slashes = [{
   name: 'fact',
   description: 'Gets a random fact',
 }];
-exports.commandHandler = function(interaction, Discord) {
-  interaction.defer();
+exports.commandHandler = async function(interaction, Discord) {
+  await interaction.defer();
 
   request(process.env.RANDOMFACT_API, function(err, req, res) {
     if (!err) {

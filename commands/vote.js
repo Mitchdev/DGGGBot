@@ -60,8 +60,8 @@ exports.slashes = [{
     required: false,
   }],
 }];
-exports.commandHandler = function(interaction) {
-  interaction.defer();
+exports.commandHandler = async function(interaction) {
+  await interaction.defer();
 
   const question = interaction.options.get('question').value;
   const time = timeToSeconds(interaction.options.get('duration').value);

@@ -46,8 +46,8 @@ exports.slashes = [{
     required: true,
   }],
 }];
-exports.commandHandler = function(interaction) {
-  interaction.defer();
+exports.commandHandler = async function(interaction) {
+  await interaction.defer();
 
   const roleRaw = `ROLE_${interaction.commandName.toUpperCase()}`;
   const roleID = process.env[roleRaw];

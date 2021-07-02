@@ -99,8 +99,8 @@ exports.slashes = [{
     }],
   }],
 }];
-exports.commandHandler = function(interaction) {
-  interaction.defer();
+exports.commandHandler = async function(interaction) {
+  await interaction.defer();
 
   const animalCode = {'dog': 'Dog', 'cat': 'Cat', 'panda': 'Panda', 'red_panda': 'Red Panda', 'fox': 'Fox', 'koala': 'Koala', 'birb': 'Bird', 'racoon': 'Racoon', 'kangaroo': 'Kangaroo', 'elephant': 'Elepant', 'giraffe': 'Giraffe', 'whale': 'Whale'};
   const animalPics = ['ferret', 'dog', 'cat', 'panda', 'red_panda', 'fox', 'koala', 'birb', 'racoon', 'kangaroo', 'whale'];

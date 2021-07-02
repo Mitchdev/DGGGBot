@@ -116,8 +116,8 @@ exports.slashes = [{
     }],
   }],
 }];
-exports.commandHandler = function(interaction, Discord) {
-  interaction.defer();
+exports.commandHandler = async function(interaction, Discord) {
+  await interaction.defer();
 
   if (interaction.options.first().name === 'odds') {
     const foundUser = userHasRole(interaction.user.id, process.env[interaction.options.first().options.get('role').value], true);
@@ -220,12 +220,12 @@ exports.commandHandler = function(interaction, Discord) {
     }
   }
 };
-exports.buttonHandler = function(interaction, Discord) {
+exports.buttonHandler = async function(interaction, Discord) {
   if (interaction.customID === 'acceptduel') {
     const foundData = gambleDuels[interaction.user.id];
     if (foundData) {
       const row = new Discord.MessageActionRow().addComponents(new Discord.MessageButton({custom_id: 'null', label: `${interaction.user.username} accepted`, style: 'SUCCESS', disabled: true}));
-      interaction.update(interaction.message.content, {components: [row]});
+      interaction.update({content: interaction.message.content, components: [row]});
 
       const user1Win = (Math.floor(Math.random() * 2) === 1);
       const winner = user1Win ? foundData.user1 : foundData.user2;
@@ -249,8 +249,8 @@ exports.buttonHandler = function(interaction, Discord) {
   } else if (interaction.customID === 'denyduel') {
     const foundData = gambleDuels[interaction.user.id];
     if (foundData) {
-      const row = new Discord.MessageActionRow().addComponents(new Discord.MessageButton({custom_id: 'null', label: `${interaction.user.username} denined`, style: 'DANGER', disabled: true}));
-      interaction.update(interaction.message.content, {components: [row]});
+      const row = new Discord.MessageActionRow().addComponents(new Discord.MessageButton({custom_id: 'null', label: `${interaction.user.username} denied`, style: 'DANGER', disabled: true}));
+      interaction.update({content: interaction.message.content, components: [row]});
       delete gambleDuels[interaction.user.id];
     }
   }

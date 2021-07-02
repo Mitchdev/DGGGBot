@@ -19,8 +19,8 @@ exports.slashes = [{
     description: 'Reloads all slash commands',
   }],
 }];
-exports.commandHandler = function(interaction) {
-  interaction.defer({ephemeral: true});
+exports.commandHandler = async function(interaction) {
+  await interaction.defer({ephemeral: true});
   if (interaction.options.first().name === 'delete') {
     if (interaction.options.first().options?.get('id')) {
       const clientCommand = client.application.commands.resolve(interaction.options.first().options.get('id').value);

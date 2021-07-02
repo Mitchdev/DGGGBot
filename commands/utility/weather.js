@@ -1,14 +1,14 @@
 exports.commands = {'weather': 'none'};
 exports.buttons = {};
 exports.slashes = [{
-  name: 'location',
-  type: 'STRING',
-  description: 'Location to get weather from',
-  required: true,
-}, {
   name: 'weather',
   description: 'Gets current weather from a location',
   options: [{
+    name: 'location',
+    type: 'STRING',
+    description: 'Location to get weather from',
+    required: true,
+  }, {
     name: 'unit',
     type: 'STRING',
     description: 'Unit of measurement',
@@ -149,7 +149,7 @@ exports.commandHandler = async function(interaction, Discord) {
 
               weather.setThumbnail(`http://openweathermap.org/img/wn/${data.current.weather[0].icon}@2x.png`);
               weather.setTitle(`${coordinatesRes.manicipality != null ? coordinatesRes.manicipality : location}, ${coordinatesRes.countryCode} (Location confidence: ${(coordinatesRes.score < 0) ? '0' : coordinatesRes.score}%)`);
-              weather.setDescription(`Current condition **${data.hourly[0].weather[0].description}** at **${localTime.getHours()}:${localTime.getMinutes()}**`);
+              weather.setDescription(`Current condition **${data.hourly[0].weather[0].description}** at **${localTime.getHours() < 10 ? `0${localTime.getHours()}`: localTime.getHours()}:${localTime.getMinutes() < 10 ? `0${localTime.getMinutes()}`: localTime.getMinutes()}**`);
               weather.addFields([{
                 name: 'Temperature',
                 value: `Current **${data.hourly[0].temp}${units === 'imperial' ? '°F' : (units === 'standard') ? 'K' : '°C'}**`+

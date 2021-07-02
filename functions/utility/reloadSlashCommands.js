@@ -59,7 +59,7 @@ module.exports = function(client) {
         setTimeout(() => {
           commandsSplit.splice(0, 1);
           reloadSlashCommands(commandsSplit, clientCommands);
-        }, 6500*guildCmdCount);
+        }, 7500*guildCmdCount);
       }
     }
   };

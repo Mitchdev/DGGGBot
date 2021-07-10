@@ -87,11 +87,11 @@ exports.commandHandler = async function(interaction, Discord) {
               if (data.daily[0].moon_phase > 0 && data.daily[0].moon_phase < 0.25) moonText += `\nMoon phase **Waxing crescent moon** 🌒`;
               if (data.daily[0].moon_phase > 0.25 && data.daily[0].moon_phase < 0.5) moonText += `\nMoon phase **Waxing gibous moon** 🌔`;
               if (data.daily[0].moon_phase > 0.5 && data.daily[0].moon_phase < 0.75) moonText += `\nMoon phase **Waning gibous moon** 🌖`;
-              if (data.daily[0].moon_phase > 0.75 && data.daily[0].moon_phase < 1) moonText += `\nMoon phase **Waning crescent moon**🌘`;
-              if (data.daily[0].moon_phase == 0 || data.daily[0].moon_phase == 1) moonText += `\nMoon phase **New moon**🌑`;
-              if (data.daily[0].moon_phase == 0.25) moonText += `\nMoon phase **First quarter moon**🌓`;
-              if (data.daily[0].moon_phase == 0.5) moonText += `\nMoon phase **Full moon**🌕`;
-              if (data.daily[0].moon_phase == 0.75) moonText += `\nMoon phase **Last quarter moon**🌗`;
+              if (data.daily[0].moon_phase > 0.75 && data.daily[0].moon_phase < 1) moonText += `\nMoon phase **Waning crescent moon** 🌘`;
+              if (data.daily[0].moon_phase == 0 || data.daily[0].moon_phase == 1) moonText += `\nMoon phase **New moon** 🌑`;
+              if (data.daily[0].moon_phase == 0.25) moonText += `\nMoon phase **First quarter moon** 🌓`;
+              if (data.daily[0].moon_phase == 0.5) moonText += `\nMoon phase **Full moon** 🌕`;
+              if (data.daily[0].moon_phase == 0.75) moonText += `\nMoon phase **Last quarter moon** 🌗`;
 
               const notSunSet = ((sunset > setRiseMargin || sunset < -setRiseMargin) && (sunrise > setRiseMargin || sunrise < -setRiseMargin));
               const sunBothPos = ((sunrise > setRiseMargin && sunset > setRiseMargin) && sunrise < sunset);

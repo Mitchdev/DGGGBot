@@ -1,6 +1,5 @@
 module.exports = function(client) {
   reloadSlashCommands = async function(c, clientCommands = []) {
-    let guildCmdCount = 0;
     let commandsSplit = c;
     let cmds = 0;
 
@@ -18,10 +17,7 @@ module.exports = function(client) {
             next();
           } else if (command.commands[command.slashes[i].name] === 'trusted') {
             const cmd = await client.guilds.resolve(process.env.GUILD_ID).commands.create(command.slashes[i]);
-            cmd.permissions.set({permissions: [
-              {id: process.env.ROLE_MOD, type: 'ROLE', permission: true},
-              {id: process.env.ROLE_TRUSTED, type: 'ROLE', permission: true},
-            ]});
+            cmd.permissions.set({permissions: [{id: process.env.ROLE_TRUSTED, type: 'ROLE', permission: true}]});
             next(cmd);
           } else if (command.commands[command.slashes[i].name] === 'mod') {
             const cmd = await client.guilds.resolve(process.env.GUILD_ID).commands.create(command.slashes[i]);
@@ -52,14 +48,11 @@ module.exports = function(client) {
     function next(cmd) {
       cmds++;
       if (cmd) {
-        guildCmdCount++;
         console.log(`[INIT] Command loaded ${cmd.name}`);
       }
       if (cmds === commandsSplit[0]?.length) {
-        setTimeout(() => {
-          commandsSplit.splice(0, 1);
-          reloadSlashCommands(commandsSplit, clientCommands);
-        }, 7500*guildCmdCount);
+        commandsSplit.splice(0, 1);
+        reloadSlashCommands(commandsSplit, clientCommands);
       }
     }
   };

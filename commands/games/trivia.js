@@ -86,7 +86,7 @@ exports.commandHandler = async function(interaction, Discord) {
     this.interval;
 
     this.loadQuestion = function(callback) {
-      if (this.isRandom && Math.floor(Math.random() * 15) === 1) {
+      if (this.isRandom && Math.floor(Math.random() * 25) === 1) {
         this.isGPT2 = true;
         this.data = triviaGPT2[Math.floor(Math.random()*triviaGPT2.length)];
         this.load(callback);

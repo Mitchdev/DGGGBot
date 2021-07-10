@@ -6,7 +6,13 @@ exports.slashes = [{
 }];
 exports.commandHandler = async function(interaction, Discord) {
   await interaction.defer();
-  interaction.editReply({content: `0m${generateNumber()}r`});
+
+  if (Math.floor(Math.random() * 1000000) === 1) {
+    interaction.editReply({content: `0m3r ${options.emote.strong.string}`});
+  } else {
+    const number = generateNumber();
+    interaction.editReply({content: `0m${number === 3 ? number + generateNumber() : number}r`});
+  }
 
   /**
    * Recursive function that returns a string of numbers.

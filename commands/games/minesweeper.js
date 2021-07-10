@@ -26,8 +26,8 @@ exports.commandHandler = async function(interaction, Discord) {
     this.player = u;
     this.interaction = i;
     this.startTime = new Date();
-    this.didFlag = false; // 🚩
-    this.flagging = false; // 🚩
+    this.didFlag = false;
+    this.flagging = false;
     this.minesOnBoard = 5;
     this.rows = 5;
     this.columns = 5;
@@ -84,7 +84,7 @@ exports.commandHandler = async function(interaction, Discord) {
             this.board[i].components[j].setDisabled(true);
           }
         }
-        this.interaction.editReply({content: `**Minesweeper (${this.minesOnBoard} Mines)**\n${didWin ? 'Won' : 'Lost'} in ${secondsToDhms((endTime - this.startTime)/1000)}`, components: this.board});
+        this.interaction.editReply({content: `**Minesweeper (${this.minesOnBoard} Mines)**\n${didWin ? 'Won' : 'Lost'} in ${secondsToDhms((endTime - this.startTime)/1000)} with ${this.moves.length} moves (inc flag)`, components: this.board});
         delete minesweeperGames[this.id];
       } else {
         this.interaction.editReply({content: `**Minesweeper (${this.minesOnBoard} Mines)**`, components: this.board});
@@ -129,13 +129,13 @@ exports.commandHandler = async function(interaction, Discord) {
     this.hitZero = function(pos, time) {
       if (this.board[pos[0]].components[pos[1]].emoji?.name != '🚩') {
         this.moves.push({pos: pos, type: '0', time: (time - this.startTime)});
-        this.board[pos[0]].components[pos[1]].setStyle('SECONDARY').setLabel('0').setEmoji('').setDisabled(true);
+        this.board[pos[0]].components[pos[1]].setStyle('SECONDARY').setLabel('').setEmoji('⬛').setDisabled(true);
         for (let i = -1; i < 2; i++) {
           for (let j = -1; j < 2; j++) {
             if (pos[0]+i < this.rows && pos[0]+i >= 0 && pos[1]+j < this.columns && pos[1]+j >= 0 && !(i === 0 && j === 0)) {
               if (this.board[pos[0]+i].components[pos[1]+j].emoji?.name === 'BLANK') {
                 const label = this.board[pos[0]+i].components[pos[1]+j].customID.split('|')[2];
-                this.board[pos[0]+i].components[pos[1]+j].setStyle('SECONDARY').setLabel(`${label}`).setEmoji('').setDisabled(true);
+                this.board[pos[0]+i].components[pos[1]+j].setStyle('SECONDARY').setLabel('').setEmoji(`${options.voteReactions[parseInt(label)-1]}`).setDisabled(true);
                 if (label === '0') {
                   this.hitZero([pos[0]+i, pos[1]+j]);
                 }
@@ -150,7 +150,7 @@ exports.commandHandler = async function(interaction, Discord) {
     this.hit = function(pos, label, time) {
       if (this.board[pos[0]].components[pos[1]].emoji?.name != '🚩') {
         this.moves.push({pos: pos, type: label, time: (time - this.startTime)});
-        this.board[pos[0]].components[pos[1]].setStyle('SECONDARY').setLabel(`${label}`).setEmoji('').setDisabled(true);
+        this.board[pos[0]].components[pos[1]].setStyle('SECONDARY').setLabel('').setEmoji(`${options.voteReactions[parseInt(label)-1]}`).setDisabled(true);
         this.checkWin();
       }
     };
@@ -184,8 +184,8 @@ exports.buttonHandler = async function(interaction, Discord) {
   if (minesweeperGames[id]) {
     if (interaction.user.id === minesweeperGames[id].player.id) {
       if (move === 'first') {
-        await ({ephemeral: true});
-        interaction.editReply({components: [new Discord.MessageActionRow().addComponents(new Discord.MessageButton({custom_id: `minesweeper|${id}|flag|0.0`, label: 'Flag (off)', style: 'DANGER'}))], ephemeral: true});
+        await interaction.defer({ephemeral: true});
+        await interaction.editReply({components: [new Discord.MessageActionRow().addComponents(new Discord.MessageButton({custom_id: `minesweeper|${id}|flag|0.0`, label: 'Flag (off)', style: 'DANGER'}))], ephemeral: true});
         minesweeperGames[id].first(pos, time);
       } else {
         await interaction.deferUpdate();
@@ -209,6 +209,7 @@ exports.buttonHandler = async function(interaction, Discord) {
     }
   } else {
     if (move === 'flag') {
+      await interaction.deferUpdate({ephemeral: true});
       interaction.editReply({components: [new Discord.MessageActionRow().addComponents(new Discord.MessageButton({custom_id: `null`, label: `Flag (off)`, style: 'DANGER', disabled: true}))], ephemeral: true});
     }
   }

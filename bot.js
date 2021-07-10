@@ -28,14 +28,13 @@ client.on('ready', async () => {
     }, 5000);
   }).catch(console.error);
 
-  console.log(`[INIT] Bot online`);
+  console.log('[INIT] Bot Online');
   client.users.fetch(process.env.DEV_ID).then((devLog) => {
-    devLog.send({content: 'Bot restarted!'});
     const errorLog = fs.readFileSync(dpath.join(__srcdir, '../../.pm2/logs/bot-error.log'), {encoding: 'utf8'}).split('\n');
     const errorTimestamp = errorLog[errorLog.length-2].match(/(\d\d\d\d\-\d\d\-\d\d\T\d\d\:\d\d\:)/g);
     if (errorTimestamp) {
       const lastestError = errorLog.filter((line) => line.startsWith(errorTimestamp[0])).join('\n');
-      devLog.send({content: 'Latest Error:'});
+      devLog.send({content: '**Restart** Latest Error:'});
       const errSplit = Util.splitMessage(lastestError);
       for (let i = 0; i < errSplit.length; i++) devLog.send({content: `\`\`\`js\n${errSplit[i]}\`\`\``});
     }
@@ -44,7 +43,7 @@ client.on('ready', async () => {
     const outTimestamp = outLog[outLog.length-2].match(/(\d\d\d\d\-\d\d\-\d\d\T\d\d\:\d\d\:)/g);
     if (outTimestamp) {
       const lastestOut = outLog.filter((line) => line.startsWith(outTimestamp[0])).join('\n');
-      devLog.send({content: 'Latest Out:'});
+      devLog.send({content: '**Restart** Latest Out:'});
       const outSplit = Util.splitMessage(lastestOut);
       for (let i = 0; i < outSplit.length; i++) devLog.send({content: `\`\`\`js\n${outSplit[i]}\`\`\``});
     }

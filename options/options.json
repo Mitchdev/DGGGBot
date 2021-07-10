@@ -39,6 +39,10 @@
     "yeelaugh": {
       "string": "<:YEELaugh:787143166318346240>",
       "id": "787143166318346240"
+    },
+    "strong": {
+      "string": "<:FeelsStrongMan:814836449886076999>",
+      "id": "814836449886076999"
     }
   },
   "voteReactions": [

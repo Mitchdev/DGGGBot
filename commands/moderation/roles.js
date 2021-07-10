@@ -71,9 +71,9 @@ exports.commandHandler = async function(interaction, Discord) {
     updateRoles();
   } else if (interaction.options.first().name === 'add') {
     const role = {
-      'name': interaction.options.get('name').value,
-      'type': interaction.options.get('category').value,
-      'role': interaction.options.get('role').value,
+      'name': interaction.options.first().options.get('name').value,
+      'type': interaction.options.first().options.get('category').value,
+      'role': interaction.options.first().options.get('role').value,
       'reaction': {'type': '', 'name': '', 'id': ''},
     };
 

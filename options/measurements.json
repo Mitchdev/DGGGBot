@@ -77,6 +77,617 @@
 		}
 	}]
 }, {
+  "name": "Currency",
+  "data": [{
+    "full": "United Arab Emirates dirham",
+    "short": "AED",
+    "symbol": "د.إ"
+  }, {
+    "full": "Afghan afghani",
+    "short": "AFN",
+    "symbol": "؋"
+  }, {
+    "full": "Albanian lek",
+    "short": "ALL",
+    "symbol": "L"
+  }, {
+    "full": "Armenian dram",
+    "short": "AMD",
+    "symbol": "֏"
+  }, {
+    "full": "Netherlands Antillean guilder",
+    "short": "ANG",
+    "symbol": "ƒ"
+  }, {
+    "full": "Angolan kwanza",
+    "short": "AOA",
+    "symbol": "Kz"
+  }, {
+    "full": "Argentine peso",
+    "short": "ARS",
+    "symbol": "$"
+  }, {
+    "full": "Australian dollar",
+    "short": "AUD",
+    "symbol": "$"
+  }, {
+    "full": "Aruban florin",
+    "short": "AWG",
+    "symbol": "ƒ"
+  }, {
+    "full": "Azerbaijani manat",
+    "short": "AZN",
+    "symbol": "₼"
+  }, {
+    "full": "Bosnia convertible mark",
+    "short": "BAM",
+    "symbol": "КМ"
+  }, {
+    "full": "Barbadian dollar",
+    "short": "BBD",
+    "symbol": "$"
+  }, {
+    "full": "Bitcoin Cash",
+    "short": "BCH",
+    "symbol": "BCH"
+  }, {
+    "full": "Bangladeshi taka",
+    "short": "BDT",
+    "symbol": "৳"
+  }, {
+    "full": "Bulgarian lev",
+    "short": "BGN",
+    "symbol": "лв."
+  }, {
+    "full": "Bahraini dinar",
+    "short": "BHD",
+    "symbol": ".د.ب"
+  }, {
+    "full": "Burundian franc",
+    "short": "BIF",
+    "symbol": "Fr"
+  }, {
+    "full": "Bermudian dollar",
+    "short": "BMD",
+    "symbol": "$"
+  }, {
+    "full": "Brunei dollar",
+    "short": "BND",
+    "symbol": "$"
+  }, {
+    "full": "Bolivian boliviano",
+    "short": "BOB",
+    "symbol": "Bs."
+  }, {
+    "full": "Brazilian real",
+    "short": "BRL",
+    "symbol": "R$"
+  }, {
+    "full": "Bahamian dollar",
+    "short": "BSD",
+    "symbol": "$"
+  }, {
+    "full": "Bitcoin",
+    "short": "BTC",
+    "symbol": "₿"
+  }, {
+    "full": "Bitcoin Gold",
+    "short": "BTG",
+    "symbol": "BTG"
+  }, {
+    "full": "Botswana pula",
+    "short": "BWP",
+    "symbol": "P"
+  }, {
+    "full": "Belize dollar",
+    "short": "BZD",
+    "symbol": "$"
+  }, {
+    "full": "Canadian dollar",
+    "short": "CAD",
+    "symbol": "$"
+  }, {
+    "full": "Congolese franc",
+    "short": "CDF",
+    "symbol": "Fr"
+  }, {
+    "full": "Swiss franc",
+    "short": "CHF",
+    "symbol": "Fr."
+  }, {
+    "full": "Chilean peso",
+    "short": "CLP",
+    "symbol": "$"
+  }, {
+    "full": "Chinese Yuan Renminbi",
+    "short": "CNH",
+    "symbol": "¥"
+  }, {
+    "full": "Chinese yuan",
+    "short": "CYN",
+    "symbol": "¥"
+  }, {
+    "full": "Colombian peso",
+    "short": "COP",
+    "symbol": "$"
+  }, {
+    "full": "Costa Rican colón",
+    "short": "CRC",
+    "symbol": "₡"
+  }, {
+    "full": "Cuban Convertible Peso",
+    "short": "CUC",
+    "symbol": "$"
+  }, {
+    "full": "Cuban peso",
+    "short": "CUP",
+    "symbol": "$"
+  }, {
+    "full": "Cape Verdean escudo",
+    "short": "CVE",
+    "symbol": "$"
+  }, {
+    "full": "Czech koruna",
+    "short": "CZK",
+    "symbol": "Kč"
+  }, {
+    "full": "Dash",
+    "short": "DASH",
+    "symbol": "DASH"
+  }, {
+    "full": "Djiboutian franc",
+    "short": "DJF",
+    "symbol": "Fr"
+  }, {
+    "full": "Danish krone",
+    "short": "DKK",
+    "symbol": "kr"
+  }, {
+    "full": "Dominican peso",
+    "short": "DOP",
+    "symbol": "RD$"
+  }, {
+    "full": "Algerian dinar",
+    "short": "DZD",
+    "symbol": "د.ج"
+  }, {
+    "full": "Egyptian pound",
+    "short": "EGP",
+    "symbol": "£"
+  }, {
+    "full": "EOS.IO",
+    "short": "EOS",
+    "symbol": "EOS"
+  }, {
+    "full": "Ethiopian birr",
+    "short": "ETB",
+    "symbol": "Br"
+  }, {
+    "full": "Ethereum",
+    "short": "ETH",
+    "symbol": "ETH"
+  }, {
+    "full": "Euro",
+    "short": "EUR",
+    "symbol": "€"
+  }, {
+    "full": "Fijian dollar",
+    "short": "FJD",
+    "symbol": "$"
+  }, {
+    "full": "British pound",
+    "short": "GBP",
+    "symbol": "£"
+  }, {
+    "full": "Georgian lari",
+    "short": "GEL",
+    "symbol": "₾"
+  }, {
+    "full": "Ghanaian cedi",
+    "short": "GHS",
+    "symbol": "₵"
+  }, {
+    "full": "Gibraltar pound",
+    "short": "GIP",
+    "symbol": "£"
+  }, {
+    "full": "Gambian dalasi",
+    "short": "GMD",
+    "symbol": "D"
+  }, {
+    "full": "Guinean franc",
+    "short": "GNF",
+    "symbol": "Fr"
+  }, {
+    "full": "Guatemalan quetzal",
+    "short": "GTQ",
+    "symbol": "Q"
+  }, {
+    "full": "Guyanese dollar",
+    "short": "GYD",
+    "symbol": "$"
+  }, {
+    "full": "Hong Kong dollar",
+    "short": "HKD",
+    "symbol": "$"
+  }, {
+    "full": "Honduran lempira",
+    "short": "HNL",
+    "symbol": "L"
+  }, {
+    "full": "Croatian kuna",
+    "short": "HRK",
+    "symbol": "kn"
+  }, {
+    "full": "Haitian gourde",
+    "short": "HTG",
+    "symbol": "G"
+  }, {
+    "full": "Hungarian forint",
+    "short": "HUF",
+    "symbol": "Ft"
+  }, {
+    "full": "Indonesian rupiah",
+    "short": "IDR",
+    "symbol": "Rp"
+  }, {
+    "full": "Israeli new shekel",
+    "short": "ILS",
+    "symbol": "₪"
+  }, {
+    "full": "Indian rupee",
+    "short": "INR",
+    "symbol": "₹"
+  }, {
+    "full": "Iraqi dinar",
+    "short": "IQD",
+    "symbol": "ع.د"
+  }, {
+    "full": "Iranian rial",
+    "short": "IRR",
+    "symbol": "﷼"
+  }, {
+    "full": "Icelandic króna",
+    "short": "ISK",
+    "symbol": "kr"
+  }, {
+    "full": "Jamaican dollar",
+    "short": "JMD",
+    "symbol": "$"
+  }, {
+    "full": "Jordanian dinar",
+    "short": "JOD",
+    "symbol": "د.ا"
+  }, {
+    "full": "Japanese yen",
+    "short": "JPY",
+    "symbol": "¥"
+  }, {
+    "full": "Kenyan shilling",
+    "short": "KES",
+    "symbol": "Sh"
+  }, {
+    "full": "Kyrgyzstani som",
+    "short": "KGS",
+    "symbol": "с"
+  }, {
+    "full": "Cambodian riel",
+    "short": "KHR",
+    "symbol": "៛"
+  }, {
+    "full": "Comorian franc",
+    "short": "KMF",
+    "symbol": "Fr"
+  }, {
+    "full": "South Korean won",
+    "short": "KRW",
+    "symbol": "₩"
+  }, {
+    "full": "Kuwaiti dinar",
+    "short": "KWD",
+    "symbol": "د.ك"
+  }, {
+    "full": "Cayman Islands dollar",
+    "short": "KYD",
+    "symbol": "$"
+  }, {
+    "full": "Kazakhstani tenge",
+    "short": "KZT",
+    "symbol": "₸"
+  }, {
+    "full": "Lao kip",
+    "short": "LAK",
+    "symbol": "₭"
+  }, {
+    "full": "Lebanese pound",
+    "short": "LBP",
+    "symbol": "ل.ل"
+  }, {
+    "full": "Sri Lankan rupee",
+    "short": "LKR",
+    "symbol": "Rs"
+  }, {
+    "full": "Liberian dollar",
+    "short": "LRD",
+    "symbol": "$"
+  }, {
+    "full": "Lesotho loti",
+    "short": "LSL",
+    "symbol": "L"
+  }, {
+    "full": "Litecoin",
+    "short": "LTC",
+    "symbol": "LTC"
+  }, {
+    "full": "Libyan dinar",
+    "short": "LYD",
+    "symbol": "ل.د"
+  }, {
+    "full": "Moroccan dirham",
+    "short": "MAD",
+    "symbol": "د. م."
+  }, {
+    "full": "Moldovan leu",
+    "short": "MDL",
+    "symbol": "L"
+  }, {
+    "full": "Macedonian denar",
+    "short": "MKD",
+    "symbol": "ден"
+  }, {
+    "full": "Burmese kyat",
+    "short": "MMK",
+    "symbol": "Ks"
+  }, {
+    "full": "Macanese pataca",
+    "short": "MOP",
+    "symbol": "MOP$"
+  }, {
+    "full": "Mauritian rupee",
+    "short": "MUR",
+    "symbol": "Rs"
+  }, {
+    "full": "Maldivian rufiyaa",
+    "short": "MVR",
+    "symbol": ".ރ"
+  }, {
+    "full": "Malawian kwacha",
+    "short": "MWK",
+    "symbol": "MK"
+  }, {
+    "full": "Mexican peso",
+    "short": "MXN",
+    "symbol": "$"
+  }, {
+    "full": "Malaysian ringgit",
+    "short": "MYR",
+    "symbol": "RM"
+  }, {
+    "full": "Mozambican metical",
+    "short": "MZN",
+    "symbol": "MT"
+  }, {
+    "full": "Namibian dollar",
+    "short": "NAD",
+    "symbol": "$"
+  }, {
+    "full": "Nigerian naira",
+    "short": "NGN",
+    "symbol": "₦"
+  }, {
+    "full": "Nicaraguan córdoba",
+    "short": "NIO",
+    "symbol": "C$"
+  }, {
+    "full": "Norwegian krone",
+    "short": "NOK",
+    "symbol": "kr"
+  }, {
+    "full": "Nepalese rupee",
+    "short": "NPR",
+    "symbol": "रू"
+  }, {
+    "full": "New Zealand dollar",
+    "short": "NZD",
+    "symbol": "$"
+  }, {
+    "full": "Omani rial",
+    "short": "OMR",
+    "symbol": "ر.ع."
+  }, {
+    "full": "Panamanian balboa",
+    "short": "PAB",
+    "symbol": "B/."
+  }, {
+    "full": "Peruvian sol",
+    "short": "PEN",
+    "symbol": "S/."
+  }, {
+    "full": "Papua New Guinean kina",
+    "short": "PGK",
+    "symbol": "K"
+  }, {
+    "full": "Philippine peso",
+    "short": "PHP",
+    "symbol": "₱"
+  }, {
+    "full": "Pakistani rupee",
+    "short": "PKR",
+    "symbol": "Rs"
+  }, {
+    "full": "Polish złoty",
+    "short": "PLN",
+    "symbol": "zł"
+  }, {
+    "full": "Paraguayan guaraní",
+    "short": "PYG",
+    "symbol": "₲"
+  }, {
+    "full": "Qatari riyal",
+    "short": "QAR",
+    "symbol": "ر.ق"
+  }, {
+    "full": "Romanian leu",
+    "short": "RON",
+    "symbol": "lei"
+  }, {
+    "full": "Serbian dinar",
+    "short": "RSD",
+    "symbol": "дин."
+  }, {
+    "full": "Russian ruble",
+    "short": "RUB",
+    "symbol": "₽"
+  }, {
+    "full": "Rwandan franc",
+    "short": "RWF",
+    "symbol": "Fr"
+  }, {
+    "full": "Saudi riyal",
+    "short": "SAR",
+    "symbol": "﷼"
+  }, {
+    "full": "Solomon Islands dollar",
+    "short": "SBD",
+    "symbol": "$"
+  }, {
+    "full": "Seychellois rupee",
+    "short": "SCR",
+    "symbol": "Rs"
+  }, {
+    "full": "Sudanese pound",
+    "short": "SDG",
+    "symbol": "ج.س."
+  }, {
+    "full": "Swedish krona",
+    "short": "SEK",
+    "symbol": "kr"
+  }, {
+    "full": "Singapore dollar",
+    "short": "SGD",
+    "symbol": "$"
+  }, {
+    "full": "Sierra Leonean leone",
+    "short": "SLL",
+    "symbol": "Le"
+  }, {
+    "full": "Somali shilling",
+    "short": "SOS",
+    "symbol": "Sh"
+  }, {
+    "full": "Surinamese dollar",
+    "short": "SRD",
+    "symbol": "$"
+  }, {
+    "full": "Salvadoran colón",
+    "short": "SVC",
+    "symbol": "₡"
+  }, {
+    "full": "Swazi lilangeni",
+    "short": "SZL",
+    "symbol": "L"
+  }, {
+    "full": "Thai baht",
+    "short": "THB",
+    "symbol": "฿"
+  }, {
+    "full": "Tajikistani somoni",
+    "short": "TJS",
+    "symbol": "c."
+  }, {
+    "full": "Turkmenistan manat",
+    "short": "TMT",
+    "symbol": "m."
+  }, {
+    "full": "Tunisian dinar",
+    "short": "TND",
+    "symbol": "د.ت"
+  }, {
+    "full": "Tongan paʻanga",
+    "short": "TOP",
+    "symbol": "T$"
+  }, {
+    "full": "Turkish lira",
+    "short": "TRY",
+    "symbol": "₺"
+  }, {
+    "full": "Trinidad and Tobago dollar",
+    "short": "TTD",
+    "symbol": "$"
+  }, {
+    "full": "New Taiwan dollar",
+    "short": "TWD",
+    "symbol": "$"
+  }, {
+    "full": "Tanzanian shilling",
+    "short": "TZS",
+    "symbol": "Sh"
+  }, {
+    "full": "Ukrainian hryvnia",
+    "short": "UAH",
+    "symbol": "₴"
+  }, {
+    "full": "Ugandan shilling",
+    "short": "UGX",
+    "symbol": "Sh"
+  }, {
+    "full": "United States dollar",
+    "short": "USD",
+    "symbol": "$"
+  }, {
+    "full": "Uruguayan peso",
+    "short": "UYU",
+    "symbol": "$"
+  }, {
+    "full": "Uzbekistani soʻm",
+    "short": "UZS",
+    "symbol": "Sʻ"
+  }, {
+    "full": "VND",
+    "short": "₫",
+    "symbol": "Vietnamese đồng"
+  }, {
+    "full": "Central African CFA franc",
+    "short": "XAF",
+    "symbol": "Fr"
+  }, {
+    "full": "Silver ounce",
+    "short": "XAG",
+    "symbol": "Ounce"
+  }, {
+    "full": "Gold ounce",
+    "short": "XAU",
+    "symbol": "Ounce"
+  }, {
+    "full": "Eastern Caribbean dollar",
+    "short": "XCD",
+    "symbol": "$"
+  }, {
+    "full": "Stellar",
+    "short": "XLM",
+    "symbol": "*"
+  }, {
+    "full": "West African CFA franc",
+    "short": "XOF",
+    "symbol": "Fr"
+  }, {
+    "full": "Ripple",
+    "short": "XRP",
+    "symbol": "✕"
+  }, {
+    "full": "Yemeni rial",
+    "short": "YER",
+    "symbol": "﷼"
+  }, {
+    "full": "South African rand",
+    "short": "ZAR",
+    "symbol": "R"
+  }, {
+    "full": "Zambian kwacha",
+    "short": "ZMW",
+    "symbol": "ZK"
+  }]
+}, {
 	"name": "Digital Storage",
 	"data": [{
 		"full": "Bit",

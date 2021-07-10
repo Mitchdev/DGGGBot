@@ -41,7 +41,7 @@ exports.slashes = [{
     description: 'Shows current interval or updates the interval for the feed in the current channel',
     type: 'SUB_COMMAND',
     options: [{
-      name: 'interval',
+      name: 'seconds',
       type: 'INTEGER',
       description: 'How often posts get shown in seconds',
       required: false,
@@ -80,10 +80,10 @@ exports.commandHandler = async function(interaction) {
         updateFeed();
       } else interaction.editReply({content: 'Subreddit not in feed.'});
     } else if (command.name === 'interval') {
-      if (command.options.length > 0) {
-        if (command.options.get('interval').value > 10) {
-          interaction.editReply({content: `Updated interval from ${feeds.list[feedIndex].interval} seconds to ${command.options.get('interval').value} seconds.`});
-          feeds.list[feedIndex].interval = command.options.get('interval').value;
+      if (command.options.get('seconds')) {
+        if (command.options.get('seconds').value > 10) {
+          interaction.editReply({content: `Updated interval from ${feeds.list[feedIndex].interval} seconds to ${command.options.get('seconds').value} seconds.`});
+          feeds.list[feedIndex].interval = command.options.get('seconds').value;
           clearInterval(feedTimers[feeds.list[feedIndex].channel]);
           feedTimer(feedIndex);
           updateFeed();

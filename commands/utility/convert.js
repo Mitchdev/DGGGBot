@@ -49,38 +49,85 @@ exports.commandHandler = async function(interaction, Discord) {
     const embed = new Discord.MessageEmbed();
     let complete = false;
     for (let i = 0; i < measurements.length; i++) {
+      let value = parseFloat(interaction.options.get('amount').value);
       const source = measurements[i].data.find((unit) => {
-        return (unit.full.toLowerCase() === interaction.options.get('source').value.toLowerCase() || unit.short === interaction.options.get('source').value || unit.multi.toLowerCase() === interaction.options.get('source').value.toLowerCase());
+        if (unit.full.toLowerCase() === interaction.options.get('source').value.toLowerCase() || unit.short.toLowerCase() === interaction.options.get('source').value.toLowerCase()) return true;
+        else if (unit.multi) {
+          if (unit.multi?.toLowerCase() === interaction.options.get('source').value.toLowerCase()) return true;
+        }
       });
       const target = measurements[i].data.find((unit) => {
-        return (unit.full.toLowerCase() === interaction.options.get('target').value.toLowerCase() || unit.short === interaction.options.get('target').value || unit.multi.toLowerCase() === interaction.options.get('target').value.toLowerCase());
+        if (unit.full.toLowerCase() === interaction.options.get('target').value.toLowerCase() || unit.short.toLowerCase() === interaction.options.get('target').value.toLowerCase()) return true;
+        else if (unit.multi) {
+          if (unit.multi?.toLowerCase() === interaction.options.get('target').value.toLowerCase()) return true;
+        }
       });
-      let value = parseFloat(interaction.options.get('amount').value);
       if (value) {
         if (source) {
           if (target) {
-            if (!source.base) value = convertValue(source.conversion.source, source.conversion.value, value);
-            if (!target.base) value = convertValue(target.conversion.target, target.conversion.value, value);
-            embed.setTitle(`${measurements[i].name} Conversion`);
-            embed.addFields([{
-              name: `${(value > 1 || value < -1) ? source.multi : source.full} (${source.short})`,
-              value: interaction.options.get('amount').value,
-              inline: true,
-            }, {name: '\u200B', value: '**=**', inline: true}, {
-              name: `${(value > 1 || value < -1) ? target.multi : target.full} (${target.short})`,
-              value: (Math.round(value * 1000) / 1000).toString(),
-              inline: true,
-            }]);
-            interaction.editReply({embeds: [embed]});
-            complete = true;
-            break;
+            if (measurements[i].name === 'Currency') {
+              convertCurrency(source, target, value, embed);
+              complete = true;
+              break;
+            } else {
+              if (!source.base) value = convertValue(source.conversion.source, source.conversion.value, value);
+              if (!target.base) value = convertValue(target.conversion.target, target.conversion.value, value);
+              embed.setTitle(`${measurements[i].name} Conversion`);
+              embed.addFields([{
+                name: `${(value > 1 || value < -1) ? source.multi : source.full} (${source.short})`,
+                value: interaction.options.get('amount').value,
+                inline: true,
+              }, {name: '\u200B', value: '**=**', inline: true}, {
+                name: `${(value > 1 || value < -1) ? target.multi : target.full} (${target.short})`,
+                value: (Math.round(value * 1000) / 1000).toString(),
+                inline: true,
+              }]);
+              interaction.editReply({embeds: [embed]});
+              complete = true;
+              break;
+            }
           }
         }
       }
     }
-
     if (!complete) interaction.editReply({content: 'Could not convert'});
   }
+
+  /**
+   * Converts currency
+   * @param {object} source of conversion.
+   * @param {object} target of conversion.
+   * @param {number} value original value.
+   * @param {Embed} embed message embed.
+   */
+  function convertCurrency(source, target, value, embed) {
+    request(process.env.CURRENCY_API, function(err, req, res) {
+      if (!err) {
+        const rates = JSON.parse(res).rates;
+        if (rates[source.short] && rates[target.short]) {
+          const USD = value / rates[source.short];
+          const REQ = USD * rates[target.short];
+          embed.addFields([{
+            name: `${source.full} (${source.short})`,
+            value: source.symbol+interaction.options.get('amount').value,
+            inline: true,
+          }, {name: '\u200B', value: '**=**', inline: true}, {
+            name: `${target.full} (${target.short})`,
+            value: target.symbol+REQ.toFixed(2),
+            inline: true,
+          }]);
+          interaction.editReply({embeds: [embed]});
+        } else {
+          let content = ``;
+          if (!rates[source.short] && !rates[target.short]) content = `Could not find ${interaction.options.get('source').value} or ${interaction.options.get('target').value}`;
+          else if (!rates[source.short]) content = `Could not find ${interaction.options.get('source').value}`;
+          else content = `Could not find ${interaction.options.get('target').value}`;
+          interaction.editReply({content: content});
+        }
+      }
+    });
+  }
+
   /**
    * Converts value by type and conversionValue
    * @param {string} type of conversion.

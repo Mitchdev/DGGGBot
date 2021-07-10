@@ -8,7 +8,7 @@ module.exports = function(client) {
       }
       if (!noComment) message.channel.send({content: `\`\`\`xl\n${clean(evaled)}\n\`\`\``});
     } catch (err) {
-      message.channel.send({content: `\`ERROR\` \`\`\`xl\n${errSplit[i]}\n\`\`\``});
+      message.channel.send({content: `\`ERROR\` \`\`\`xl\n${err}\n\`\`\``});
     }
   };
 };

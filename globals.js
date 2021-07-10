@@ -34,6 +34,7 @@ module.exports = function(conf) {
   options = conf.config;
   commands = conf.commands;
 
+  suggestions = JSON.parse(fs.readFileSync(dpath.join(__srcdir, './options/suggestions.json')));
   colorNames = JSON.parse(fs.readFileSync(dpath.join(__srcdir, './options/colorNames.json')));
   customCommands = JSON.parse(fs.readFileSync(dpath.join(__srcdir, './options/customCommands.json')));
   roles = JSON.parse(fs.readFileSync(dpath.join(__srcdir, './options/roles.json')));

@@ -28,14 +28,14 @@ exports.commandHandler = async function(interaction, Discord) {
     const id = makeID();
     const channel = await client.channels.resolve((interaction.options.get('type').value === 'Bot') ? process.env.CHANNEL_BOT_TESTING : process.env.CHANNEL_LOGS);
     const buttons = [new Discord.MessageActionRow().addComponents([
-      new Discord.MessageButton({customID: `suggest|bl|${interaction.user.id}`, label: 'Blacklist User', style: 'DANGER'}),
-      new Discord.MessageButton({customID: `suggest|delmute|${interaction.user.id}|${interaction.user.username}`, label: 'Delete & Mute (10m)', style: 'DANGER'}),
-      new Discord.MessageButton({customID: `suggest|del|${interaction.user.id}`, label: 'Delete', style: 'DANGER'}),
+      new Discord.MessageButton({customId: `suggest|bl|${interaction.user.id}`, label: 'Blacklist User', style: 'DANGER'}),
+      new Discord.MessageButton({customId: `suggest|delmute|${interaction.user.id}|${interaction.user.username}`, label: 'Delete & Mute (10m)', style: 'DANGER'}),
+      new Discord.MessageButton({customId: `suggest|del|${interaction.user.id}`, label: 'Delete', style: 'DANGER'}),
     ]), new Discord.MessageActionRow().addComponents([
-      new Discord.MessageButton({customID: `suggest|th|${interaction.user.id}|${id}`, label: 'Create Thread', style: 'SUCCESS', disabled: true}),
-      new Discord.MessageButton({customID: `suggest|inp`, label: 'In Progress', style: 'SUCCESS'}),
-      new Discord.MessageButton({customID: `suggest|com`, label: 'Complete', style: 'SUCCESS'}),
-      new Discord.MessageButton({customID: `suggest|den`, label: 'Denied', style: 'DANGER'}),
+      new Discord.MessageButton({customId: `suggest|th|${interaction.user.id}|${id}`, label: 'Create Thread', style: 'SUCCESS', disabled: true}),
+      new Discord.MessageButton({customId: `suggest|inp`, label: 'In Progress', style: 'SUCCESS'}),
+      new Discord.MessageButton({customId: `suggest|com`, label: 'Complete', style: 'SUCCESS'}),
+      new Discord.MessageButton({customId: `suggest|den`, label: 'Denied', style: 'DANGER'}),
     ])];
     const embed = new Discord.MessageEmbed().setTitle(`${interaction.options.get('type').value} Suggestion - Pending`).setDescription(interaction.options.get('suggestion').value).setTimestamp().addFields([{
       name: 'User Username',
@@ -54,22 +54,22 @@ exports.commandHandler = async function(interaction, Discord) {
     updateSuggestions();
     channel.send({embeds: [embed], components: buttons}).then(() => interaction.editReply({content: `Thank you for your ${interaction.options.get('type').value} suggestion.`}));
   } else {
-    interaction.editReply({content: `You\'re blacklist from suggesting.\nPlease message ${client.users.resolve(process.env.DEV_ID)} if you believe this is a problem.`});
+    interaction.editReply({content: `You're blacklist from suggesting.\nPlease message ${client.users.resolve(process.env.DEV_ID)} if you think this is a mistake.`});
   }
 };
 exports.buttonHandler = async function(interaction, Discord) {
   await interaction.deferUpdate();
-  const type = interaction.customID.split('|')[1];
-  const userid = interaction.customID.split('|')[2];
+  const type = interaction.customId.split('|')[1];
+  const userid = interaction.customId.split('|')[2];
   const button = new Discord.MessageActionRow();
   if (type === 'bl' || type === 'wl') {
     if (type === 'bl') {
       if (!suggestions.blacklist.find((id) => id === userid)) suggestions.blacklist.push(userid);
-      await button.addComponents([new Discord.MessageButton({customID: `suggest|wl|${userid}`, label: 'Whitelist User', style: 'SUCCESS'})]);
+      await button.addComponents([new Discord.MessageButton({customId: `suggest|wl|${userid}`, label: 'Whitelist User', style: 'SUCCESS'})]);
     } else if (type === 'wl') {
       const index = suggestions.blacklist.findIndex((id) => id === userid);
       if (index >= 0) suggestions.blacklist.splice(index, 1);
-      await button.addComponents([new Discord.MessageButton({customID: `suggest|bl|${userid}`, label: 'Blacklist User', style: 'DANGER'})]);
+      await button.addComponents([new Discord.MessageButton({customId: `suggest|bl|${userid}`, label: 'Blacklist User', style: 'DANGER'})]);
     }
     updateSuggestions();
     interaction.editReply({embeds: interaction.message.embeds, components: [button]});
@@ -82,7 +82,7 @@ exports.buttonHandler = async function(interaction, Discord) {
         });
         mutes.list.push({
           'user': userid,
-          'username': interaction.customID.split('|')[3],
+          'username': interaction.customId.split('|')[3],
           'role': process.env.ROLE_MUTE,
           'roleName': 'ROLE_MUTE',
           'startTime': new Date(),
@@ -97,14 +97,14 @@ exports.buttonHandler = async function(interaction, Discord) {
     }
     interaction.deleteReply();
   } else if (type === 'th') {
-    const data = suggestions.suggestions[interaction.customID.split('|')[3]];
+    const data = suggestions.suggestions[interaction.customId.split('|')[3]];
     const thread = await client.channels.resolve(process.env.CHANNEL_INFO).threads.create({
       name: `${data.suggestion.substring(0, 95)}${(data.suggestion.length > 95 ? '...' : '')}`,
       autoArchiveDuration: 10080,
       type: 'private_thread',
       reason: `${data.type} Suggestion Thread`,
     });
-    await thread.send({content: `${data.type} Suggestion Thread from ${suggestions.suggestions[interaction.customID.split('|')[3]].asker}\nThread created by ${interaction.user}\n\n**${data.suggestion}**`});
+    await thread.send({content: `${data.type} Suggestion Thread from ${suggestions.suggestions[interaction.customId.split('|')[3]].asker}\nThread created by ${interaction.user}\n\n**${data.suggestion}**`});
     const buttons = interaction.message.components;
     buttons[1].components[0].label = 'Thread Created';
     buttons[1].components[0].disabled = true;

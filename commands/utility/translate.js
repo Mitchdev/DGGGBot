@@ -37,10 +37,18 @@ exports.commandHandler = async function(interaction) {
   const binary = phrase.match(/[10\s]+/gmi);
   const morse = phrase.match(/[.\-\/\s]+/gmi);
 
-  if (binary.length === 1) interaction.editReply({content: `**Binary**\n${phrase}\n**Ascii**\n${decodeBinary(phrase)}`});
-  else if (morse.length === 1) interaction.editReply({content: `**Morse**\n${phrase}\n**Ascii**\n${decodeMorse(phrase)}`});
-  else if (phrase.toLowerCase() === 'andlin') interaction.editReply({content: `**Svensk** - Language detection score: 777,777,777,777,777\n${phrase}\n**English**\n🥺 0mar 😂 please mute me <:rustgarage:800754270550360104>`});
-  else {
+  let finish = false;
+  if (binary?.length === 1 || morse?.length === 1) {
+    if (binary[0] === phrase && (!interaction.options.get('source') || !interaction.options.get('target'))) {
+      interaction.editReply({content: `**Binary**\n${phrase}\n**Ascii**\n${decodeBinary(phrase)}`});
+      finish = true;
+    } else if (morse[0] === phrase && (!interaction.options.get('source') || !interaction.options.get('target'))) {
+      interaction.editReply({content: `**Morse**\n${phrase}\n**Ascii**\n${decodeMorse(phrase)}`});
+      finish = true;
+    }
+  }
+
+  if (!finish) {
     const sourceLanguage = interaction.options.get('source') ? interaction.options.get('source').value : 'auto';
     const targetLanguage = interaction.options.get('target') ? interaction.options.get('target').value : 'en';
     request({

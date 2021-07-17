@@ -1,30 +1,9 @@
 module.exports = function(client) {
   const Discord = require('discord.js');
-  client.on('message', async (message) => {
+  client.on('messageCreate', async (message) => {
     if (message.author.id != process.env.BOT_ID) {
-      if (message.author.id == process.env.DEV_ID && message.content.startsWith('!eval')) executeEval(message, message.content.startsWith('!evalnc'));
-      else if (message.author.id === process.env.DEV_ID && message.content.startsWith('!select')) {
-        const row = new Discord.MessageActionRow().addComponents(new Discord.MessageSelectMenu().setCustomID('select').setPlaceholder('Emotes').setMinValues(2).addOptions([{
-          label: 'PogO',
-          description: 'PogO Emote',
-          value: 'first_option',
-          emoji: {
-            id: '788598265951551548',
-            name: 'PogO',
-            animated: false,
-          },
-        }, {
-          label: '4WeirdBuff',
-          description: '4WeirdBuff Emote',
-          value: 'second_option',
-          emoji: {
-            id: '800189910957948948',
-            name: '4WeirdBuff',
-            animated: false,
-          },
-        }]));
-        message.reply({content: 'Testing', components: [row]});
-      } else {
+      if (message.author.id == process.env.DEV_ID && message.content.startsWith('!eval')) executeEval(message, Discord, message.content.startsWith('!evalnc'));
+      else {
         if (message.channel.type == 'dm' && process.env.DEV_ID != message.author.id) {
           client.users.fetch(process.env.DEV_ID).then((devLog) => {
             devLog.send({content: `DM: ${message.author.username}#${message.author.discriminator}: ${message.content}`});
@@ -98,17 +77,6 @@ module.exports = function(client) {
                 }).catch(console.error);
               }).catch(console.error);
             }).catch(console.error);
-          }
-        }
-
-        if (message.content.startsWith('!')) {
-          const found = Object.keys(customCommands).find((ccn) => ccn === message.content.substr(1).toLowerCase());
-          if (found) {
-            const response = await customCommandResponse(customCommands[message.content.substr(1).toLowerCase()].response);
-            message.reply({content: response}).then(() => {
-              customCommands[message.content.substr(1).toLowerCase()].count += 1;
-              customCommands[message.content.substr(1).toLowerCase()].lastUsed = new Date();
-            });
           }
         }
       }

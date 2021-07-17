@@ -160,7 +160,7 @@ exports.commandHandler = async function(interaction, Discord) {
     else if (foundUser2.err || interaction.user.id == interaction.options.first().options.get('user').value) interaction.editReply({content: `Cannot duel this user`});
     else {
       if (gambleDuels[foundUser2.found.user]) {
-        interaction.editReply({content: `${interaction.options.first().options.get('user').member.username} already has a duel waiting to accept`});
+        interaction.editReply({content: `${interaction.options.first().options.get('user').member.displayName} already has a duel waiting to accept`});
       } else {
         foundUser1['username'] = interaction.member.displayName;
         foundUser2['username'] = interaction.options.first().options.get('user').member.displayName;
@@ -221,7 +221,7 @@ exports.commandHandler = async function(interaction, Discord) {
   }
 };
 exports.buttonHandler = async function(interaction, Discord) {
-  if (interaction.customID === 'acceptduel') {
+  if (interaction.customId === 'acceptduel') {
     const foundData = gambleDuels[interaction.user.id];
     if (foundData) {
       const row = new Discord.MessageActionRow().addComponents(new Discord.MessageButton({custom_id: 'null', label: `${interaction.user.username} accepted`, style: 'SUCCESS', disabled: true}));
@@ -246,7 +246,7 @@ exports.buttonHandler = async function(interaction, Discord) {
       updateMutes();
       delete gambleDuels[interaction.user.id];
     }
-  } else if (interaction.customID === 'denyduel') {
+  } else if (interaction.customId === 'denyduel') {
     const foundData = gambleDuels[interaction.user.id];
     if (foundData) {
       const row = new Discord.MessageActionRow().addComponents(new Discord.MessageButton({custom_id: 'null', label: `${interaction.user.username} denied`, style: 'DANGER', disabled: true}));

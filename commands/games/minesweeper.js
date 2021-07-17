@@ -108,8 +108,8 @@ exports.commandHandler = async function(interaction, Discord) {
             }
           }
         }
-        if (this.board[pos[0]].components[pos[1]].customID.split('|')[2] === '0') this.hitZero(pos, time);
-        else this.hit(pos, this.board[pos[0]].components[pos[1]].customID.split('|')[2], time);
+        if (this.board[pos[0]].components[pos[1]].customId.split('|')[2] === '0') this.hitZero(pos, time);
+        else this.hit(pos, this.board[pos[0]].components[pos[1]].customId.split('|')[2], time);
       });
     };
 
@@ -117,7 +117,7 @@ exports.commandHandler = async function(interaction, Discord) {
       let end = true;
       for (let i = 0; i < this.rows; i++) {
         for (let j = 0; j < this.columns; j++) {
-          if ((this.board[i].components[j].emoji?.name === 'BLANK' || this.board[i].components[j].emoji?.name === '🚩') && this.board[i].components[j].customID.split('|')[2] != 'mine') {
+          if ((this.board[i].components[j].emoji?.name === 'BLANK' || this.board[i].components[j].emoji?.name === '🚩') && this.board[i].components[j].customId.split('|')[2] != 'mine') {
             end = false;
             break;
           }
@@ -134,7 +134,7 @@ exports.commandHandler = async function(interaction, Discord) {
           for (let j = -1; j < 2; j++) {
             if (pos[0]+i < this.rows && pos[0]+i >= 0 && pos[1]+j < this.columns && pos[1]+j >= 0 && !(i === 0 && j === 0)) {
               if (this.board[pos[0]+i].components[pos[1]+j].emoji?.name === 'BLANK') {
-                const label = this.board[pos[0]+i].components[pos[1]+j].customID.split('|')[2];
+                const label = this.board[pos[0]+i].components[pos[1]+j].customId.split('|')[2];
                 this.board[pos[0]+i].components[pos[1]+j].setStyle('SECONDARY').setLabel('').setEmoji(`${options.voteReactions[parseInt(label)-1]}`).setDisabled(true);
                 if (label === '0') {
                   this.hitZero([pos[0]+i, pos[1]+j]);
@@ -178,9 +178,9 @@ exports.commandHandler = async function(interaction, Discord) {
 };
 exports.buttonHandler = async function(interaction, Discord) {
   const time = new Date();
-  const id = interaction.customID.split('|')[1];
-  const move = interaction.customID.split('|')[2];
-  const pos = [parseInt(interaction.customID.split('|')[3].split('.')[0]), parseInt(interaction.customID.split('|')[3].split('.')[1])];
+  const id = interaction.customId.split('|')[1];
+  const move = interaction.customId.split('|')[2];
+  const pos = [parseInt(interaction.customId.split('|')[3].split('.')[0]), parseInt(interaction.customId.split('|')[3].split('.')[1])];
   if (minesweeperGames[id]) {
     if (interaction.user.id === minesweeperGames[id].player.id) {
       if (move === 'first') {

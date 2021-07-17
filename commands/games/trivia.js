@@ -352,8 +352,8 @@ exports.commandHandler = async function(interaction, Discord) {
 };
 exports.buttonHandler = async function(interaction, Discord) {
   const time = new Date();
-  const id = interaction.customID.split('|')[1];
-  const answer = interaction.customID.split('|')[2];
+  const id = interaction.customId.split('|')[1];
+  const answer = interaction.customId.split('|')[2];
   if (id === 'p') {
     await interaction.defer({ephemeral: true});
     if (answer == 'true') interaction.editReply({content: options.emote.troll.string});
@@ -363,7 +363,7 @@ exports.buttonHandler = async function(interaction, Discord) {
       // interaction.message.edit({embeds: interaction.message.embeds, components: btns});
       interaction.editReply({content: options.emote.ok.string});
       // const logProblem = await client.channels.resolve(process.env.CHANNEL_BOT_TESTING)
-      // logProblem.send({content: `Problem reported, https://discord.com/channels/${interaction.customID.split('|')[3]}/${interaction.customID.split('|')[4]}/${interaction.customID.split('|')[5]}`});
+      // logProblem.send({content: `Problem reported, https://discord.com/channels/${interaction.customId.split('|')[3]}/${interaction.customId.split('|')[4]}/${interaction.customId.split('|')[5]}`});
     }
   } else if (triviaGame?.id === id) {
     const found = triviaGame.guessed.find((g) => g.id === interaction.user.id);

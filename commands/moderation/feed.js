@@ -52,7 +52,7 @@ exports.commandHandler = async function(interaction) {
   await interaction.defer();
 
   const command = interaction.options.first();
-  const feedIndex = feeds.list.findIndex((feed) => feed.channel == interaction.channelID);
+  const feedIndex = feeds.list.findIndex((feed) => feed.channel == interaction.channelId);
   if (feedIndex >= 0) {
     if (command.name === 'list') {
       if (feedIndex >= 0) interaction.editReply({content: `**Subs in the feed**\n${feeds.list[feedIndex].subs.join('\n')}`});
@@ -97,7 +97,7 @@ exports.commandHandler = async function(interaction) {
     }
   } else {
     if (command.name === 'create') {
-      feeds.list.push({'interval': 3600, 'channel': interaction.channelID, 'subs': [], 'posted': []});
+      feeds.list.push({'interval': 3600, 'channel': interaction.channelId, 'subs': [], 'posted': []});
       interaction.editReply({content: `Created a new feed for this channel`});
       updateFeed();
     } else {

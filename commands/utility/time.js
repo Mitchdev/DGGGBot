@@ -10,43 +10,33 @@ exports.slashes = [{
     required: true,
   }],
 }];
-exports.commandHandler = async function(interaction) {
+exports.commandHandler = async function(interaction, Discord) {
   await interaction.defer();
 
-  request({
-    method: 'POST',
-    url: process.env.ANDLIN_ADDRESS_API,
-    headers: {'Authorization': process.env.ANDLIN_TOKEN},
-    json: {'Address': interaction.options.get('location').value},
-  }, (coordinatesErr, coordinatesReq, coordinatesRes) => {
-    if (!coordinatesErr) {
-      if (coordinatesRes.Message) {
-        if (coordinatesRes.Message.startsWith('404 Not Found:')) {
-          interaction.editReply({content: `Could not find ${interaction.options.get('location').value}`});
-        } else {
-          client.users.fetch(process.env.DEV_ID).then((devLog) => {
-            devLog.send({content: `**Coordinates:** ${coordinatesRes.Message}\n**Sent:** \`\`\`{"Address": ${interaction.options.get('location').value}}\`\`\``});
-          });
-          client.users.fetch(process.env.ANDLIN_ID).then((andlinLog) => {
-            andlinLog.send({content: `**Coordinates:** ${coordinatesRes.Message}\n**Sent:** \`\`\`{"Address": ${interaction.options.get('location').value}}\`\`\``});
-          });
-        }
-      } else {
-        request(process.env.TIME_API.replace('|lat|', coordinatesRes.lat).replace('|lon|', coordinatesRes.lon), function(err, req, res) {
-          if (!err) {
-            const time = JSON.parse(res);
-            const hours = (new Date(time.datetime).getHours() < 10) ? '0' + new Date(time.datetime).getHours() : new Date(time.datetime).getHours();
-            const minutes = (new Date(time.datetime).getMinutes() < 10) ? '0' + new Date(time.datetime).getMinutes() : new Date(time.datetime).getMinutes();
-            if (isNaN(hours) || isNaN(minutes)) interaction.editReply({content: `Could not find ${interaction.options.get('location').value}`});
-            else {
-              const content = `${coordinatesRes.manicipality != null ? coordinatesRes.manicipality : interaction.options.get('location').value}, ${coordinatesRes.countryCode} (Location confidence: ${(coordinatesRes.score < 0) ? '0' : coordinatesRes.score}%)\n`+
-                              `**${time.timezone_name} | ${time.timezone_location} | (${time.timezone_abbreviation}) | (GMT${time.gmt_offset >= 0 ? `+`: ``}${time.gmt_offset})**\n`+
-                              `${hours}:${minutes}`;
-              interaction.editReply({content: content});
-            }
-          }
-        });
-      }
-    }
-  });
+  const time = await (await fetch(process.env.TIME_API.replace('|location|', interaction.options.get('location').value))).json();
+  const embed = new Discord.MessageEmbed();
+  embed.setTitle(`The time in ${time.requested_location} is **${(new Date(time.datetime).getHours() < 10) ? '0' + new Date(time.datetime).getHours() : new Date(time.datetime).getHours()}:${(new Date(time.datetime).getMinutes() < 10) ? '0' + new Date(time.datetime).getMinutes() : new Date(time.datetime).getMinutes()}**`);
+  embed.addFields([{
+    name: 'Abbreviation',
+    value: time.timezone_abbreviation,
+    inline: true,
+  }, {
+    name: 'GMT',
+    value: (time.gmt_offset >= 0 ? '+' : '') + time.gmt_offset,
+    inline: true,
+  }, {
+    name: 'Daylight Savings',
+    value: capitalize(time.is_dst.toString()),
+    inline: true,
+  }, {
+    name: 'Name',
+    value: time.timezone_name,
+    inline: true,
+  }, {
+    name: 'Location',
+    value: time.timezone_location,
+    inline: true,
+  }]);
+
+  interaction.editReply({embeds: [embed]});
 };

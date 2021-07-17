@@ -644,31 +644,31 @@ exports.commandHandler = async function(interaction, Discord) {
   }
 };
 exports.buttonHandler = async function(interaction, Discord) {
-  const id = interaction.customID.split('|')[1];
+  const id = interaction.customId.split('|')[1];
   if (scrabbleGames[id]) {
-    if (interaction.customID.split('|')[2] === 'join') {
+    if (interaction.customId.split('|')[2] === 'join') {
       await interaction.deferUpdate();
-      const index = parseInt(interaction.customID.split('|')[3]);
+      const index = parseInt(interaction.customId.split('|')[3]);
       if (scrabbleGames[id].colors[index].available) {
         scrabbleGames[id].playerJoin({'user': interaction.user, 'member': interaction.member, 'letters': [], 'color': {}, 'points': 0}, index);
       }
-    } else if (interaction.customID.split('|')[2] === 'start') {
+    } else if (interaction.customId.split('|')[2] === 'start') {
       await interaction.deferUpdate();
       if (scrabbleGames[id].owner.user.id === interaction.user.id) {
         scrabbleGames[id].startGame();
       }
-    } else if (interaction.customID.split('|')[2] === 'leave') {
+    } else if (interaction.customId.split('|')[2] === 'leave') {
       await interaction.deferUpdate();
       const index = scrabbleGames[id].players.findIndex((p) => p.user.id === interaction.user.id);
       if (index >= 0) {
         scrabbleGames[id].playerLeave(index);
       }
-    } else if (interaction.customID.split('|')[2] === 'cancel') {
+    } else if (interaction.customId.split('|')[2] === 'cancel') {
       await interaction.deferUpdate();
       if (scrabbleGames[id].owner.user.id === interaction.user.id) {
         scrabbleGames[id].endGame(true);
       }
-    } else if (interaction.customID.split('|')[2] === 'skip') {
+    } else if (interaction.customId.split('|')[2] === 'skip') {
       if (scrabbleGames[id].players[scrabbleGames[id].turn].user.id === interaction.user.id) {
         await interaction.defer();
         scrabbleGames[id].playerSkip(interaction);

@@ -93,7 +93,7 @@ exports.commandHandler = async function(interaction, Discord) {
 };
 exports.buttonHandler = function(interaction, Discord) {
   if (triviaLeaderboard.length > 0) {
-    const page = parseInt(interaction.customID.split('|')[2]);
+    const page = parseInt(interaction.customId.split('|')[2]);
     const buttons = new Discord.MessageActionRow();
     buttons.addComponents(new Discord.MessageButton({custom_id: `leaderboard|prev|${page-1}`, label: 'prev', style: 'SECONDARY', disabled: (page-1 < 0)}));
     buttons.addComponents(new Discord.MessageButton({custom_id: `leaderboard|current|${page}`, label: page+1, style: 'SECONDARY', disabled: true}));

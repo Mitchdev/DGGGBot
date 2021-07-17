@@ -111,7 +111,7 @@ exports.commandHandler = async function(interaction, Discord) {
 exports.buttonHandler = async function(interaction) {
   await interaction.defer({ephemeral: true});
 
-  const foundRole = roles.list.find((role) => role.name === interaction.customID.split('|')[1]);
+  const foundRole = roles.list.find((role) => role.name === interaction.customId.split('|')[1]);
   if (foundRole) {
     interaction.member.guild.roles.fetch(foundRole.role).then((role) => {
       if (interaction.member._roles.includes(foundRole.role)) {

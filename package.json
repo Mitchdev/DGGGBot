@@ -27,9 +27,11 @@
     "fs": "0.0.1-security",
     "html-entities": "^2.3.2",
     "lodash.clonedeep": "^4.5.0",
+    "node-fetch": "^2.6.1",
     "os": "^0.1.1",
     "path": "^0.12.7",
     "request": "^2.88.2",
-    "require-reload": "^0.2.2"
+    "require-reload": "^0.2.2",
+    "sharp": "^0.28.3"
   }
 }

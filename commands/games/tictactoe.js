@@ -122,8 +122,8 @@ exports.commandHandler = async function(interaction, Discord) {
 exports.buttonHandler = async function(interaction, Discord) {
   await interaction.deferUpdate();
   const time = new Date();
-  const id = interaction.customID.split('|')[1];
-  const move = interaction.customID.split('|')[2].split('.');
+  const id = interaction.customId.split('|')[1];
+  const move = interaction.customId.split('|')[2].split('.');
   if (tictactoeGames[id]) {
     if (interaction.user.id === tictactoeGames[id].turn.user.id) {
       if (tictactoeGames[id].buttons[move[0]].components[move[1]].emoji == undefined) {

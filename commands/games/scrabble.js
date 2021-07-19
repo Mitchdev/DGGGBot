@@ -446,32 +446,28 @@ exports.commandHandler = async function(interaction, Discord) {
     };
 
     this.checkWords = function(i, wordsFinal, wildcards, callback) {
-      fs.readFile(dpath.join(__srcdir, './resources/scrabble/scrabble.txt'), 'utf8', (err, data) => {
+      fs.readFile(dpath.join(__srcdir, './resources/scrabble/scrabble.txt'), 'utf8', async (err, data) => {
         const scrabbleDict = data;
         const regex = new RegExp(`^(${wordsFinal.words[i].word})\r\n`, 'gim');
         if (scrabbleDict.match(regex)) {
           callback({'message': undefined, 'words': wordsFinal, 'wilds': wildcards});
         } else {
-          request(process.env.URBAN_API.replace('|phrase|', wordsFinal.words[i].word), (err, res) => {
-            if (!err && res) {
-              const data = JSON.parse(res.body).list;
-              if (data.length > 0) {
-                if (data[0].word === wordsFinal.words[i].word && data[0].thumbs_up >= 3) {
-                  if (i === wordsFinal.words.length-1) {
-                    callback({'message': undefined, 'words': wordsFinal, 'wilds': wildcards});
-                  } else {
-                    this.checkWords(i+1, wordsFinal, wildcards, (message) => {
-                      callback(message);
-                    });
-                  }
-                } else {
-                  callback({'message': `Could not find the word ${wordsFinal.words[i].word}`});
-                }
+          const {list} = await (await fetch(process.env.URBAN_API.replace('|phrase|', wordsFinal.words[i].word))).json();
+          if (list.length > 0) {
+            if (list[0].word === wordsFinal.words[i].word && list[0].thumbs_up >= 3) {
+              if (i === wordsFinal.words.length-1) {
+                callback({'message': undefined, 'words': wordsFinal, 'wilds': wildcards});
               } else {
-                callback({'message': `Could not find the word ${wordsFinal.words[i].word}`});
+                this.checkWords(i+1, wordsFinal, wildcards, (message) => {
+                  callback(message);
+                });
               }
+            } else {
+              callback({'message': `Could not find the word ${wordsFinal.words[i].word}`});
             }
-          });
+          } else {
+            callback({'message': `Could not find the word ${wordsFinal.words[i].word}`});
+          }
         }
       });
     };

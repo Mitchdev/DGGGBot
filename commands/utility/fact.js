@@ -6,10 +6,6 @@ exports.slashes = [{
 }];
 exports.commandHandler = async function(interaction, Discord) {
   await interaction.defer();
-
-  request(process.env.RANDOMFACT_API, function(err, req, res) {
-    if (!err) {
-      interaction.editReply({content: JSON.parse(res).data});
-    }
-  });
+  const {data} = await (await fetch(process.env.RANDOMFACT_API)).json();
+  interaction.editReply({content: data});
 };

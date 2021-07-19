@@ -2,7 +2,6 @@ module.exports = function(conf) {
   fs = require('fs');
   dpath = require('path');
   reload = require('require-reload')(require);
-  request = require('request');
   fetch = require('node-fetch');
   sharp = require('sharp');
   os = require('os');

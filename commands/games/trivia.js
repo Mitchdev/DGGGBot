@@ -91,23 +91,19 @@ exports.commandHandler = async function(interaction, Discord) {
         this.data = triviaGPT2[Math.floor(Math.random()*triviaGPT2.length)];
         this.load(callback);
       } else {
-        this.getTriviaToken((token) => {
-          request(process.env.TRIVIA_API.replace('|category|', this.category).replace('|difficulty|', this.difficulty).replace('|token|', token), (err, req, res) => {
-            if (!err) {
-              const data = JSON.parse(res);
-              if (data.response_code === 0) {
-                this.data = data.results[0];
-                this.load(callback);
-              } else if (data.response_code === 3 || data.response_code === 4) {
-                request(process.env.TRIVIA_TOKENRESET_API.replace('|token|', token));
-                triviaOptions.token = '';
-                this.loadQuestion((success) => callback(success));
-              } else {
-                this.interaction.editReply({content: 'Could not create a trivia question.', ephemeral: true});
-                callback(false);
-              }
-            }
-          });
+        this.getTriviaToken(async (token) => {
+          const data = await (await fetch(process.env.TRIVIA_API.replace('|category|', this.category).replace('|difficulty|', this.difficulty).replace('|token|', token))).json();
+          if (data.response_code === 0) {
+            this.data = data.results[0];
+            this.load(callback);
+          } else if (data.response_code === 3 || data.response_code === 4) {
+            fetch(process.env.TRIVIA_TOKENRESET_API.replace('|token|', token));
+            triviaOptions.token = '';
+            this.loadQuestion((success) => callback(success));
+          } else {
+            this.interaction.editReply({content: 'Could not create a trivia question.', ephemeral: true});
+            callback(false);
+          }
         });
       }
     };
@@ -174,16 +170,13 @@ exports.commandHandler = async function(interaction, Discord) {
       });
     };
 
-    this.getTriviaToken = function(callback) {
+    this.getTriviaToken = async function(callback) {
       if (triviaOptions.token != '') callback(triviaOptions.token);
       else {
-        request(process.env.TRIVIA_TOKEN_API, (err, req, res) => {
-          if (!err) {
-            triviaOptions.token = JSON.parse(res).token;
-            callback(triviaOptions.token);
-            fs.writeFileSync(dpath.join(__srcdir, './options/trivia.json'), JSON.stringify(triviaOptions));
-          }
-        });
+        const {token} = await (await fetch(process.env.TRIVIA_TOKEN_API)).json();
+        triviaOptions.token = token;
+        callback(triviaOptions.token);
+        fs.writeFileSync(dpath.join(__srcdir, './options/trivia.json'), JSON.stringify(triviaOptions));
       }
     };
 
@@ -304,18 +297,10 @@ exports.commandHandler = async function(interaction, Discord) {
             'guessed': guesses,
           };
 
-          request({
+          fetch(process.env.ANDLIN_TRIVIA_LEADERBOARD_ADD_API, {
             method: 'POST',
-            url: process.env.ANDLIN_TRIVIA_LEADERBOARD_ADD_API,
             headers: {'Authorization': process.env.ANDLIN_TOKEN},
-            json: triviaData,
-          }, (err, req, res) => {
-            if (!err) {
-              if (res) console.log(res);
-            } else {
-              console.log(triviaData);
-              console.log(err);
-            }
+            body: JSON.stringify(triviaData),
           });
         }
 

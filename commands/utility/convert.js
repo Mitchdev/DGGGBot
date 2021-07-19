@@ -100,32 +100,28 @@ exports.commandHandler = async function(interaction, Discord) {
    * @param {number} value original value.
    * @param {Embed} embed message embed.
    */
-  function convertCurrency(source, target, value, embed) {
-    request(process.env.CURRENCY_API, function(err, req, res) {
-      if (!err) {
-        const rates = JSON.parse(res).rates;
-        if (rates[source.short] && rates[target.short]) {
-          const USD = value / rates[source.short];
-          const REQ = USD * rates[target.short];
-          embed.addFields([{
-            name: `${source.full} (${source.short})`,
-            value: source.symbol+interaction.options.get('amount').value,
-            inline: true,
-          }, {name: '\u200B', value: '**=**', inline: true}, {
-            name: `${target.full} (${target.short})`,
-            value: target.symbol+REQ.toFixed(2),
-            inline: true,
-          }]);
-          interaction.editReply({embeds: [embed]});
-        } else {
-          let content = ``;
-          if (!rates[source.short] && !rates[target.short]) content = `Could not find ${interaction.options.get('source').value} or ${interaction.options.get('target').value}`;
-          else if (!rates[source.short]) content = `Could not find ${interaction.options.get('source').value}`;
-          else content = `Could not find ${interaction.options.get('target').value}`;
-          interaction.editReply({content: content});
-        }
-      }
-    });
+  async function convertCurrency(source, target, value, embed) {
+    const {rates} = await (await fetch(process.env.CURRENCY_API)).json();
+    if (rates[source.short] && rates[target.short]) {
+      const USD = value / rates[source.short];
+      const REQ = USD * rates[target.short];
+      embed.addFields([{
+        name: `${source.full} (${source.short})`,
+        value: source.symbol+interaction.options.get('amount').value,
+        inline: true,
+      }, {name: '\u200B', value: '**=**', inline: true}, {
+        name: `${target.full} (${target.short})`,
+        value: target.symbol+REQ.toFixed(2),
+        inline: true,
+      }]);
+      interaction.editReply({embeds: [embed]});
+    } else {
+      let content = ``;
+      if (!rates[source.short] && !rates[target.short]) content = `Could not find ${interaction.options.get('source').value} or ${interaction.options.get('target').value}`;
+      else if (!rates[source.short]) content = `Could not find ${interaction.options.get('source').value}`;
+      else content = `Could not find ${interaction.options.get('target').value}`;
+      interaction.editReply({content: content});
+    }
   }
 
   /**

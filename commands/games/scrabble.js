@@ -154,23 +154,19 @@ exports.commandHandler = async function(interaction, Discord) {
       });
       fields.push({name: `${capitalize(this.players[this.turn].color.embed.toLowerCase())}s turn`, value: this.players[this.turn].user.username});
       fields.push({name: `${capitalize(this.players[this.turn].color.embed.toLowerCase())}s letters`, value: this.players[this.turn].letters.join(', ')});
-      const writeStream = await request({
+
+      const writeStream = await fetch(process.env.ANDLIN_SCRABBLE_API, {
         method: 'POST',
-        url: process.env.ANDLIN_SCRABBLE_API,
         headers: {'Authorization': process.env.ANDLIN_TOKEN},
-        json: this.board,
-      }).pipe(fs.createWriteStream(dpath.join(__srcdir, `./resources/scrabble/${this.id}.jpg`)));
-      writeStream.on('close', () => {
+        body: JSON.stringify(this.board),
+      });
+
+      writeStream.body.pipe(fs.createWriteStream(dpath.join(__srcdir, `./resources/scrabble/${this.id}.jpg`)));
+
+      writeStream.body.on('close', () => {
         const file = new Discord.MessageAttachment(fs.readFileSync(dpath.join(__srcdir, `./resources/scrabble/${this.id}.jpg`)), `${this.id}.jpg`);
-        const embed = new Discord.MessageEmbed()
-            .attachFiles([file])
-            .setTitle('Do `/scrabble place` to place a word')
-            .setColor(this.players[this.turn].color.embed)
-            .addFields(fields)
-            .setImage(`attachment://${this.id}.jpg`);
-
-        this.interaction.editReply({embeds: [embed], components: this.skipBtns});
-
+        const embed = new Discord.MessageEmbed().setTitle('Do `/scrabble place` to place a word').setColor(this.players[this.turn].color.embed).addFields(fields);
+        this.interaction.editReply({files: [file], embeds: [embed.setImage(`attachment://${this.id}.jpg`)], components: this.skipBtns});
         try {
           fs.unlinkSync(dpath.join(__srcdir, `./resources/scrabble/${this.id}.jpg`));
         } catch (err) {

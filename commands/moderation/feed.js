@@ -58,19 +58,17 @@ exports.commandHandler = async function(interaction) {
       if (feedIndex >= 0) interaction.editReply({content: `**Subs in the feed**\n${feeds.list[feedIndex].subs.join('\n')}`});
       else interaction.editReply({content: `No feed in this channel`});
     } else if (command.name === 'sub') {
-      request(`https://www.reddit.com/subreddits/search.json?q=${command.options.get('subreddit').value}&nsfw=1&include_over_18=on`, (err, req, res) => {
-        const data = JSON.parse(res);
-        if (data.data.dist > 0) {
-          const filtered = data.data.children.filter((item) => {
-            return item.data.display_name.toLowerCase() === command.options.get('subreddit').value;
-          });
-          if (filtered.length > 0) {
-            feeds.list[feedIndex].subs.push(command.options.get('subreddit').value);
-            interaction.editReply({content: `Added ${command.options.get('subreddit').value} to the feed.`});
-            updateFeed();
-          } else interaction.editReply({content: `Could not find subreddit ${command.options.get('subreddit').value}`});
+      const data = await (await fetch(process.env.SUBREDDIT_SEARCH_API.replace('|subreddit|', command.options.get('subreddit').value))).json();
+      if (data.data.dist > 0) {
+        const filtered = data.data.children.filter((item) => {
+          return item.data.display_name.toLowerCase() === command.options.get('subreddit').value;
+        });
+        if (filtered.length > 0) {
+          feeds.list[feedIndex].subs.push(command.options.get('subreddit').value);
+          interaction.editReply({content: `Added ${command.options.get('subreddit').value} to the feed.`});
+          updateFeed();
         } else interaction.editReply({content: `Could not find subreddit ${command.options.get('subreddit').value}`});
-      });
+      } else interaction.editReply({content: `Could not find subreddit ${command.options.get('subreddit').value}`});
     } else if (command.name === 'unsub') {
       if (feeds.list[feedIndex].subs.includes(command.options.get('subreddit').value)) {
         feeds.list[feedIndex].subs = feeds.list[feedIndex].subs.filter((item) => {

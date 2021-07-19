@@ -51,33 +51,29 @@ exports.commandHandler = async function(interaction) {
   if (!finish) {
     const sourceLanguage = interaction.options.get('source') ? interaction.options.get('source').value : 'auto';
     const targetLanguage = interaction.options.get('target') ? interaction.options.get('target').value : 'en';
-    request({
+
+    const data = await (await fetch(process.env.ANDLIN_TRANSLATE_API, {
       method: 'POST',
-      url: process.env.ANDLIN_TRANSLATE_API,
       headers: {'Authorization': process.env.ANDLIN_TOKEN},
-      json: {'source': sourceLanguage, 'target': targetLanguage, 'text': escapeHtml(phrase, false)},
-    }, function(err, req, res) {
-      if (!err) {
-        if (res) {
-          if (res.Message) {
-            client.users.fetch(process.env.DEV_ID).then((devLog) => {
-              devLog.send({content: `**Translator:** ${res.Message}\n**Sent:** \`\`\`{"source": ${sourceLanguage}, "target": ${targetLanguage}, "text": ${escapeHtml(phrase, false)}}\`\`\``});
-            });
-            client.users.fetch(process.env.ANDLIN_ID).then((andlinLog) => {
-              andlinLog.send({content: `**Translator:** ${res.Message}\n**Sent:** \`\`\`{"source": ${sourceLanguage}, "target": ${targetLanguage}, "text": ${escapeHtml(phrase, false)}}\`\`\``});
-            });
-          } else if (res.length > 0) {
-            if (res[0].translations) {
-              if (res[0].translations.length > 0) {
-                sourceLanguageName = getLang((res[0].detectedLanguage ? res[0].detectedLanguage.language : sourceLanguage));
-                targetLanguageName = getLang((res[0].translations[0].to ? res[0].translations[0].to: targetLanguage));
-                splitMessage(interaction, `**${sourceLanguageName}**${(res[0].detectedLanguage ? ` - Language confidence: ${parseFloat(res[0].detectedLanguage.score)*100}%` : ``)}\n${phrase}\n**${targetLanguageName}**\n${escapeHtml(res[0].translations[0].text, true)}`);
-              }
-            }
-          }
+      body: JSON.stringify({'source': sourceLanguage, 'target': targetLanguage, 'text': escapeHtml(phrase, false)}),
+    })).json();
+
+    if (data.Message) {
+      client.users.fetch(process.env.DEV_ID).then((devLog) => {
+        devLog.send({content: `**Translator:** ${data.Message}\n**Sent:** \`\`\`{"source": ${sourceLanguage}, "target": ${targetLanguage}, "text": ${escapeHtml(phrase, false)}}\`\`\``});
+      });
+      client.users.fetch(process.env.ANDLIN_ID).then((andlinLog) => {
+        andlinLog.send({content: `**Translator:** ${data.Message}\n**Sent:** \`\`\`{"source": ${sourceLanguage}, "target": ${targetLanguage}, "text": ${escapeHtml(phrase, false)}}\`\`\``});
+      });
+    } else if (data.length > 0) {
+      if (data[0].translations) {
+        if (data[0].translations.length > 0) {
+          sourceLanguageName = getLang((data[0].detectedLanguage ? data[0].detectedLanguage.language : sourceLanguage));
+          targetLanguageName = getLang((data[0].translations[0].to ? data[0].translations[0].to: targetLanguage));
+          splitMessage(interaction, `**${sourceLanguageName}**${(data[0].detectedLanguage ? ` - Language confidence: ${parseFloat(data[0].detectedLanguage.score)*100}%` : ``)}\n${phrase}\n**${targetLanguageName}**\n${escapeHtml(data[0].translations[0].text, true)}`);
         }
-      } else console.log(err);
-    });
+      }
+    }
   }
 
   /**

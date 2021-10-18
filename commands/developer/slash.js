@@ -25,9 +25,9 @@ exports.commandHandler = async function(interaction) {
   console.log(interaction.options);
 
   if (interaction.options.getSubcommand() === 'delete') {
-    if (interaction.options.first().options?.get('id')) {
-      const clientCommand = client.application.commands.resolve(interaction.options.first().options.get('id').value);
-      const guildCommand = client.guilds.resolve(process.env.GUILD_ID).commands.resolve(interaction.options.first().options.get('id').value);
+    if (interaction.options.get('id')) {
+      const clientCommand = client.application.commands.resolve(interaction.options.get('id').value);
+      const guildCommand = client.guilds.resolve(process.env.GUILD_ID).commands.resolve(interaction.options.get('id').value);
       if (guildCommand) {
         guildCommand.delete().catch((err) => interaction.editReply({content: `Could not delete ${guildCommand.name}`, ephemeral: true}));
         interaction.editReply({content: `Deleted ${guildCommand.name}`, ephemeral: true});
@@ -35,7 +35,7 @@ exports.commandHandler = async function(interaction) {
         clientCommand.delete().catch((err) => interaction.editReply({content: `Could not delete ${clientCommand.name}`, ephemeral: true}));
         interaction.editReply({content: `Deleted ${clientCommand.name}`, ephemeral: true});
       } else {
-        interaction.editReply({content: `Could not find command ${interaction.options.first().options.get('id')}`, ephemeral: true});
+        interaction.editReply({content: `Could not find command ${interaction.options.get('id')}`, ephemeral: true});
       }
     } else {
       client.guilds.resolve(process.env.GUILD_ID).commands.set([]);

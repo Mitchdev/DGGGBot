@@ -45,12 +45,12 @@ exports.commandHandler = async function(interaction, Discord) {
     const gameID = gameIDs.filter((id) => scrabbleGames[id].players.find((p) => p.user.id === interaction.user.id));
 
     if (gameID.length > 0) {
-      if (interaction.options.first().name === 'place') {
+      if (interaction.options.getSubcommand() === 'place') {
         if (interaction.user.id === scrabbleGames[gameID].players[scrabbleGames[gameID].turn].user.id) {
-          const word = interaction.options.first().options.get('word').value.toUpperCase();
-          const row = interaction.options.first().options.get('row').value-1;
-          const col = interaction.options.first().options.get('col').value-1;
-          const dir = interaction.options.first().options.get('direction').value;
+          const word = interaction.options.get('word').value.toUpperCase();
+          const row = interaction.options.get('row').value-1;
+          const col = interaction.options.get('col').value-1;
+          const dir = interaction.options.get('direction').value;
           scrabbleGames[gameID].validateWord(word, row, col, dir, (valid) => {
             console.log(valid);
             if (valid.message) {
@@ -66,7 +66,7 @@ exports.commandHandler = async function(interaction, Discord) {
         interaction.editReply({content: 'You\'re already in a game'});
       }
     } else {
-      if (interaction.options.first().name === 'create') {
+      if (interaction.options.getSubcommand() === 'create') {
         const id = makeID();
         scrabbleGames[id] = new Scrabble(id, {'user': interaction.user, 'member': interaction.member}, interaction, cloneDeep(options.scrabbleLetters));
         scrabbleGames[id].playerJoin({'user': interaction.user, 'member': interaction.member, 'letters': [], 'color': {}, 'points': 0}, 0);

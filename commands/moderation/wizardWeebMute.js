@@ -67,6 +67,8 @@ exports.commandHandler = async function(interaction) {
               if (!member._roles.includes(roleID)) member.roles.add(role);
               interaction.editReply({content: `${options.emote.gun.string} gun backfired!`});
               mutes.list.push({
+                'issuerID': interaction.user.id,
+                'issuerUsername': interaction.user.username,
                 'user': interaction.user.id,
                 'username': interaction.user.username,
                 'role': roleID,
@@ -87,6 +89,8 @@ exports.commandHandler = async function(interaction) {
               if (!interaction.options.get('user').member._roles.includes(roleID)) interaction.options.get('user').member.roles.add(role);
               interaction.editReply({content: `${options.emote.ok.string} ${interaction.options.get('user').user.username} is a ${capitalize(roleRaw.replace('ROLE_', '').toLowerCase())} for ${timeRaw}`});
               mutes.list.push({
+                'issuerID': interaction.user.id,
+                'issuerUsername': interaction.user.username,
                 'user': interaction.options.get('user').user.id,
                 'username': interaction.options.get('user').user.username,
                 'role': roleID,
@@ -108,6 +112,8 @@ exports.commandHandler = async function(interaction) {
             return (m.user != interaction.options.get('user').user.id) || (m.role != roleID);
           });
           mutes.list.push({
+            'issuerID': interaction.user.id,
+            'issuerUsername': interaction.user.username,
             'user': interaction.options.get('user').user.id,
             'username': interaction.options.get('user').user.username,
             'role': roleID,

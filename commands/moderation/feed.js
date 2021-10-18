@@ -50,51 +50,50 @@ exports.slashes = [{
 }];
 exports.commandHandler = async function(interaction) {
   await interaction.deferReply();
-
-  const command = interaction.options.first();
+  
   const feedIndex = feeds.list.findIndex((feed) => feed.channel == interaction.channelId);
   if (feedIndex >= 0) {
-    if (command.name === 'list') {
+    if (interaction.options.getSubcommand() === 'list') {
       if (feedIndex >= 0) interaction.editReply({content: `**Subs in the feed**\n${feeds.list[feedIndex].subs.join('\n')}`});
       else interaction.editReply({content: `No feed in this channel`});
-    } else if (command.name === 'sub') {
-      const data = await (await fetch(process.env.SUBREDDIT_SEARCH_API.replace('|subreddit|', command.options.get('subreddit').value))).json();
+    } else if (interaction.options.getSubcommand() === 'sub') {
+      const data = await (await fetch(process.env.SUBREDDIT_SEARCH_API.replace('|subreddit|', interaction.options.get('subreddit').value))).json();
       if (data.data.dist > 0) {
         const filtered = data.data.children.filter((item) => {
-          return item.data.display_name.toLowerCase() === command.options.get('subreddit').value;
+          return item.data.display_name.toLowerCase() === interaction.options.get('subreddit').value;
         });
         if (filtered.length > 0) {
-          feeds.list[feedIndex].subs.push(command.options.get('subreddit').value);
-          interaction.editReply({content: `Added ${command.options.get('subreddit').value} to the feed.`});
+          feeds.list[feedIndex].subs.push(interaction.options.get('subreddit').value);
+          interaction.editReply({content: `Added ${interaction.options.get('subreddit').value} to the feed.`});
           updateFeed();
-        } else interaction.editReply({content: `Could not find subreddit ${command.options.get('subreddit').value}`});
-      } else interaction.editReply({content: `Could not find subreddit ${command.options.get('subreddit').value}`});
-    } else if (command.name === 'unsub') {
-      if (feeds.list[feedIndex].subs.includes(command.options.get('subreddit').value)) {
+        } else interaction.editReply({content: `Could not find subreddit ${interaction.options.get('subreddit').value}`});
+      } else interaction.editReply({content: `Could not find subreddit ${interaction.options.get('subreddit').value}`});
+    } else if (interaction.options.getSubcommand() === 'unsub') {
+      if (feeds.list[feedIndex].subs.includes(interaction.options.get('subreddit').value)) {
         feeds.list[feedIndex].subs = feeds.list[feedIndex].subs.filter((item) => {
-          return item !== command.options.get('subreddit').value;
+          return item !== interaction.options.get('subreddit').value;
         });
-        interaction.editReply({content: `Removed ${command.options.get('subreddit').value} from the feed.`});
+        interaction.editReply({content: `Removed ${interaction.options.get('subreddit').value} from the feed.`});
         updateFeed();
       } else interaction.editReply({content: 'Subreddit not in feed.'});
-    } else if (command.name === 'interval') {
-      if (command.options.get('seconds')) {
-        if (command.options.get('seconds').value > 10) {
-          interaction.editReply({content: `Updated interval from ${feeds.list[feedIndex].interval} seconds to ${command.options.get('seconds').value} seconds.`});
-          feeds.list[feedIndex].interval = command.options.get('seconds').value;
+    } else if (interaction.options.getSubcommand() === 'interval') {
+      if (interaction.options.get('seconds')) {
+        if (interaction.options.get('seconds').value > 10) {
+          interaction.editReply({content: `Updated interval from ${feeds.list[feedIndex].interval} seconds to ${interaction.options.get('seconds').value} seconds.`});
+          feeds.list[feedIndex].interval = interaction.options.get('seconds').value;
           clearInterval(feedTimers[feeds.list[feedIndex].channel]);
           feedTimer(feedIndex);
           updateFeed();
         } else interaction.editReply({content: `Interval has to be more than 10 seconds.`});
       } else interaction.editReply({content: `The current feed interval is ${feeds.list[feedIndex].interval} seconds.`});
-    } else if (command.name === 'delete') {
+    } else if (interaction.options.getSubcommand() === 'delete') {
       clearInterval(feedTimers[feeds.list[feedIndex].channel]);
       feeds.list.splice(feedIndex, 1);
       updateFeed();
       interaction.editReply({content: `Deleted feed for this channel`});
     }
   } else {
-    if (command.name === 'create') {
+    if (interaction.options.getSubcommand() === 'create') {
       feeds.list.push({'interval': 3600, 'channel': interaction.channelId, 'subs': [], 'posted': []});
       interaction.editReply({content: `Created a new feed for this channel`});
       updateFeed();

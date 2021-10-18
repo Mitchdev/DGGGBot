@@ -60,25 +60,24 @@ exports.slashes = [{
 exports.commandHandler = async function(interaction, Discord) {
   await interaction.deferReply({ephemeral: true});
 
-  console.log(interaction);
-  if (interaction.options.first().name === 'reload') {
+  if (interaction.options.getSubcommand() === 'reload') {
     interaction.editReply({content: `Reloaded`, ephemeral: true});
     reloadRolesMessage(Discord);
-  } else if (interaction.options.first().name === 'remove') {
-    roles.list = roles.list.filter((role) => role.name.toLowerCase() != interaction.options.first().options.get('name').value.toLowerCase());
-    interaction.editReply({content: `Removed ${interaction.options.first().options.get('name').value}`, ephemeral: true});
+  } else if (interaction.options.getSubcommand() === 'remove') {
+    roles.list = roles.list.filter((role) => role.name.toLowerCase() != interaction.options.get('name').value.toLowerCase());
+    interaction.editReply({content: `Removed ${interaction.options.get('name').value}`, ephemeral: true});
     reloadRolesMessage(Discord);
     updateRoles();
-  } else if (interaction.options.first().name === 'add') {
+  } else if (interaction.options.getSubcommand()  === 'add') {
     const role = {
-      'name': interaction.options.first().options.get('name').value,
-      'type': interaction.options.first().options.get('category').value,
-      'role': interaction.options.first().options.get('role').value,
+      'name': interaction.options.get('name').value,
+      'type': interaction.options.get('category').value,
+      'role': interaction.options.get('role').value,
       'reaction': {'type': '', 'name': '', 'id': ''},
     };
 
-    const emojiMatch = interaction.options.first().options.get('emoji').value.match(/\<\:(.+?)\:(\d+?)\>/g);
-    const unicodeEmojiMatch = interaction.options.first().options.get('emoji').value.match(/(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])/g);
+    const emojiMatch = interaction.options.get('emoji').value.match(/\<\:(.+?)\:(\d+?)\>/g);
+    const unicodeEmojiMatch = interaction.options.get('emoji').value.match(/(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])/g);
     if (emojiMatch != undefined) {
       const emoji = client.emojis.cache.find((emoji) => emoji.id == emojiMatch[0].split(':')[2].replace('>', ''));
       if (emoji != undefined) {
@@ -105,7 +104,7 @@ exports.commandHandler = async function(interaction, Discord) {
       return;
     }
 
-    addRole(role, interaction.options.first().options.get('position')?.value, interaction, Discord);
+    addRole(role, interaction.options.get('position')?.value, interaction, Discord);
   }
 };
 exports.buttonHandler = async function(interaction) {

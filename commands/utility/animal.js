@@ -105,9 +105,9 @@ exports.commandHandler = async function(interaction) {
   const animalCode = {'ferret': 'Ferret', 'dog': 'Dog', 'cat': 'Cat', 'panda': 'Panda', 'red_panda': 'Red Panda', 'fox': 'Fox', 'koala': 'Koala', 'birb': 'Bird', 'racoon': 'Racoon', 'kangaroo': 'Kangaroo', 'elephant': 'Elepant', 'giraffe': 'Giraffe', 'whale': 'Whale'};
   const animalPics = ['ferret', 'dog', 'cat', 'panda', 'red_panda', 'fox', 'koala', 'birb', 'racoon', 'kangaroo', 'whale'];
   const animalFacts = ['dog', 'cat', 'panda', 'fox', 'koala', 'birb', 'racoon', 'kangaroo', 'elephant', 'giraffe', 'whale'];
-  let animal = interaction.options.first().options.first().value;
+  let animal = interaction.options.get('animal').value;
 
-  if (interaction.options.first().name === 'pic') {
+  if (interaction.options.getSubcommand() === 'pic') {
     if (animal === 'random') animal = animalPics[Math.floor(Math.random() * animalPics.length)];
     const {url, link} = await (await fetch(animal === 'ferret' ? process.env.ANIMAL_PIC_FERRET_API : process.env.ANIMAL_PIC_OTHER_API.replace('|animal|', animal))).json();
     if (url || link) interaction.editReply({content: `**${animalCode[animal]}**\n${animal === 'ferret' ? url : link}`});

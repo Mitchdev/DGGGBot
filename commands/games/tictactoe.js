@@ -17,13 +17,13 @@ exports.commandHandler = async function(interaction, Discord) {
   } else {
     await interaction.deferReply();
 
-    if (interaction.user.id === interaction.options.first().user.id || interaction.options.first().user.bot) {
-      interaction.editReply({content: `You can't play with ${interaction.options.first().user.bot ? 'a bot' : 'yourself'} ${options.emote.pogo.string}`});
+    if (interaction.user.id === interaction.options.get('user').user.id || interaction.options.get('user').user.bot) {
+      interaction.editReply({content: `You can't play with ${interaction.options.get('user').user.bot ? 'a bot' : 'yourself'} ${options.emote.pogo.string}`});
       return;
     }
 
     const id = makeID();
-    tictactoeGames[id] = new Tictactoe(id, {'user': interaction.user, 'member': interaction.member}, {'user': interaction.options.first().user, 'member': interaction.options.first().member}, interaction);
+    tictactoeGames[id] = new Tictactoe(id, {'user': interaction.user, 'member': interaction.member}, {'user': interaction.options.get('user').user, 'member': interaction.options.get('user').member}, interaction);
     tictactoeGames[id].update();
   }
   /**

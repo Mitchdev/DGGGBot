@@ -5,7 +5,7 @@ exports.slashes = [{
   description: 'Reloads a command',
 }];
 exports.commandHandler = async function(interaction, Discord, client) {
-  await interaction.defer({ephemeral: true});
+  await interaction.deferReply({ephemeral: true});
   loadCommands(client, () => {
     interaction.editReply({content: 'Reloaded', ephemeral: true});
   });

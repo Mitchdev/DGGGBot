@@ -20,8 +20,11 @@ exports.slashes = [{
   }],
 }];
 exports.commandHandler = async function(interaction) {
-  await interaction.defer({ephemeral: true});
-  if (interaction.options.first().name === 'delete') {
+  await interaction.deferReply({ephemeral: true});
+
+  console.log(interaction.options);
+
+  if (interaction.options.getSubcommand() === 'delete') {
     if (interaction.options.first().options?.get('id')) {
       const clientCommand = client.application.commands.resolve(interaction.options.first().options.get('id').value);
       const guildCommand = client.guilds.resolve(process.env.GUILD_ID).commands.resolve(interaction.options.first().options.get('id').value);
@@ -39,7 +42,7 @@ exports.commandHandler = async function(interaction) {
       client.application.commands.set([]);
       interaction.editReply({content: 'Deleted all commands', ephemeral: true});
     }
-  } else if (interaction.options.first().name === 'reload') {
+  } else if (interaction.options.getSubcommand() === 'reload') {
     interaction.editReply({content: 'Reloading slash commands'});
     reloadSlashCommands();
   }

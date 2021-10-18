@@ -27,6 +27,7 @@
     "fs": "0.0.1-security",
     "html-entities": "^2.3.2",
     "lodash.clonedeep": "^4.5.0",
+    "murmurhash-v3": "^1.0.2",
     "node-fetch": "^2.6.1",
     "os": "^0.1.1",
     "path": "^0.12.7",

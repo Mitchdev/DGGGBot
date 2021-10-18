@@ -58,7 +58,7 @@ exports.slashes = [{
   }],
 }];
 exports.commandHandler = async function(interaction, Discord) {
-  await interaction.defer({ephemeral: true});
+  await interaction.deferReply({ephemeral: true});
 
   console.log(interaction);
   if (interaction.options.first().name === 'reload') {
@@ -109,7 +109,7 @@ exports.commandHandler = async function(interaction, Discord) {
   }
 };
 exports.buttonHandler = async function(interaction) {
-  await interaction.defer({ephemeral: true});
+  await interaction.deferReply({ephemeral: true});
 
   const foundRole = roles.list.find((role) => role.name === interaction.customId.split('|')[1]);
   if (foundRole) {

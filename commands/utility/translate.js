@@ -31,7 +31,7 @@ exports.slashes = [{
   }],
 }];
 exports.commandHandler = async function(interaction) {
-  await interaction.defer();
+  await interaction.deferReply();
 
   const phrase = interaction.options.get('phrase').value;
   const binary = phrase.match(/[10\s]+/gmi);

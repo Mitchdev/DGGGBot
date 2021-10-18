@@ -5,7 +5,7 @@ module.exports = function(client) {
       const command = commands.find((cmd) => cmd.commands[interaction.commandName] != undefined);
       if (command) {
         if (options.BFCCUsers[interaction.commandName]?.includes(interaction.user.id)) {
-          await interaction.defer({ephemeral: true});
+          await interaction.deferReply({ephemeral: true});
           interaction.editReply({content: `You have been banned from using the command **${interaction.commandName}**\nPlease message ${client.users.resolve(process.env.DEV_ID)} if you think this is a mistake.`});
         } else {
           if (command.commands[interaction.commandName] === 'mod') {

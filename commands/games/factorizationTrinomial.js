@@ -21,7 +21,7 @@ exports.slashes = [{
   }],
 }];
 exports.commandHandler = async function(interaction) {
-  await interaction.defer();
+  await interaction.deferReply();
 
   let a; let b; let c; let r11; let r12; let r21; let r22;
   let r1; let r2;

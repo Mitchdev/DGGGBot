@@ -5,7 +5,7 @@ exports.slashes = [{
   description: 'Shows list of temporarily roled users',
 }];
 exports.commandHandler = async function(interaction, Discord) {
-  await interaction.defer();
+  await interaction.deferReply();
 
   const embed = new Discord.MessageEmbed().setTitle('List of temporarily roled users');
   const sorted = mutes.list.sort((a, b) => {

@@ -4,12 +4,30 @@ exports.slashes = [{
   name: 'info',
   description: 'Shows uptime and ping',
 }];
-exports.commandHandler = async function(interaction) {
-  await interaction.defer();
+exports.commandHandler = async function(interaction, Discord) {
+  await interaction.deferReply();
 
   const pre = new Date();
   await fetch(process.env.ANDLIN_PING_API);
   const post = new Date();
 
-  interaction.editReply({content: `**Client Uptime** ${secondsToDhms(client.uptime/1000)}\n**System Uptime** ${secondsToDhms(os.uptime())}\n\n**Discord API Ping** ${Math.round(client.ws.ping)}ms\n**Andlin API Ping** ${(post - pre)}ms`});
+  const embed = new Discord.MessageEmbed().setTitle('Info').addFields([{
+    name: 'Client Uptime',
+    value: secondsToDhms(client.uptime/1000),
+    inline: true,
+  }, {name: '\u200B', value: '\u200B', inline: true}, {
+    name: 'Discord API Ping',
+    value: `${Math.round(client.ws.ping)}ms`,
+    inline: true,
+  }, {
+    name: 'System Uptime',
+    value: secondsToDhms(os.uptime()),
+    inline: true,
+  }, {name: '\u200B', value: '\u200B', inline: true}, {
+    name: 'Andlin API Ping',
+    value: `${(post - pre)}ms`,
+    inline: true,
+  }]);
+
+  interaction.editReply({embeds: [embed]});
 };

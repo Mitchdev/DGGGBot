@@ -47,7 +47,7 @@ exports.slashes = [{
   }],
 }];
 exports.commandHandler = async function(interaction) {
-  await interaction.defer();
+  await interaction.deferReply();
 
   const roleRaw = `ROLE_${interaction.commandName.toUpperCase()}`;
   const roleID = process.env[roleRaw];
@@ -101,7 +101,7 @@ exports.commandHandler = async function(interaction) {
           } else {
             interaction.editReply({content: `Fixing the gun...`});
           }
-        } else if (interaction.user.id != interaction.options.get('user').user.id) {
+        } else if (interaction.user.id != interaction.options.get('user').user.id || interaction.user.id === process.env.DEV_ID) {
           if (!interaction.options.get('user').member._roles.includes(roleID)) interaction.options.get('user').member.roles.add(role);
           interaction.editReply({content: `${options.emote.ok.string} Updated ${interaction.options.get('user').user.username}\'s ${capitalize(roleRaw.replace('ROLE_', '').toLowerCase())} time from ${inc[0].timeRaw} to ${timeRaw}`});
           mutes.list = mutes.list.filter((m) => {

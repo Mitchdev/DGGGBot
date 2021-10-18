@@ -9,7 +9,7 @@ module.exports = function(client) {
     const dDisplay = d > 0 ? d + 'd ' : '';
     const hDisplay = h > 0 ? h + 'h ' : '';
     const mDisplay = m > 0 ? m + 'm ' : '';
-    const sDisplay = s > 0 ? s + 's ' : '';
-    return dDisplay + hDisplay + mDisplay + sDisplay;
+
+    return dDisplay + hDisplay + mDisplay + s + 's ';
   };
 };

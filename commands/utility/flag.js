@@ -20,14 +20,13 @@ exports.commandHandler = async function(interaction, Discord) {
     return false;
   });
   if (country) {
-    await interaction.defer();
-    const response = await fetch(country.flag);
-    const buffer = await response.buffer();
+    await interaction.deferReply();
+    const buffer = await (await fetch(country.flag)).buffer();
     const pngFlag = await sharp(buffer).png().toBuffer();
     const color = await colorThief.getColorFromURL(pngFlag);
     interaction.editReply({files: [{attachment: pngFlag, name: 'flag.png'}], embeds: [new Discord.MessageEmbed().setTitle(`Flag of ${country.name}`).setImage('attachment://flag.png').setColor(color)]});
   } else {
-    await interaction.defer({ephemeral: true});
+    await interaction.deferReply({ephemeral: true});
     interaction.editReply({content: `Could not find country ${interaction.options.get('country').value}`});
   }
 };

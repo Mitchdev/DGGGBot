@@ -5,7 +5,7 @@ exports.slashes = [{
   description: 'Gets a random fact',
 }];
 exports.commandHandler = async function(interaction, Discord) {
-  await interaction.defer();
+  await interaction.deferReply();
   const {data} = await (await fetch(process.env.RANDOMFACT_API)).json();
   interaction.editReply({content: data});
 };

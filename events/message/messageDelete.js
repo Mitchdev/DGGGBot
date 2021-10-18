@@ -6,7 +6,7 @@ module.exports = function(client) {
           .setTitle(`**${message.author.username}s deleted message in #${message.channel.name}**`)
           .setDescription(message.content);
 
-      const hook = new Discord.WebhookClient(process.env.WEBHOOK_LOG_ID, process.env.WEBHOOK_LOG_AUTH);
+      const hook = new Discord.WebhookClient({id: process.env.WEBHOOK_LOG_ID, token: process.env.WEBHOOK_LOG_AUTH});
       hook.send({embeds: [embed]});
     }
   });

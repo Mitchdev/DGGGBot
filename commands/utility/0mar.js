@@ -5,7 +5,7 @@ exports.slashes = [{
   description: '0MAR LMAO',
 }];
 exports.commandHandler = async function(interaction, Discord) {
-  await interaction.defer();
+  await interaction.deferReply();
 
   if (Math.floor(Math.random() * 1000000) === 1) {
     interaction.editReply({content: `0m3r ${options.emote.strong.string}`});

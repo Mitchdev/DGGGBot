@@ -20,7 +20,7 @@ exports.slashes = [{
   }],
 }];
 exports.commandHandler = async function(interaction, Discord) {
-  await interaction.defer();
+  await interaction.deferReply();
 
   triviaLeaderboard = JSON.parse(await (await fetch(process.env.ANDLIN_LEADERBOARD_API.replace('|game|', interaction.options.get('game').value, {headers: {'Authorization': process.env.ANDLIN_TOKEN}}))).json());
   if (interaction.options.get('user')) {

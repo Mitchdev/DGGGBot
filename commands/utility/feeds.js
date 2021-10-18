@@ -5,7 +5,7 @@ exports.slashes = [{
   description: 'Lists all the feeds',
 }];
 exports.commandHandler = async function(interaction) {
-  await interaction.defer();
+  await interaction.deferReply();
 
   interaction.editReply({content: `**Feeds**\n${feeds.list.map((item) => {
     return `${client.channels.cache.find((c) => c.id === item.channel)} every ${item.interval} seconds`;

@@ -11,7 +11,7 @@ exports.slashes = [{
   }],
 }];
 exports.commandHandler = async function(interaction, Discord) {
-  await interaction.defer();
+  await interaction.deferReply();
 
   const phrase = interaction.options.get('phrase').value.toLowerCase();
   const {list} = await (await fetch(process.env.URBAN_API.replace('|phrase|', phrase))).json();

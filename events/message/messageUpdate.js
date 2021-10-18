@@ -12,7 +12,7 @@ module.exports = function(client) {
             name: 'New',
             value: newMessage.content,
           }]);
-      const hook = new Discord.WebhookClient(process.env.WEBHOOK_LOG_ID, process.env.WEBHOOK_LOG_AUTH);
+      const hook = new Discord.WebhookClient({id: process.env.WEBHOOK_LOG_ID, token: process.env.WEBHOOK_LOG_AUTH});
       hook.send({embeds: [embed]});
     }
   });

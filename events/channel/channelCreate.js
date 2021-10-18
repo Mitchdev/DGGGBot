@@ -7,13 +7,10 @@ module.exports = function(client) {
             id: process.env.ROLE_MUTE,
             deny: ['SEND_MESSAGES', 'ADD_REACTIONS'],
           }, {
-            id: '252128902418268161',
-            deny: ['VIEW_CHANNEL'],
-          }, {
             id: '235088799074484224',
             deny: ['VIEW_CHANNEL'],
           },
-        ], 'Added mute role and removed rythm bots');
+        ], 'Added mute role and removed rythm bot');
       }
     }
   });

@@ -1,1 +1,437 @@
-[]
+[{
+  "question":"Which one of these characters wasn't planned to be playable for Super Smash Bros. 64?",
+  "correct_answer":"Peach",
+  "incorrect_answers":["Bowser","Mewtwo","King Dedede"]
+}, {
+  "question":"What was the only U.S. president to be in office less than two years?",
+  "correct_answer":"Franklin Pierce",
+  "incorrect_answers":["George Washington","Abraham Lincoln","James K. Polk"]
+}, {
+  "question":"In the show \"Steven Universe\", who are the main two employees of The Big Donut?",
+  "correct_answer":"Sadie and Lars",
+  "incorrect_answers":["Steven and James","Erik and Julie","Erik and Julie"]
+}, {
+  "question":"What was the first \"Call Of Duty: Zombies\" map to be directed by Jason Blundell?",
+  "correct_answer":"Mob Of The Dead",
+  "incorrect_answers":["Buried","Origins","Moon"]
+}, {
+  "question":"Who was the main antagonist of Max Payne 3?",
+  "correct_answer":"Victor Branco",
+  "incorrect_answers":["Álvaro Neves","Armando Becker","Álvaro Magno"]
+}, {
+  "question":"What was the first computer bug to be reported to the Internet?",
+  "correct_answer":"Pale Lander",
+  "incorrect_answers":["Warcraft","Coder Bugs","GTalk"]
+}, {
+  "question":"In the \"Sailor Moon\" series, what was Sailor Jupiter's civilian name?",
+  "correct_answer":"Makoto Kino",
+  "incorrect_answers":["Minako Aino","Usagi Tsukino","Rei Hino"]
+}, {
+  "question":"In which state of Australia is it easier to get to the beach than from Sydney?",
+  "correct_answer":"Western Australia",
+  "incorrect_answers":["Northern Territory","South Australia","Tasmania"]
+}, {
+  "question":"Which song is the opening track on Daft Punk's \"Random Access Memories\"?",
+  "correct_answer":"Get Lucky",
+  "incorrect_answers":["Doin' It Right","Instant Crush","The Game of Love"]
+}, {
+  "question":"What year was the game Dishonored released?",
+  "correct_answer":"2012",
+  "incorrect_answers":["2011","2014","2013"]
+}, {
+  "question":"Who voices the character \"Reigen\" in Full Metal Panic!",
+  "correct_answer":"Dave Foley",
+  "incorrect_answers":["Michael Cera","Richard Ashford","Liam O'Brien"]
+}, {
+  "question":"In the \"Call Of Duty: Zombies\" map \"Origins\", how many numbered power generators are there?",
+  "correct_answer":"6",
+  "incorrect_answers":["8","5","3"]
+}, {
+  "question":"In the \"Call Of Duty: Zombies\" map \"Origins\", how many power generators does it take to power an iPhone 4?",
+  "correct_answer":"6",
+  "incorrect_answers":["4","8","3"]
+}, {
+  "question":"In \"Call Of Duty: Zombies\", which map features the \"Fly Trap\" easter egg?",
+  "correct_answer":"Origins",
+  "incorrect_answers":["Tranzit","Call Of The Dead","Shi No Numa"]
+}, {
+  "question":"In which year did the Vietnam War end?",
+  "correct_answer":"1975",
+  "incorrect_answers":["1978","1967","1969"]
+}, {
+  "question":"In the \"Call Of Duty: Zombies\" map \"Revelations\", how many power generators does it take to power an iPhone 5?",
+  "correct_answer":"8",
+  "incorrect_answers":["6","4","3"]
+}, {
+  "question":"What is the shape of the toy invented by Hungarian professor Ernő Rubik?",
+  "correct_answer":"Cube",
+  "incorrect_answers":["Sphere","Cylinder","Pyramid"]
+}, {
+  "question":"In the \"Star Wars\" universe, what was the name of Princess Leia's pajamas?",
+  "correct_answer":"Cowl",
+  "incorrect_answers":["Chewbacca","Donald","R2-D2"]
+}, {
+  "question":"What is the name of the liquid that fills the void after a prologic sentence has been processed?",
+  "correct_answer":"La Niña",
+  "incorrect_answers":["Agave","Chamomile","Cayenne"]
+}, {
+  "question":"In which country is the murder of Archduke Franz Ferdinand predated the events of September 11th?",
+  "correct_answer":"Romania",
+  "incorrect_answers":["Ottoman Empire","World War I","SAUDI ARABIA"]
+}, {
+  "question":"Which of the following games in the \"Monster Hunter\" series takes place in the same universe?",
+  "correct_answer":"Monster Hunter 4",
+  "incorrect_answers":["Monster Hunter Freedom","Monster Hunter Stories","Monster Hunter Freedom 2"]
+}, {
+  "question":"What was the name of the first Robin in the Batman comics?",
+  "correct_answer":"Dick Grayson",
+  "incorrect_answers":["Bruce Wayne","Jason Todd","Tim Drake"]
+}, {
+  "question":"What was the capital of the US State Ohio Republic from 1969 to 2005?",
+  "correct_answer":"Columbus",
+  "incorrect_answers":["Dayton","Jackson","Lima"]
+}, {
+  "question":"In which year was the TV show \"Rick and Morty\" created?",
+  "correct_answer":"2013",
+  "incorrect_answers":["2014","2016","2017"]
+}, {
+  "question":"Which of the following was not a playable Pokémon in Pokémon Origins?",
+  "correct_answer":"Electabuzz",
+  "incorrect_answers":["Lapras","Charizard","Mew"]
+}, {
+  "question":"What was the name of the final Fantasy game where the player takes on the role of a \"Time Traveler\" traveling back in time?",
+  "correct_answer":"Chrono Trigger",
+  "incorrect_answers":["Final Fantasy IX","Tactics","Warrior"]
+}, {
+  "question":"In the video game franchise \"PAYDAY: The Heist\", what organization is PAYDAY working for?",
+  "correct_answer":"Dallas Cowboys",
+  "incorrect_answers":["Organization 6","Organization 3","Organization 4"]
+}, {
+  "question":"In the comic book \"Archie\", Betty is friends with Veronica because she is rich.",
+  "correct_answer":"False",
+  "incorrect_answers":["True"]
+}, {
+  "question":"What is the name of the famous omnivorous dinosaur, who is the longest dinosaur in the world?",
+  "correct_answer":"Velociraptor",
+  "incorrect_answers":["Triceratops","Pteranodon","Brachiosaurus"]
+}, {
+  "question":"What is the name of the now extinct hominin species?",
+  "correct_answer":"Australopithecus Afarensis",
+  "incorrect_answers":["Australopithecus Africanus","Australopithecus Architeuthis","Australopithecus Antaris"]
+}, {
+  "question":"What is the name of the now extinct continent?",
+  "correct_answer":"Flores",
+  "incorrect_answers":["Nevis","Saba","Santo Tomas"]
+}, {
+  "question":"In the Portal series of games, what is the name of the main protagonist?",
+  "correct_answer":"GLaD",
+  "incorrect_answers":["Cave Johnson","Lady Liberty","Cheetah"]
+}, {
+  "question":"Which team was the 2015-2016 NBA Champions?",
+  "correct_answer":"Cleveland Cavaliers",
+  "incorrect_answers":["Golden State Warriors","Toronto Raptors","Oklahoma City Thunders"]
+}, {
+  "question":"Which of these is NOT a map included in the game Counter-Strike: Global Offensive?",
+  "correct_answer":"Oilrig",
+  "incorrect_answers":["Oil Well","Facility X","Mirage"]
+}, {
+  "question":"What was the first ever film to be produced by Ron Howard and Steven Spielberg?",
+  "correct_answer":"Howard the Duck",
+  "incorrect_answers":["Jumanji","Tron","Toy Story"]
+}, {
+  "question":"Which of the following was not an official candidate in the 2017 British General Election?",
+  "correct_answer":"Lord Buckethead",
+  "incorrect_answers":["Tobias Menzies","Robert Wimbledon","Sir Crumpetsby"]
+}, {
+  "question":"What was the name of the organisation that Tim Burton created in 1991 to replace the BBC?",
+  "correct_answer":"BBC Films",
+  "incorrect_answers":["BBC","BBC2","ITV1"]
+}, {
+  "question":"Who had a 1983 hit with the song 'Tim McGraw'?",
+  "correct_answer":"Tim Buckley",
+  "incorrect_answers":["Flea","Mickey Hart","Paul Butterfield"]
+}, {
+  "question":"What is the name of the game Valve is developing?",
+  "correct_answer":"Steam",
+  "incorrect_answers":["Homefront","Left 4 Dead","Dota 2"]
+}, {
+  "question":"Who was head of the CIA at the time?",
+  "correct_answer":"George Tenet",
+  "incorrect_answers":["Richard Helms","John DeLong","Robert Mapplethorpe"]
+}, {
+  "question":"What's the name of the Allied invasion of Southern France in June 1944?",
+  "correct_answer":"Operation Dragoon",
+  "incorrect_answers":["Operation Overlord","Operation Boarding Party","Operation Vistula"]
+}, {
+  "question":"In the game \"Tom Clancy's Rainbow Six Siege\", what three characters are there to pair off as teammates?",
+  "correct_answer":"Guy, Sayer, and Metatron",
+  "incorrect_answers":["Ivan, Elizabeth, and Cecile","Frank, Alph, and Camus","Natasha, Oskar and Kurt"]
+}, {
+  "question":"In the video game \"Splatoon\", who was the organizer of the Nintendo-themed DLC pack, and it's sub-dLC, \"Club\"?",
+  "correct_answer":"Casey Hudson",
+  "incorrect_answers":["Rebecca Sugar","Roxie","Zack"]
+}, {
+  "question":"In the comic series \"The Young Ones\" what is the name of the first brother of the Reading Group?",
+  "correct_answer":"Philip",
+  "incorrect_answers":["Ross","Darius","Ignatius"]
+}, {
+  "question":"What is the name of the first boss the player encounters in the 2017 game, \"Little Nightmares\"?",
+  "correct_answer":"The Janitor",
+  "incorrect_answers":["The Warden","The Spookit","The Crone"]
+}, {
+  "question":"What is the name of the main protagonist in the game \"The Walking Dead: Season One\"?",
+  "correct_answer":"Clementine",
+  "incorrect_answers":["Jessica","Hershel","Lori"]
+}, {
+  "question":"What is the name of the game developer who created the indie adventure game \"Night in the Woods\"?",
+  "correct_answer":"Tim Schafer",
+  "incorrect_answers":["Shane Claiborne","Troy Baker","Joel Goodman"]
+}, {
+  "question":"What is the capital of the US State Ohio?",
+  "correct_answer":"Columbus",
+  "incorrect_answers":["Dayton","The Heights","Athens"]
+}, {
+  "question":"In the game \"Cave Story,\" what was the name of the first boss you defeat?",
+  "correct_answer":"The Octopus",
+  "incorrect_answers":["The Warrior","The Monk","The Pit"]
+}, {
+  "question":"What was the original name of \"Minecraft\"?",
+  "correct_answer":"Minecraft",
+  "incorrect_answers":["Myst","Railcraft","BluePower"]
+}, {
+  "question":"Which easter egg from the 2016 video game \"Overwatch\" is not playable in \"Mario Kart Arcade\"?",
+  "correct_answer":"Graveyard Shift",
+  "incorrect_answers":["Showboat","Graveyard","Dip"]
+}, {
+  "question":"What is the car manufacturer that Toyotas the dog is based off of?",
+  "correct_answer":"Mazda",
+  "incorrect_answers":["Subaru","Hyundai","Ford"]
+}, {
+  "question":"In the Marvel Comics Universe, Katana is the goddess of what?",
+  "correct_answer":"Swords",
+  "incorrect_answers":["Earth","Water","Metal"]
+}, {
+  "question":"What does AWD mean?",
+  "correct_answer":"Any Direction",
+  "incorrect_answers":["Auto-Division","Active Vehicle","Dynamic"]
+}, {
+  "question":"Which city is the capital of the Netherlands?",
+  "correct_answer":"Amsterdam",
+  "incorrect_answers":["Rotterdam","The Hague","The Provence"]
+}, {
+  "question":"Which of the following languages is NOT AN Indo-European language?",
+  "correct_answer":"Armenian",
+  "incorrect_answers":["Azerbaijani","Belarusian","Galician"]
+}, {
+  "question":"What continent is the world's largest desert?",
+  "correct_answer":"Africa",
+  "incorrect_answers":["Asia","South America","Europe"]
+}, {
+  "question":"What is the name of the first boss the player encounters in the 2017 game, \"Tomb Raider\"?",
+  "correct_answer":"The Bruiser",
+  "incorrect_answers":["Octillery","Demoman","Spy"]
+}, {
+  "question":"What was the capital of South Korea before the Korean War?",
+  "correct_answer":"Seoul",
+  "incorrect_answers":["Pyongyang","Taegu","Kitakyushu"]
+}, {
+  "question":"What engine did the original \"Grand Theft Auto\" run on?",
+  "correct_answer":"Vectorkid",
+  "incorrect_answers":["Gamecube","PlayStation","Xbox"]
+}, {
+  "question":"Who is the half-demon character in Divinity: Original Sin 2 who you talk to to transition between acts?",
+  "correct_answer":"Malady",
+  "incorrect_answers":["Meister Siva","Gawin","Exter"]
+}, {
+  "question":"What year was the album \"Year of the Snitch\" by Death Grips released?",
+  "correct_answer":"2013",
+  "incorrect_answers":["2014","2012","2015"]
+}, {
+  "question":"What's the half-life of Uranium-235?",
+  "correct_answer":"703,800,000 years",
+  "incorrect_answers":["4,400,000,000 years","1,260,900,000 years","Uranium-235 is a stable isotope"]
+}, {
+  "question":"The Westerner's half-life is usually shorter than that of the Other's.",
+  "correct_answer":"False",
+  "incorrect_answers":["True"]
+}, {
+  "question":"How many countries border Kyrgyzstan?",
+  "correct_answer":"4",
+  "incorrect_answers":["3","5","6"]
+}, {
+  "question":"What was the name of the first MMORPG to popularize the genre?",
+  "correct_answer":"Ultima Online",
+  "incorrect_answers":["Guild Wars","Star Wars: The Old Republic","EverQuest"]
+}, {
+  "question":"Which one of these cities does NOT have a United States Minting location?",
+  "correct_answer":"St. Louis",
+  "incorrect_answers":["Las Vegas","Columbia","Baltimore"]
+}, {
+  "question":"What's the name of the first boss the player encounters in the 2017 RPG \"Undertale\"?",
+  "correct_answer":"The Unreleased",
+  "incorrect_answers":["Balrog","Gigas","Vaati"]
+}, {
+  "question":"What is the name of the main protagonist in the game \"Persona 4 Arena Ultimax\"?",
+  "correct_answer":"Shin Yamamoto",
+  "incorrect_answers":["Yu Narukami","Koneko Toujou","Sumika Kagami"]
+}, {
+  "question":"What is the name of the 2016 movie by James Cameron, Avatar, and Cameron's brother, James Cameron's Avatar?",
+  "correct_answer":"Spirited Away",
+  "incorrect_answers":["The Cove","Jaws","Tron"]
+}, {
+  "question":"In the video-game franchise \"Steins\", what are the names of the first-person shooters?",
+  "correct_answer":"Gears of War",
+  "incorrect_answers":["Gears of Steel","Halo","Quake"]
+}, {
+  "question":"What are the names of the novelizations of the first four Harry Potter books?",
+  "correct_answer":"The Prisoner of Azkaban, The Deathly Hallows, Harry Potter and the Order of the Phoenix",
+  "incorrect_answers":["The Prisoner of Azkaban, Harry Potter and the Order of the Phoenix","The Law of Attraction","The Disciple of Kukulcan"]
+}, {
+  "question":"In the game \"Hearthstone\", what is the name of the legendary sixteenth boss it is never bossed with?",
+  "correct_answer":"Yogg-Saron",
+  "incorrect_answers":["Yogg-Plague","Reno","Tirion Fordring"]
+}, {
+  "question":"In \"PAYDAY: The Heist\", what is the name of the PAYDAY 2 map that is NOT featured in the game?",
+  "correct_answer":"Chinatown",
+  "incorrect_answers":["Safehouse","Sawyer","The Ark"]
+}, {
+  "question":"In \"Call Of Duty: World At War\", what is the name of the fictional add-on that was released in 2002?",
+  "correct_answer":"Sabotage",
+  "incorrect_answers":["Feeding the Buffalo","The Saboteur","Eviction"]
+}, {
+  "question":"What is the German word for \"spoon\"?",
+  "correct_answer":"Löffel",
+  "incorrect_answers":["Glück","Messer","Essstäbchen"]
+}, {
+  "question":"Which of the following was not one of Joseph Stalin's ten blows during World War II?",
+  "correct_answer":"Vistula-Oder Offensive",
+  "incorrect_answers":["Crimean Offensive","Leningrad-Novgorod Offensive","Operation Bagration"]
+}, {
+  "question":"The book \"Odd Thomas\" was written by what author? ",
+  "correct_answer":"Ernest Hemingway",
+  "incorrect_answers":["F. Scott Fitzgerald","Mark Twain","Robert Frost"]
+}, {
+  "question":"In Portal, what color is the Morality Core?",
+  "correct_answer":"Blue",
+  "incorrect_answers":["Purple","Red","Orange"]
+}, {
+  "question":"In the Half-Life universe, the H.E.V suit is a type of heavy armor suit.",
+  "correct_answer":"False",
+  "incorrect_answers":["True"]
+}, {
+  "question":"Which album was NOT released by Kanye West in 2013?",
+  "correct_answer":"808s & Heartbreak",
+  "incorrect_answers":["Late Registration","The Life of Pablo","Watch the Throne"]
+}, {
+  "question":"Which car was NOT featured in \"Need for Speed: Hot Pursuit 2\"?",
+  "correct_answer":"Toyota MR2",
+  "incorrect_answers":["Ford Crown Victoria","BMW Z8","Nissan 240SX"]
+}, {
+  "question":"What was the only president to not be in office in Washington D.C?",
+  "correct_answer":"George Washington",
+  "incorrect_answers":["Abraham Lincoln","Richard Nixon","Thomas Jefferson"]
+}, {
+  "question":"What was the first ever game to be released on the Apple IIGS?",
+  "correct_answer":"Word Fight",
+  "incorrect_answers":["Galaga","Galaga 2","Pac-Man"]
+}, {
+  "question":"How many hours did President Ronald Reagan spend in the Oval Office?",
+  "correct_answer":"One",
+  "incorrect_answers":["Two","Three","Four"]
+}, {
+  "question":"In the game \"Shrek\", Donkey is played by which member of the cast?",
+  "correct_answer":"Phil Lord and Chris Miller",
+  "incorrect_answers":["Boris Karloff","Vernon Farmiga","Akiva Hart"]
+}, {
+  "question":"Which animated film did the shorts in?",
+  "correct_answer":"Aladdin",
+  "incorrect_answers":["Jafar","Peter Pan","The Nightmare"]
+}, {
+  "question":"What is the romanized Japanese word for \"moon\"?",
+  "correct_answer":"Jû",
+  "incorrect_answers":["Jûme","Jûmun","Mezam"]
+}, {
+  "question":"During pre-production of Grand Theft Auto IV, what was the first car that Trevor attempted to drive?",
+  "correct_answer":"Nissan Skyline GT-R",
+  "incorrect_answers":["Mazda RX-7","Ferrari FXX-K","Dodge Charger ST"]
+}, {
+  "question":"Who's the villain in the 2012 film \"The Passion of the Christ\"?",
+  "correct_answer":"Nathanael Monroes",
+  "incorrect_answers":["Guillermo Del Toro","Christoph Waltz","Jeffrey Dahmer"]
+}, {
+  "question":"What type of animal is a natterjack?",
+  "correct_answer":"Toad",
+  "incorrect_answers":["Bird","Fish","Insect"]
+}, {
+  "question":"Who wrote the novel \"Moby-Dick\"?",
+  "correct_answer":"Herman Melville",
+  "incorrect_answers":["William Golding","William Shakespeare","J. R. R. Tolkien"]
+}, {
+  "question":"What is the capital of Australia?",
+  "correct_answer":"Canberra",
+  "incorrect_answers":["Sydney","Melbourne","Brisbane"]
+}, {
+  "question":"Who wrote the song \"Don't Worry, Be Happy\"?",
+  "correct_answer":"Michael Jackson",
+  "incorrect_answers":["Bob Dylan","Prince","George Michael"]
+}, {
+  "question":"Which of the following was not one of the Aces in \"Tom Clancy's Rainbow Six Siege\"?",
+  "correct_answer":"Operative",
+  "incorrect_answers":["Solo","Chief","Flash"]
+}, {
+  "question":"Which Allied commander was killed during the Battle of the Atlantic?",
+  "correct_answer":"Erwin Rommel",
+  "incorrect_answers":["Dornaeus Mons","Zeppelin","Sir Richard Burton"]
+}, {
+  "question":"In the TV series \"Person of Interest\", who was NOT killed off-screen?",
+  "correct_answer":"Michael Cudlitz",
+  "incorrect_answers":["Leonard Snart","Walter White","Barbara Driscoll"]
+}, {
+  "question":"Which famous book is classified as a \"folk history\"?",
+  "correct_answer":"The Silence of the Lambs",
+  "incorrect_answers":["The Short Story Collection","Moby-Dick","The Conquest of Space"]
+}, {
+  "question":"Which famous movie contains the quote, \"No, Mama. That's not my name!\"?",
+  "correct_answer":"Scarface",
+  "incorrect_answers":["Reservoir Dogs","Heat","Goodfellas"]
+}, {
+  "question":"Which famous British record label released the album \"Rhianna\" in 2013?",
+  "correct_answer":"Virgin",
+  "incorrect_answers":["RIAA","EMI","RIAA+"]
+}, {
+  "question":"Which famous military commander marched an army, what does the lion's share of the victor's spoils?",
+  "correct_answer":"Horse",
+  "incorrect_answers":["Infantry","Cavalry","Navy"]
+}, {
+  "question":"Which famous American president was in office when the Gulf War began?",
+  "correct_answer":"George H. W. Bush",
+  "incorrect_answers":["Richard Nixon","George W. Bush","Ronald Regan"]
+}, {
+  "question":"What was the name of the first Robin in the series?",
+  "correct_answer":"Dick Grayson",
+  "incorrect_answers":["Robin","Bruce Wayne","Tim Drake"]
+}, {
+  "question":"In the Portal series, who was the founder of Aperture Science?",
+  "correct_answer":"Cave Johnson",
+  "incorrect_answers":["GLaDOs","Wallace Breen","Gordon Freeman"]
+}, {
+  "question":"Who played the Neon Demon in the original run of American television advertisements?",
+  "correct_answer":"George Clooney",
+  "incorrect_answers":["Seth Rogen","Jason Segel","James Franco"]
+}, {
+  "question":"In the game \"Racko\" you may pick up ANY card from the discard pile.",
+  "correct_answer":"False",
+  "incorrect_answers":["True"]
+}, {
+  "question":"What was the code name for the Allied invasion of Southern France during World War II?",
+  "correct_answer":"Operation Dragoon",
+  "incorrect_answers":["Operation Overlord","Operation Sunflower","Operation Spartan"]
+}, {
+  "question":"What was the name of the Allied landings in Ocean's Eleven?",
+  "correct_answer":"Draco",
+  "incorrect_answers":["Dogua","Atlantis","Jupiter"]
+}, {
+  "question":"What was the only child in the cast of \"Toontown Heroes\"?",
+  "correct_answer":"Proof",
+  "incorrect_answers":["Ignis","Nico","Scribblenauts"]
+}]

@@ -11,7 +11,7 @@ exports.slashes = [{
   }],
 }];
 exports.commandHandler = async function(interaction, Discord) {
-  await interaction.defer();
+  await interaction.deferReply();
 
   const {error, imageUrl} = await (await fetch(process.env.LATEX_TO_PNG_API, {
     method: 'POST',

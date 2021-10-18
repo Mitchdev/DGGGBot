@@ -11,7 +11,7 @@ exports.slashes = [{
   }],
 }];
 exports.commandHandler = async function(interaction, Discord) {
-  await interaction.defer();
+  await interaction.deferReply();
 
   const time = await (await fetch(process.env.TIME_API.replace('|location|', interaction.options.get('location').value))).json();
 

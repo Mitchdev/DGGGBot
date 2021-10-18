@@ -30,7 +30,7 @@ exports.slashes = [{
   }],
 }];
 exports.commandHandler = async function(interaction) {
-  await interaction.defer({ephemeral: (interaction.options.get('size').value === 'true')});
+  await interaction.deferReply({ephemeral: (interaction.options.get('size').value === 'true')});
 
   if (interaction.options.get('size').value === 'true') {
     interaction.editReply({content: 'Fixing'});

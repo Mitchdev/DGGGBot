@@ -23,7 +23,7 @@ exports.slashes = [{
   }],
 }];
 exports.commandHandler = async function(interaction, Discord) {
-  await interaction.defer({ephemeral: true});
+  await interaction.deferReply({ephemeral: true});
   if (!suggestions.blacklist.find((id) => id === interaction.user.id)) {
     const id = makeID();
     const channel = await client.channels.resolve((interaction.options.get('type').value === 'Bot') ? process.env.CHANNEL_BOT_TESTING : process.env.CHANNEL_LOGS);
@@ -32,7 +32,7 @@ exports.commandHandler = async function(interaction, Discord) {
       new Discord.MessageButton({customId: `suggest|delmute|${interaction.user.id}|${interaction.user.username}`, label: 'Delete & Mute (10m)', style: 'DANGER'}),
       new Discord.MessageButton({customId: `suggest|del|${interaction.user.id}`, label: 'Delete', style: 'DANGER'}),
     ]), new Discord.MessageActionRow().addComponents([
-      new Discord.MessageButton({customId: `suggest|th|${interaction.user.id}|${id}`, label: 'Create Thread', style: 'SUCCESS', disabled: true}),
+      new Discord.MessageButton({customId: `suggest|th|${interaction.user.id}|${id}`, label: 'Create Thread', style: 'SUCCESS'}),
       new Discord.MessageButton({customId: `suggest|inp`, label: 'In Progress', style: 'SUCCESS'}),
       new Discord.MessageButton({customId: `suggest|com`, label: 'Complete', style: 'SUCCESS'}),
       new Discord.MessageButton({customId: `suggest|den`, label: 'Denied', style: 'DANGER'}),
@@ -98,7 +98,7 @@ exports.buttonHandler = async function(interaction, Discord) {
     interaction.deleteReply();
   } else if (type === 'th') {
     const data = suggestions.suggestions[interaction.customId.split('|')[3]];
-    const thread = await client.channels.resolve(process.env.CHANNEL_INFO).threads.create({
+    const thread = await client.channels.resolve(process.env.CHANNEL_GENERAL).threads.create({
       name: `${data.suggestion.substring(0, 95)}${(data.suggestion.length > 95 ? '...' : '')}`,
       autoArchiveDuration: 10080,
       type: 'private_thread',

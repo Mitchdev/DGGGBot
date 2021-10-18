@@ -21,7 +21,7 @@ exports.commandHandler = async function(interaction, Discord) {
     return false;
   });
   if (country) {
-    await interaction.defer();
+    await interaction.deferReply();
     const embed = new Discord.MessageEmbed().setTitle(country.name);
 
     const landPeople = `Demonym **${country.demonym}**\n` +
@@ -60,7 +60,7 @@ exports.commandHandler = async function(interaction, Discord) {
 
     interaction.editReply({files: [{attachment: pngFlag, name: 'flag.png'}], embeds: [embed.setThumbnail('attachment://flag.png').setColor(color)]});
   } else {
-    await interaction.defer({ephemeral: true});
+    await interaction.deferReply({ephemeral: true});
     interaction.editReply({content: `Could not find country ${interaction.options.get('country').value}`});
   }
 };

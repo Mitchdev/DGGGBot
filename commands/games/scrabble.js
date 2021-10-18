@@ -37,10 +37,10 @@ exports.slashes = [{
 }];
 exports.commandHandler = async function(interaction, Discord) {
   if (interaction.channel.id === process.env.CHANNEL_GENERAL) {
-    await interaction.defer({ephemeral: true});
+    await interaction.deferReply({ephemeral: true});
     interaction.editReply({content: `Please use ${client.channels.resolve(process.env.CHANNEL_BOT_GAMES)}`});
   } else {
-    await interaction.defer();
+    await interaction.deferReply();
     const gameIDs = Object.keys(scrabbleGames);
     const gameID = gameIDs.filter((id) => scrabbleGames[id].players.find((p) => p.user.id === interaction.user.id));
 
@@ -662,7 +662,7 @@ exports.buttonHandler = async function(interaction, Discord) {
       }
     } else if (interaction.customId.split('|')[2] === 'skip') {
       if (scrabbleGames[id].players[scrabbleGames[id].turn].user.id === interaction.user.id) {
-        await interaction.defer();
+        await interaction.deferReply();
         scrabbleGames[id].playerSkip(interaction);
       } else await interaction.deferUpdate();
     }

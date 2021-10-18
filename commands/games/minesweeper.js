@@ -6,10 +6,10 @@ exports.slashes = [{
 }];
 exports.commandHandler = async function(interaction, Discord) {
   if (interaction.channel.id === process.env.CHANNEL_GENERAL) {
-    await interaction.defer({ephemeral: true});
+    await interaction.deferReply({ephemeral: true});
     interaction.editReply({content: `Please use ${client.channels.resolve(process.env.CHANNEL_BOT_GAMES)}`});
   } else {
-    await interaction.defer();
+    await interaction.deferReply();
 
     const id = makeID();
     minesweeperGames[id] = new Minesweeper(id, interaction.user, interaction);
@@ -184,7 +184,7 @@ exports.buttonHandler = async function(interaction, Discord) {
   if (minesweeperGames[id]) {
     if (interaction.user.id === minesweeperGames[id].player.id) {
       if (move === 'first') {
-        await interaction.defer({ephemeral: true});
+        await interaction.deferReply({ephemeral: true});
         await interaction.editReply({components: [new Discord.MessageActionRow().addComponents(new Discord.MessageButton({custom_id: `minesweeper|${id}|flag|0.0`, label: 'Flag (off)', style: 'DANGER'}))], ephemeral: true});
         minesweeperGames[id].first(pos, time);
       } else {

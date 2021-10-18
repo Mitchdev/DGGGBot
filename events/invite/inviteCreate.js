@@ -1,5 +1,5 @@
 module.exports = function(client) {
   client.on('inviteCreate', (invite) => {
-    inviteList.push(invite);
+    inviteList[invite.code] = {'uses': invite.uses, 'user': invite.inviter.username};
   });
 };

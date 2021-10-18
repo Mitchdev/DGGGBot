@@ -5,7 +5,7 @@ exports.slashes = [{
   description: 'Shows list of indefinitely roled users',
 }];
 exports.commandHandler = async function(interaction) {
-  await interaction.defer();
+  await interaction.deferReply();
 
   client.guilds.fetch(process.env.GUILD_ID).then((guild) => {
     guild.roles.fetch(process.env.ROLE_WIZARD).then((wizardRole) => {

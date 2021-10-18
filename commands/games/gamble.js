@@ -117,7 +117,7 @@ exports.slashes = [{
   }],
 }];
 exports.commandHandler = async function(interaction, Discord) {
-  await interaction.defer();
+  await interaction.deferReply();
 
   if (interaction.options.first().name === 'odds') {
     const foundUser = userHasRole(interaction.user.id, process.env[interaction.options.first().options.get('role').value], true);

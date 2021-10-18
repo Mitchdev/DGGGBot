@@ -61,7 +61,7 @@ exports.slashes = [{
   }],
 }];
 exports.commandHandler = async function(interaction) {
-  await interaction.defer();
+  await interaction.deferReply();
 
   const question = interaction.options.get('question').value;
   const time = timeToSeconds(interaction.options.get('duration').value);

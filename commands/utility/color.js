@@ -11,7 +11,7 @@ exports.slashes = [{
   }],
 }];
 exports.commandHandler = async function(interaction, Discord) {
-  await interaction.defer();
+  await interaction.deferReply();
 
   const image = interaction.options.get('link').value;
   const colors = await colorThief.getPaletteFromURL(image, 6).catch(() => {

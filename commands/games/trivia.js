@@ -32,7 +32,7 @@ exports.slashes = [{
   }],
 }];
 exports.commandHandler = async function(interaction, Discord) {
-  await interaction.defer({ephemeral: true});
+  await interaction.deferReply({ephemeral: true});
   if (interaction.channel.id === process.env.CHANNEL_GENERAL) {
     interaction.editReply({content: `Please use ${client.channels.resolve(process.env.CHANNEL_BOT_GAMES)}`});
   } else {
@@ -340,7 +340,7 @@ exports.buttonHandler = async function(interaction, Discord) {
   const id = interaction.customId.split('|')[1];
   const answer = interaction.customId.split('|')[2];
   if (id === 'p') {
-    await interaction.defer({ephemeral: true});
+    await interaction.deferReply({ephemeral: true});
     if (answer == 'true') interaction.editReply({content: options.emote.troll.string});
     else {
       // let btns = interaction.message.components;
@@ -356,7 +356,7 @@ exports.buttonHandler = async function(interaction, Discord) {
       await interaction.deferUpdate();
       triviaGame.guess(answer, interaction.user, time);
     } else {
-      await interaction.defer({ephemeral: true});
+      await interaction.deferReply({ephemeral: true});
       interaction.editReply({content: `Already guessed`, ephemeral: true});
     }
   }

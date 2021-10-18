@@ -12,10 +12,10 @@ exports.slashes = [{
 }];
 exports.commandHandler = async function(interaction, Discord) {
   if (interaction.channel.id === process.env.CHANNEL_GENERAL) {
-    await interaction.defer({ephemeral: true});
+    await interaction.deferReply({ephemeral: true});
     interaction.editReply({content: `Please use ${client.channels.resolve(process.env.CHANNEL_BOT_GAMES)}`});
   } else {
-    await interaction.defer();
+    await interaction.deferReply();
 
     if (interaction.user.id === interaction.options.first().user.id || interaction.options.first().user.bot) {
       interaction.editReply({content: `You can't play with ${interaction.options.first().user.bot ? 'a bot' : 'yourself'} ${options.emote.pogo.string}`});

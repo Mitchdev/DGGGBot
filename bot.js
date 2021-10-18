@@ -5,7 +5,7 @@ const client = new Client({
     Intents.FLAGS.GUILDS,
     Intents.FLAGS.GUILD_MEMBERS,
     Intents.FLAGS.GUILD_BANS,
-    Intents.FLAGS.GUILD_EMOJIS,
+    Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS,
     Intents.FLAGS.GUILD_INTEGRATIONS,
     Intents.FLAGS.GUILD_WEBHOOKS,
     Intents.FLAGS.GUILD_INVITES,
@@ -34,7 +34,7 @@ client.on('ready', async () => {
   await guild.channels.cache.each(async (channel) => {
     if (channel.isText()) {
       const invites = await guild.invites.fetch({channelId: channel.id});
-      invites.each((invite) => inviteList.push(invite));
+      invites.each((invite) => inviteList[invite.code] = {'uses': invite.uses, 'user': invite.inviter.username});
     }
   });
 
@@ -52,6 +52,7 @@ client.on('ready', async () => {
     const lastestError = errorLog.filter((line) => line.startsWith(errorTimestamp[0])).join('\n');
     splitMessage(null, lastestError, 'js', errMsg);
   }
+
   const outMsg = await devLog.send('**Restart** Latest Out:');
   const outLog = fs.readFileSync(dpath.join(__srcdir, '../../.pm2/logs/bot-out.log'), {encoding: 'utf8'}).split('\n');
   const outTimestamp = outLog[outLog.length-2].match(/(\d\d\d\d\-\d\d\-\d\d\T\d\d\:\d\d\:)/g);

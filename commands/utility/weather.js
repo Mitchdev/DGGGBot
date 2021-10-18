@@ -26,7 +26,7 @@ exports.slashes = [{
   }],
 }];
 exports.commandHandler = async function(interaction, Discord) {
-  await interaction.defer();
+  await interaction.deferReply();
 
   const weather = new Discord.MessageEmbed();
   const alerts = new Discord.MessageEmbed().setTitle('Alerts').setColor('RED');
@@ -44,19 +44,14 @@ exports.commandHandler = async function(interaction, Discord) {
   if (coordinates.Message) {
     if (coordinates.Message.startsWith('404 Not Found:')) interaction.editReply({content: `Could not find ${location}`});
     else {
-      client.users.fetch(process.env.DEV_ID).then((devLog) => {
-        devLog.send({content: `**Coordinates:** ${coordinates.Message}\n**Sent:** \`\`\`{"Address": ${location}}\`\`\``});
-      });
-      client.users.fetch(process.env.ANDLIN_ID).then((andlinLog) => {
-        andlinLog.send({content: `**Coordinates:** ${coordinates.Message}\n**Sent:** \`\`\`{"Address": ${location}}\`\`\``});
-      });
+      client.users.fetch(process.env.DEV_ID).then((devLog) => devLog.send({content: `**Coordinates:** ${coordinates.Message}\n**Sent:** \`\`\`{"Address": ${location}}\`\`\``}));
+      client.users.fetch(process.env.ANDLIN_ID).then((andlinLog) => andlinLog.send({content: `**Coordinates:** ${coordinates.Message}\n**Sent:** \`\`\`{"Address": ${location}}\`\`\``}));
     }
   } else {
     const data = await (await fetch(process.env.WEATHER_API.replace('|lat|', coordinates.lat).replace('|lon|', coordinates.lon).replace('|units|', units))).json();
-
     const localTime = new Date((data.current.dt+data.timezone_offset)*1000);
-
     const setRiseMargin = 900; // seconds
+
     let sunText = '';
     let moonText = '';
     let rainText = '';
@@ -66,29 +61,20 @@ exports.commandHandler = async function(interaction, Discord) {
 
     const sunrise = data.daily[0].sunrise - data.current.dt;
     const sunset = data.daily[0].sunset - data.current.dt;
-    if (sunrise <= setRiseMargin && sunrise >= -setRiseMargin) sunText = `Sun **rising now**`;
-    else if (sunset <= setRiseMargin && sunset >= -setRiseMargin) sunText = `Sun position **setting now**`;
-    else if (sunrise >= 0) sunText = `Sun position **rising in ${secondsToDhms(sunrise)}**`;
-    else if (sunset >= 0) sunText = `Sun position **setting in ${secondsToDhms(sunset)}**`;
-    else sunText = `Sun position **set ${secondsToDhms(Math.abs(sunset))}ago**`;
-
     const moonrise = data.daily[0].moonrise - data.current.dt;
     const moonset = data.daily[0].moonset - data.current.dt;
 
-    if (moonrise <= setRiseMargin && moonrise >= -setRiseMargin) moonText += `Moon position **rising now**`;
-    else if (moonset <= setRiseMargin && moonset >= -setRiseMargin) moonText += `Moon position **setting now**`;
-    else if (moonrise >= 0) moonText += `Moon position **rising in ${secondsToDhms(moonrise)}**`;
-    else if (moonset >= 0) moonText += `Moon position **setting in ${secondsToDhms(moonset)}**`;
-    else moonText += `Moon position **set ${secondsToDhms(Math.abs(moonset))}ago**`;
+    sunText = `Sun **${sunrise >= 0 ? 'rising' : 'rose'} <t:${data.daily[0].sunrise}:R>** and ${sunset >= 0 ? 'is **setting' : '**set'} <t:${data.daily[0].sunset}:R>**`;
+    moonText = `Moon **${moonrise >= 0 ? 'rising' : 'rose'} <t:${data.daily[0].moonrise}:R>** and ${moonset >= 0 ? 'is **setting' : '**set'} <t:${data.daily[0].moonset}:R>**`;
 
-    if (data.daily[0].moon_phase > 0 && data.daily[0].moon_phase < 0.25) moonText += `\nMoon phase **Waxing crescent moon** 🌒`;
-    if (data.daily[0].moon_phase > 0.25 && data.daily[0].moon_phase < 0.5) moonText += `\nMoon phase **Waxing gibous moon** 🌔`;
-    if (data.daily[0].moon_phase > 0.5 && data.daily[0].moon_phase < 0.75) moonText += `\nMoon phase **Waning gibous moon** 🌖`;
-    if (data.daily[0].moon_phase > 0.75 && data.daily[0].moon_phase < 1) moonText += `\nMoon phase **Waning crescent moon** 🌘`;
-    if (data.daily[0].moon_phase == 0 || data.daily[0].moon_phase == 1) moonText += `\nMoon phase **New moon** 🌑`;
-    if (data.daily[0].moon_phase == 0.25) moonText += `\nMoon phase **First quarter moon** 🌓`;
-    if (data.daily[0].moon_phase == 0.5) moonText += `\nMoon phase **Full moon** 🌕`;
-    if (data.daily[0].moon_phase == 0.75) moonText += `\nMoon phase **Last quarter moon** 🌗`;
+    if (data.daily[0].moon_phase > 0 && data.daily[0].moon_phase < 0.25) moonText += `\nPhase **Waxing crescent moon** 🌒`;
+    if (data.daily[0].moon_phase > 0.25 && data.daily[0].moon_phase < 0.5) moonText += `\nPhase **Waxing gibous moon** 🌔`;
+    if (data.daily[0].moon_phase > 0.5 && data.daily[0].moon_phase < 0.75) moonText += `\nPhase **Waning gibous moon** 🌖`;
+    if (data.daily[0].moon_phase > 0.75 && data.daily[0].moon_phase < 1) moonText += `\nPhase **Waning crescent moon** 🌘`;
+    if (data.daily[0].moon_phase == 0 || data.daily[0].moon_phase == 1) moonText += `\nPhase **New moon** 🌑`;
+    if (data.daily[0].moon_phase == 0.25) moonText += `\nPhase **First quarter moon** 🌓`;
+    if (data.daily[0].moon_phase == 0.5) moonText += `\nPhase **Full moon** 🌕`;
+    if (data.daily[0].moon_phase == 0.75) moonText += `\nPhase **Last quarter moon** 🌗`;
 
     const notSunSet = ((sunset > setRiseMargin || sunset < -setRiseMargin) && (sunrise > setRiseMargin || sunrise < -setRiseMargin));
     const sunBothPos = ((sunrise > setRiseMargin && sunset > setRiseMargin) && sunrise < sunset);
@@ -103,6 +89,7 @@ exports.commandHandler = async function(interaction, Discord) {
 
     let hour = localTime.getHours();
     if (hour > 12) hour = 12 - (hour - 12);
+
     const daylightTime = Math.abs(data.daily[0].sunset - data.daily[0].sunrise);
     const nightlightTime = Math.abs(86400 - daylightTime);
     const hourOffset = ((daylightTime/3600)/12)*hour;
@@ -165,10 +152,9 @@ exports.commandHandler = async function(interaction, Discord) {
       inline: true,
     }, {
       name: 'Sun & Moon',
-      value: `Daylight **${secondsToDhms(daylightTime)}**`+
-      `\n${sunText}`+
-      `\nNightlight **${secondsToDhms(nightlightTime)}**`+
-      `\n${moonText}`,
+      value: `${sunText}\n${moonText}`+
+      `\nAmount of Daylight **${secondsToDhms(daylightTime)}**`+
+      `\nAmount of Nightlight **${secondsToDhms(nightlightTime)}**`,
     }]);
     embeds.push(weather);
 

@@ -5,6 +5,6 @@ exports.slashes = [{
   description: 'Links to command list on github',
 }];
 exports.commandHandler = async function(interaction) {
-  await interaction.defer({ephemeral: true});
+  await interaction.deferReply({ephemeral: true});
   interaction.editReply({content: `**Commands** https://github.com/Mitchdev/DGGGBot#readme`, ephemeral: true});
 };

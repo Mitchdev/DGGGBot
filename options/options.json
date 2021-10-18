@@ -1,5 +1,9 @@
 {
   "emote": {
+    "pepeweird": {
+      "string": "<:pepeWeird:816528901622464533>",
+      "id": "816528901622464533"
+    },
     "troll": {
       "string": "<:troll:792676626315739166>",
       "id": "792676626315739166"
@@ -9,8 +13,8 @@
       "id": "785230226732613654"
     },
     "tony": {
-      "string": "<:tonyW:794911355634712606>",
-      "id": "794911355634712606"
+      "string": "<:tonyW:865825727252004885>",
+      "id": "865825727252004885"
     },
     "donowall": {
       "string": "<:DonoWall:773295613558128671>",
@@ -60,33 +64,29 @@
     "9️⃣",
     "🔟"
   ],
-  "weebPhrases": [
-    "anime",
-    "ayaya",
-    "onii-chan",
-    "oniichan",
-    "onii chan",
-    "daijobu",
-    "nani",
-    "omaewashinderu",
-    "omae-wa-shinderu",
-    "omae wa shinderu",
-    "yare-yare",
-    "yare yare",
-    "yareyare",
-    "yare",
-    "tsundere",
-    "baka",
-    "senpai",
-    "kawaii",
-    "manga",
-    "yandere",
-    "chibi",
-    "onee-san",
-    "onee san",
-    "oneesan",
-    "doujinshi"
+  "eightBallAnswers": [
+    "It is Certain.",
+    "It is decidedly so.",
+    "Without a doubt.",
+    "Yes definitely.",
+    "You may rely on it.",
+    "As I see it, yes.",
+    "Most likely.",
+    "Outlook good.",
+    "Yes.",
+    "Signs point to yes.",
+    "Reply hazy, try again.",
+    "Ask again later.",
+    "Better not tell you now.",
+    "Cannot predict now.",
+    "Concentrate and ask again.",
+    "Don't count on it.",
+    "My reply is no.",
+    "My sources say no.",
+    "Outlook not so good.",
+    "Very doubtful."
   ],
+  "slurs": [],
   "scrabbleLetters": {
     "?": {
       "points": 0,

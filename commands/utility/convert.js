@@ -31,7 +31,7 @@ exports.slashes = [{
 }];
 exports.commandHandler = async function(interaction, Discord) {
   if (interaction.commandName === 'convertlist') {
-    await interaction.defer({ephemeral: true});
+    await interaction.deferReply({ephemeral: true});
     if (!interaction.options.get('measurement')) {
       interaction.editReply({content: `**Conversion Measurement List**\n${measurements.map((measurement) => measurement.name).join('\n')}`});
     } else {
@@ -45,7 +45,7 @@ exports.commandHandler = async function(interaction, Discord) {
       interaction.editReply({content: content});
     }
   } else {
-    await interaction.defer();
+    await interaction.deferReply();
     const embed = new Discord.MessageEmbed();
     let complete = false;
     for (let i = 0; i < measurements.length; i++) {

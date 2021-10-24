@@ -68,7 +68,7 @@ exports.commandHandler = async function(interaction, Discord) {
     interaction.editReply({content: `Removed ${interaction.options.get('name').value}`, ephemeral: true});
     reloadRolesMessage(Discord);
     updateRoles();
-  } else if (interaction.options.getSubcommand()  === 'add') {
+  } else if (interaction.options.getSubcommand() === 'add') {
     const role = {
       'name': interaction.options.get('name').value,
       'type': interaction.options.get('category').value,

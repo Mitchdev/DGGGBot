@@ -32,7 +32,7 @@ client.on('ready', async () => {
 
   const guild = await client.guilds.resolve(process.env.GUILD_ID);
   await guild.channels.cache.each(async (channel) => {
-    if (channel.isText()) {
+    if (channel.isText() && !channel.isThread()) {
       const invites = await guild.invites.fetch({channelId: channel.id});
       invites.each((invite) => inviteList[invite.code] = {'uses': invite.uses, 'user': invite.inviter.username});
     }

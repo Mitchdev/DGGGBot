@@ -50,7 +50,7 @@ exports.slashes = [{
 }];
 exports.commandHandler = async function(interaction) {
   await interaction.deferReply();
-  
+
   const feedIndex = feeds.list.findIndex((feed) => feed.channel == interaction.channelId);
   if (feedIndex >= 0) {
     if (interaction.options.getSubcommand() === 'list') {

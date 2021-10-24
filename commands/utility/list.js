@@ -31,7 +31,7 @@ exports.commandHandler = async function(interaction, Discord) {
         inline: true,
       }, {
         name: 'Issuer',
-        value: r.map((u) => u.issuerUsername ? u.issuerUsername : "null").join('\n'),
+        value: r.map((u) => u.issuerUsername ? u.issuerUsername : 'null').join('\n'),
         inline: true,
       }];
     })));
